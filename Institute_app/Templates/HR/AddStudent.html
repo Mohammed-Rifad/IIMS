@@ -1,0 +1,85 @@
+{% extends 'HR/HrMaster.html' %}
+
+{% block content%}
+
+<form method="POST" action="{% url 'institute_app:add_student' %}" class="reg-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p  class="text-danger">{{msg}}</p>
+<table class="tb">
+    <tr>
+        <td>{{form.s_name.label}}</td>
+         <td>{{form.s_name}}</td>
+    </tr>
+    <tr>
+        <td>{{form.s_gender.label}}</td>
+         <td>{{form.s_gender}}</td>
+    </tr>
+    <tr>
+        <td>Course Selected</td>
+         <td>
+             <select name="course">
+                 {% for course in courses %}
+                <option value="{{course.c_id}}">{{course.c_name|title}}</option>
+                {% endfor %}
+         </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{form.s_type.label}}
+        </td>
+        <td>
+           {{form.s_type}}
+       </td>
+    </tr>
+    <tr>
+        <td>{{form.s_dob.label}}</td>
+         <td>{{form.s_dob}}</td>
+    </tr>
+    <tr>
+        <td>{{form.s_colg.label}}</td>
+         <td>{{form.s_colg}}</td>
+    </tr>
+    <tr>
+        <td>{{form.s_qual.label}}</td>
+         <td>{{form.s_qual}}</td>
+    </tr>
+    <tr>
+        <td>{{form.s_passout.label}}</td>
+         <td>{{form.s_passout}}</td>
+    </tr>
+    <tr>
+        <td>{{form.s_address.label}}</td>
+         <td>{{form.s_address}}</td>
+    </tr>
+    <tr>
+        <td>{{form.s_email.label}}</td>
+         <td>{{form.s_email}}</td>
+    </tr>
+    <tr>
+        <td>{{form.s_phno.label}}</td>
+         <td>{{form.s_phno}}</td>
+    </tr>
+    <tr>
+        <td>{{form.amt_payable.label}}</td>
+         <td>{{form.amt_payable}}</td>
+    </tr>
+    <tr>
+        <td>{{form.s_pic.label}}</td>
+         <td>{{form.s_pic}}</td>
+    </tr>
+    <tr>
+
+        <td>Enter Installment</td>
+        <td><input type="number" name="ins1" required style="width: 80px;">
+            <input type="number" name="ins2" required style="width: 80px;">
+            
+            <input type="number" name="ins3" required style="width: 80px;"></td>
+    </tr>
+   
+    
+</table>
+
+<input type="submit" value="Login" class="btn btn-primary" style="margin-left: 60px;"/>
+</form>
+{% endblock %}

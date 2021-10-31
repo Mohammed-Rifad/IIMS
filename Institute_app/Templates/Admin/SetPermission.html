@@ -1,0 +1,36 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+<form method="POST" action="{% url 'institute_app:set_permission' %}" class="reg-form">
+    {% csrf_token %}
+    
+<table class="tb">
+    <tr>
+        <td>
+            Sellect Trainer
+        </td>
+        <td>
+            
+            <select name="trainer" >
+                {% for tr in trainers %}
+                <option value="{{tr.tr_id}}">{{tr.tr_name|title}}</option>
+                {% endfor %}
+            </select>
+        </td>
+        <tr>
+            <td>
+                Permission
+            </td>
+           <td> <select name="permission_type" id="">
+            <option value="revoke">Revoke</option>
+            <option value="grand">Grand</option>
+        </select></td>
+    </tr>
+   
+</tr>
+</table>
+{{msg}}
+<input type="submit" value="Update" class="btn btn-primary" style="margin-left: 60px;"/>
+</form>
+{% endblock %}

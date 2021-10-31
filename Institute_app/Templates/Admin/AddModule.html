@@ -1,0 +1,33 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+<form method="POST" action="{% url 'institute_app:add_module' %}" class="reg-form">
+    {% csrf_token %}
+    <p  class="text-danger">{{msg}}</p>
+<table class="tb">
+    <tr>
+        <td>
+            Select Course
+        </td>
+        <td>
+           <select name="course" id="">
+               {% for course in courses %}
+            <option value="{{course.c_id}}">{{course.c_name|title}}</option>
+               {% endfor %}
+            </select>
+        </td>
+        <tr>
+            <td>
+                {{form.m_name.label}}
+            </td>
+            <td>
+                {{form.m_name}}
+            </td>
+    </tr>
+    
+</table>
+
+<input type="submit" value="Login" class="btn btn-primary" style="margin-left: 60px;"/>
+</form>
+{% endblock %}

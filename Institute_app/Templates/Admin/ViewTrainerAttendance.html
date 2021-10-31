@@ -1,0 +1,75 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+<form method="POST" action="{% url 'institute_app:view_tr_attendance'  %}" class="reg-form" enctype="multipart/form-data">
+
+    
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>Select Trainer</td>
+            <td>
+                <select name="trainer">
+                {% for trainer in trainers %}
+               <option value="{{trainer.tr_id}}">{{trainer.tr_name|title}}</option>
+               {% endfor %}
+        </select>
+    </td>
+        </tr>
+    <tr>
+        <td>
+            Select Lab
+        </td>
+        <td>
+            <select name="mnth" >
+                
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value=7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="submit" ></td>
+    </tr>
+</table>
+
+</form>
+
+
+
+{% if attendance_data %}
+<H3>{{trainer_name|title}}</H3>
+
+<table>
+   <tr>
+      
+       <th>Date</th>
+       <th>Status</th>
+      
+   </tr>
+   <tr>
+       {% for data in attendance_data %}
+
+        <td>{{data.date}}</td>
+        <td>{{data.status|title}}</td>
+       <td><input type="hidden" name="tr_id" id="{{data.tr_id.tr_id}}"></td>
+
+       
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+{% endblock %}

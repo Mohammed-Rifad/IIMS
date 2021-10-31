@@ -1,0 +1,28 @@
+{% extends 'Common/CommonMaster.html' %}
+
+{% block content%}
+
+<form method="POST" action="{% url 'institute_app:login' %}" class="reg-form">
+    {% csrf_token %}
+    <p  class="text-danger">{{msg}}</p>
+<table class="tb">
+    <tr>
+        <td>
+            {{form.login_id.label}}
+        </td>
+        <td>
+            {{form.login_id}}
+        </td>
+        <tr>
+            <td>
+                {{form.login_passwd.label}}
+            </td>
+            <td>
+                {{form.login_passwd}}
+            </td>
+    </tr>
+</table>
+
+<input type="submit" value="Login" class="btn btn-primary" style="margin-left: 60px;"/>
+</form>
+{% endblock %}

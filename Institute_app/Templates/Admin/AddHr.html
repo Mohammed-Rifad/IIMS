@@ -1,0 +1,48 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+<form method="POST" action="{% url 'institute_app:add_hr' %}" class="reg-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p  class="text-danger">{{msg}}</p>
+<table class="tb">
+    <tr>
+        <td>{{form.hr_name.label}}</td>
+         <td>{{form.hr_name}}</td>
+    </tr>
+    <tr>
+        <td>{{form.hr_gender.label}}</td>
+         <td>{{form.hr_gender}}</td>
+    </tr>
+    <tr>
+        <td>{{form.hr_dob.label}}</td>
+         <td>{{form.hr_dob}}</td>
+    </tr>
+    <tr>
+        <td>{{form.hr_qual.label}}</td>
+         <td>{{form.hr_qual}}</td>
+    </tr>
+    <tr>
+        <td>{{form.hr_address.label}}</td>
+         <td>{{form.hr_address}}</td>
+    </tr>
+    <tr>
+        <td>{{form.hr_email.label}}</td>
+         <td>{{form.hr_email}}</td>
+    </tr>
+    <tr>
+        <td>{{form.hr_phno.label}}</td>
+         <td>{{form.hr_phno}}</td>
+    </tr>
+    <tr>
+        <td>{{form.hr_pic.label}}</td>
+         <td>{{form.hr_pic}}</td>
+    </tr>
+    
+   
+    
+</table>
+
+<input type="submit" value="Login" class="btn btn-primary" style="margin-left: 60px;"/>
+</form>
+{% endblock %}

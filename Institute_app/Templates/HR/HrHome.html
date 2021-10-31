@@ -1,0 +1,18 @@
+{% extends 'HR/HrMaster.html' %}
+
+{% block content%}
+<br>
+<a href="{% url 'institute_app:add_student' %}"> Add Student</a>
+<BR></BR>
+<a href="{% url 'institute_app:assign_seat' %}"> Assign Seat</a>
+<br>
+<a href="{% url 'institute_app:hr_act_followup' %}"> Assign Seat</a>
+<br>
+<a href="{% url 'institute_app:view_seating_hr' %}"> View Seating</a>
+<br>
+<a href="{% url 'institute_app:hr_active_students' %}"> Active Students</a>
+<br>
+<a href="{% url 'institute_app:trainer_att' %}"> Attendance</a>
+<br>
+<a href="{% url 'institute_app:tr_attendance' %}"> View Attendance</a>
+{% endblock %}

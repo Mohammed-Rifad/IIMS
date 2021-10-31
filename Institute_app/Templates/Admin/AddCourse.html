@@ -1,0 +1,36 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+<form method="POST" action="{% url 'institute_app:add_course' %}" style="margin-left: 200px; margin-top: 100px;">
+    {% csrf_token %}
+    <p  class="text-danger">{{msg}}</p>
+<table style="border-spacing: 20px;border-collapse: separate;">
+    <tr>
+        <td>
+            {{form.c_name.label}}
+        </td>
+        <td>
+            {{form.c_name}}
+        </td>
+        <tr>
+            <td>
+                {{form.c_duration.label}}
+            </td>
+            <td>
+                {{form.c_duration}}
+            </td>
+    </tr>
+    <tr>
+        <td>
+            {{form.c_fee.label}}
+        </td>
+        <td>
+            {{form.c_fee}}
+        </td>
+</tr>
+</table>
+
+<input type="submit" value="Login" class="btn btn-primary" style="margin-left: 60px;"/>
+</form>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+<form method="POST" action="{% url 'institute_app:add_trainer' %}" class="reg-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p  class="text-danger">{{msg}}</p>
+<table class="tb">
+    <tr>
+        <td>{{form.tr_name.label}}</td>
+         <td>{{form.tr_name}}</td>
+    </tr>
+    <tr>
+        <td>Assign Course</td>
+         <td>
+             <select name="course">
+                 {% for course in courses %}
+                <option value="{{course.c_id}}">{{course.c_name|title}}</option>
+                {% endfor %}
+         </select>
+        </td>
+    </tr>
+    <tr>
+        <td>{{form.tr_gender.label}}</td>
+         <td>{{form.tr_gender}}</td>
+    </tr>
+    <tr>
+        <td>{{form.tr_dob.label}}</td>
+         <td>{{form.tr_dob}}</td>
+    </tr>
+    <tr>
+        <td>{{form.tr_qual.label}}</td>
+         <td>{{form.tr_qual}}</td>
+    </tr>
+    <tr>
+        <td>{{form.tr_address.label}}</td>
+         <td>{{form.tr_address}}</td>
+    </tr>
+    <tr>
+        <td>{{form.tr_email.label}}</td>
+         <td>{{form.tr_email}}</td>
+    </tr>
+    <tr>
+        <td>{{form.tr_phno.label}}</td>
+         <td>{{form.tr_phno}}</td>
+    </tr>
+    <tr>
+        <td>{{form.log_permission.label}}</td>
+         <td>{{form.log_permission}}</td>
+    </tr>
+    <tr>
+        <td>{{form.tr_pic.label}}</td>
+         <td>{{form.tr_pic}}</td>
+    </tr>
+    
+   
+    
+</table>
+
+<input type="submit" value="Login" class="btn btn-primary" style="margin-left: 60px;"/>
+</form>
+{% endblock %}

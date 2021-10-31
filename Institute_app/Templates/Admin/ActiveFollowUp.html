@@ -1,0 +1,37 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+<form method="POST" action="{% url 'institute_app:hr_act_followup' %}" class="reg-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p  class="text-danger">{{msg}}</p>
+<table class="tb">
+ <tr>
+     <th>Date Entered</th>
+     <th>Name</th>
+     <th>D.O.B</th>
+     <th>College</th>
+     <th>Passout</th>
+     <th>Email</th>
+     <th>Phone No</th>
+ </tr>
+{% for data in followup_data %}
+ <tr>
+    <td>{{data.date_entered}}</td>
+<td>{{data.s_name|title}}</td>
+<td>{{data.s_dob}}</td>
+<td>{{data.s_colg|title}}</td>
+<td>{{data.s_passout}}</td>
+<td>{{data.s_email}}</td>
+<td>{{data.s_phno}}</td>
+
+<td><a href="{% url 'institute_app:admin_followup_hst' data.f_id %}">Details</a></td>
+
+ </tr>
+ {% endfor %}
+    
+</table>
+
+
+</form>
+{% endblock %}

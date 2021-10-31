@@ -1,0 +1,29 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+<form method="POST" action="{% url 'institute_app:add_system' %}" class="reg-form">
+    {% csrf_token %}
+    <p  class="text-danger">{{msg}}</p>
+<table class="tb">
+    <tr>
+        <td>
+            {{form.lab_no.label}}
+        </td>
+        <td>
+            {{form.lab_no}}
+        </td>
+        <tr>
+            <td>
+                {{form.sys_no.label}}
+            </td>
+            <td>
+                {{form.sys_no}}
+            </td>
+    </tr>
+ 
+</table>
+
+<input type="submit" value="Login" class="btn btn-primary" style="margin-left: 60px;"/>
+</form>
+{% endblock %}

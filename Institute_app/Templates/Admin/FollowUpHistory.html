@@ -1,0 +1,29 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+
+    <p  class="text-danger">{{msg}}</p>
+<table class="tb">
+ <tr>
+    <th>Date</th> 
+    <th>Status</th>
+    
+ </tr>
+ 
+{% for d in data %}
+<form method="POST" action="{% url 'institute_app:hr_followup_hst' d.f_id.f_id %}" class="reg-form" enctype="multipart/form-data">
+    {% csrf_token %}
+ <tr>
+    <td>{{d.date}}</td>
+<td>{{d.status|capfirst}}</td>
+
+
+ </tr>
+ {% endfor %}
+    </form>
+</table>
+
+
+</form>
+{% endblock %}

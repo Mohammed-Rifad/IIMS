@@ -1,0 +1,52 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+<form method="POST" action="{% url 'institute_app:add_followup' %}" class="reg-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p  class="text-danger">{{msg}}</p>
+    <table class="tb">
+        <tr>
+            <td>{{form.s_name.label}}</td>
+             <td>{{form.s_name}}</td>
+        </tr>
+        <tr>
+            <td>{{form.s_gender.label}}</td>
+             <td>{{form.s_gender}}</td>
+        </tr>
+       
+        <tr>
+            <td>{{form.s_dob.label}}</td>
+             <td>{{form.s_dob}}</td>
+        </tr>
+        <tr>
+            <td>{{form.s_colg.label}}</td>
+             <td>{{form.s_colg}}</td>
+        </tr>
+        <tr>
+            <td>{{form.s_qual.label}}</td>
+             <td>{{form.s_qual}}</td>
+        </tr>
+        <tr>
+            <td>{{form.s_passout.label}}</td>
+             <td>{{form.s_passout}}</td>
+        </tr>
+       
+        <tr>
+            <td>{{form.s_email.label}}</td>
+             <td>{{form.s_email}}</td>
+        </tr>
+        <tr>
+            <td>{{form.s_phno.label}}</td>
+             <td>{{form.s_phno}}</td>
+        </tr>
+        
+      
+       
+       
+        
+    </table>
+
+<input type="submit" value="Login" class="btn btn-primary" style="margin-left: 60px;"/>
+</form>
+{% endblock %}

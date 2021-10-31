@@ -1,0 +1,60 @@
+{% extends 'Trainer/TrainerMaster.html' %}
+
+{% block content%}
+
+<form action="{% url 'institute_app:tr_active_students' %}" method="POST">
+ {% csrf_token %}
+<table>
+    <tr>
+        <td>Select Course</td>
+        <td><select name="course" >
+            {% for c in courses %}
+            <option value="{{c.c_id}}">{{c.c_name|title}}</option>
+            {% endfor %}
+        </select>
+   
+    </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="submit"  value="Filter"></td>
+    </tr>
+</table>
+</form>
+<table class="tb">
+ <tr>
+    <th></th> 
+    <th>Student Name</th>
+    <th>Join Date</th>
+    <th>Type </th>
+    <th>Course</th>
+    <th>Address</th>
+    <th>Qualification</th>
+    <th>College</th>
+    <th>Passout Year</th>
+    <th>Email</th>
+    <th>Phone No</th>
+
+    
+ </tr>
+ 
+{% for student in students %}
+<tr>
+    <td><img src="{{student.s_pic.url}}" style="height: 80px; width: 80px;" alt=""></td>
+    <td>{{student.s_name|title}}</td>
+    <td>{{student.s_join}}</td>
+    <td>{{student.s_type}}</td>
+    <td>{{student.c_id.c_name|title}}</td>
+    <td>{{student.s_address|capfirst}}</td>
+    <td>{{student.s_qual|title}}</td>
+    <td>{{student.s_colg|title}}</td>
+    <td>{{student.s_passout}}</td>
+    <td>{{student.s_email}}</td>
+    <td>{{student.s_phno}}</td>
+</tr>
+{% endfor %}
+</table>
+
+
+</form>
+{% endblock %}

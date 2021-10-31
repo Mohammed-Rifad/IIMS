@@ -1,0 +1,22 @@
+{% extends 'HR/HrMaster.html' %}
+
+{% block content%}
+
+<form method="POST" action="{% url 'institute_app:hr_add_followup' id %}" class="reg-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p  class="text-danger">{{msg}}</p>
+<table class="tb">
+ <tr>
+
+    <td>Status</td>
+    <td><textarea name="status" id="status" cols="30" rows="10" required></textarea></td>
+</tr>
+<tr>
+    <td></td>
+    <td><input type="submit" name="" value="Add" id=""></td>
+</tr>
+</table>
+
+
+</form>
+{% endblock %}

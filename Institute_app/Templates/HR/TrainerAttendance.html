@@ -1,0 +1,47 @@
+{% extends 'HR/HrMaster.html' %}
+
+{% block content%}
+
+<form method="POST" action="{% url 'institute_app:trainer_att' %}" class="reg-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p  class="text-danger">{{msg}}</p>
+<table class="tb">
+ 
+    <tr>
+        <td>Select Trainer</td>
+         <td>
+             <select name="trainer">
+                 {% for trainer in trainers %}
+                <option value="{{trainer.tr_id}}">{{trainer.tr_name|title}}</option>
+                {% endfor %}
+         </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Date
+        </td>
+        <td>
+            <input type="date" name="date" id="" required>
+        </td>
+    </tr>
+
+        <tr>
+            <td>Status</td>
+            <td>
+                <select name="status" id="">
+                    <option value="present">Present</option>
+                    <option value="leave">Leave</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Add"></td>
+        </tr>
+    </table>
+
+
+</form>
+{% endblock %}

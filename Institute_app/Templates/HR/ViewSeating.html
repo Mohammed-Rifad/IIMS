@@ -1,0 +1,53 @@
+{% extends 'HR/HrMaster.html' %}
+
+{% block content%}
+<form method="POST" action="{% url 'institute_app:view_seating_hr'  %}" class="reg-form" enctype="multipart/form-data">
+
+    {% csrf_token %}
+    <table>
+    <tr>
+        <td>
+            Select Lab
+        </td>
+        <td>
+            <select name="lab" >
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="submit" ></td>
+    </tr>
+</table>
+
+</form>
+
+
+
+{% if seating_details %}
+
+<table>
+   <tr>
+      
+       <th>Sys No</th>
+       <th>Slot 1</th>
+       <th>Slot 2</th>
+       <th>Slot 3</th>
+   </tr>
+   <tr>
+       {% for data in seating_details %}
+
+        <td>{{data.sys_no}}</td>
+        <td>{{data.slot1|title}}</td>
+        <td>{{data.slot2|title}}</td>
+        <td>{{data.slot3|title}}</td>
+
+       
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+{% endblock %}
