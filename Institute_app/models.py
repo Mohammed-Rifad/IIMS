@@ -106,6 +106,15 @@ class StudentDetails(models.Model):
     
     def verifyPasswd(self,raw_passwd):
         return pbkdf2_sha256.verify(raw_passwd,self.tr_passwd)
+        
+class StudentModule(models.Model):
+    s_id=models.ForeignKey(StudentDetails,on_delete=models.CASCADE,db_column="s_id")
+    m_id=models.ForeignKey(ModuleDetails,on_delete=models.CASCADE,db_column="m_id")
+    status=models.CharField(max_length=30,default="pending",db_column="status")
+    
+    class Meta:
+        db_table="tb_stmodule"
+
 
 class SeatingDetails(models.Model):
     lab_no=models.IntegerField(db_column="lab_no")
@@ -171,3 +180,13 @@ class AttendanceDetails(models.Model):
     status=models.CharField(max_length=20,db_column="status")
     class Meta:
         db_table="tb_attendance"
+
+class NotesDetails(models.Model):
+    mod_id=models.ForeignKey(ModuleDetails,on_delete=models.CASCADE,db_column="mod_id")
+    uploaded_by=models.CharField(max_length=20,db_column="up_by")
+    uploaded_date=models.CharField(max_length=20,db_column="up_dt")
+    uploaded_file=models.FileField(upload_to='Notes/')
+    desc=models.CharField(max_length=200,db_column="desc")
+    
+    class Meta:
+        db_table="tb_notes"

@@ -1,0 +1,61 @@
+{% extends 'Trainer/TrainerMaster.html' %}
+
+{% block content%}
+
+<form   method="POST" >
+ {% csrf_token %}
+
+ <table>    
+
+<tr>
+    <td>Select Module</td>
+    <td>
+        <select name="module" id="module" required>
+           
+                {% for module in modules %}
+                <option value="{{ module.m_id}}">{{ module.m_name|title }}</option>
+                {% endfor %}
+        </select>
+    </td>
+</tr>
+
+
+<tr>
+    <td></td>
+    <td ><input type="submit" value="Search" name="search"></td>
+</tr>
+ </table>
+</form>
+
+ <table>
+     <tr>
+         <th>Module</th>
+         <th>Uploaded By</th>
+         <th>Date Uploaded</th>
+         <th>Desc</th>
+         <th>Download</th>
+     </tr>
+     {% for note in notes %}
+     
+<form action="" method="POST">
+    {% csrf_token %}
+     <tr>
+         <td>{{note.mod_id.m_name|title}}</td>
+          <td>{{note.uploaded_by|title}}</td>
+          <td>{{note.uploaded_date}}</td>
+          <td>{{note.desc}}</td>
+         <td> <a target="_blank" href="{{note.uploaded_file.url}}">{{note.uploaded_file}}</a></td>
+    
+         <td><input type="submit" name="del" id=""></td>
+         <td><input type="hidden" name="n_id" value="{{note.id}}"></td>
+        </form>
+     {% endfor %}
+    </tr>
+ </table>
+
+
+
+
+
+
+{% endblock %}

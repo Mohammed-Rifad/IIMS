@@ -36,9 +36,16 @@ urlpatterns = [
     path('HrHome/ActiveFollowup',HrViews.ActiveFollowUp,name="hr_act_followup"),
     path('HrHome/Followup/<int:id>',HrViews.AddFollowUp,name="hr_add_followup"),
     path('HrHome/History/<int:f_id>',HrViews.FollowUpHistory,name="hr_followup_hst"),
+    path('HrHome/DueList',HrViews.DueList,name="hr_due_list"),
+    path('HrHome/AddPayment',HrViews.AddPayment,name="hr_add_pay"),
 
     path('TrainerHome',TrainerViews.TrainerHome,name="tr_home"),
     path('TrainerHome/ActiveStudents',TrainerViews.ViewActiveStudents,name="tr_active_students"),
  
     path('TrainerHome/UpdateSeat',TrainerViews.UpdateSeating,name="tr_assign_seat"),
+    path('TrainerHome/AddNotes',TrainerViews.AddNotes,name="add_notes"),
+    path('TrainerHome/Status',TrainerViews.ViewStudentStatus,name="tr_st_status"),
+    path('TrainerHome/getModules',TrainerViews.getModules),
+    path('TrainerHome/Update',TrainerViews.UpdateStatus,name="upd_status"),
+    path('TrainerHome/ViewNotes',TrainerViews.ViewNotes,name="tr_view_notes"),
 ]

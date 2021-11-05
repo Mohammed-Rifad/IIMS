@@ -1,0 +1,35 @@
+
+
+
+{% extends 'HR/HrMaster.html' %}
+
+{% block content%}
+
+<table>
+    <tr>
+        <th>SID</th>
+        <th>Student Name</th>
+        <th>Mode</th>
+        <th>Course</th>
+        <th>Installment No</th>
+        <th>Due Date</th>
+        <th>Due Amount</th>
+        <th></th>
+    </tr>
+        {% for arr in data %}  
+        <tr>
+            <td>{{arr.s_id.s_id}}</td>
+            <td>{{arr.s_id.s_name|title}}</td>
+            <td>{{arr.s_id.s_type|title}}</td>
+            <td>{{arr.ins_no}}</td>
+            <td>{{arr.s_id.c_id.c_name|title}}</td>
+            <td>{{arr.due_date}}</td>
+            <td>Rs {{arr.due_amt}}</td>
+            <td><a href="/IIMS/HrHome/AddPayment?id={{arr.id}}&st={{arr.s_id.s_name}}">Add Payment</a></td>
+            {{arr.id}}
+        </tr> 
+        
+        {% endfor %}
+</table>
+
+{% endblock %}

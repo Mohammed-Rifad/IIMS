@@ -1,0 +1,23 @@
+
+{% extends 'HR/HrMaster.html' %}
+
+{% block content%}
+<h1>{{st|title}}</h1>
+<form action="{% url 'institute_app:hr_add_pay' %}" method="POST" >
+    {% csrf_token %}
+<table>
+    <tr>
+        <td>Payment Date</td>
+        <td><input type="text" placeholder="dd/mm/yyyy" name="p_date" required></td>
+    </tr>
+    <tr>
+        <td>Amount Paid</td>
+        <td><input type="number" min=1 name="p_amt" required></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="submit" name="" id="" value="Submit"></td>
+    </tr>
+</table>
+</form>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'Trainer/TrainerMaster.html' %}
+
+{% block content%}
+
+<form  action="{% url  'institute_app:upd_status' %}"  method="POST">
+    {% csrf_token %}
+
+ <table>
+     <tr>
+         <th>Select Module</th>
+         <th><select name="module" id="">
+             {% for mod in modules %}
+
+
+             <option value="{{mod.m_id.m_id}}">{{mod.m_id.m_name|title}}</option>
+
+             {% endfor %}
+         </select></th>
+     </tr>
+     <tr>
+         <td></td>
+         <td><input type="submit" value="Change" name="" id=""></td>
+         <td><input type="hidden" name="s_id" value="{{s_id}}" id=""></td>
+     </tr>
+ </table>
+</form>
+{% endblock %}

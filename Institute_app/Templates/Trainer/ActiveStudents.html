@@ -17,7 +17,7 @@
     </tr>
     <tr>
         <td></td>
-        <td><input type="submit"  value="Filter"></td>
+        <td><input type="submit"  value="Filter" name="filter"></td>
     </tr>
 </table>
 </form>
@@ -39,6 +39,8 @@
  </tr>
  
 {% for student in students %}
+<form action="" method="POST">
+    {% csrf_token %}
 <tr>
     <td><img src="{{student.s_pic.url}}" style="height: 80px; width: 80px;" alt=""></td>
     <td>{{student.s_name|title}}</td>
@@ -51,7 +53,12 @@
     <td>{{student.s_passout}}</td>
     <td>{{student.s_email}}</td>
     <td>{{student.s_phno}}</td>
+    
+    <td><input type="submit" name="status" value="View Status" id=""></td>
+    <td><input type="submit" name="update" value="Update" id=""></td>
+    <td><input type="hidden" name="s_id" id="" value="{{student.s_id}}"></td>
 </tr>
+</form>
 {% endfor %}
 </table>
 

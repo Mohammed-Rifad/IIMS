@@ -15,7 +15,7 @@ class StudentForm(forms.ModelForm):
         ('mca','MCA')
     )
     mode_choices=(
-        ('online','Online'),
+        ('offline','Offline'),
         ('online','Online'),
     )
     s_name=forms.CharField(label="Student Name",widget=forms.TextInput(attrs={'class':'form-control','style':'width:300px',}))

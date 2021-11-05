@@ -1,0 +1,4 @@
+<option disabled=true>-----------</option>
+{% for module in modules %}
+<option value="{{ module.m_id}}">{{ module.m_name|title }}</option>
+{% endfor %}

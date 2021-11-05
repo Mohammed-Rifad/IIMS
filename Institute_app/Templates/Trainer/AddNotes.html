@@ -1,0 +1,91 @@
+{% extends 'Trainer/TrainerMaster.html' %}
+
+{% block content%}
+
+<form   method="POST" enctype="multipart/form-data">
+ {% csrf_token %}
+
+ <table>    
+<tr>
+    <td>Select Course</td>
+    <td>
+        <select name="course" id="course" required>
+            <option value="" selected disabled>Select</option>
+    {% for course in courses %}
+
+                <option value="{{course.c_id}}">{{course.c_name|title}}</option>
+
+    {% endfor %}
+    </select>
+    </td>
+</tr>
+<tr>
+    <td>Select Module</td>
+    <td>
+        <select name="module" id="module" required>
+    
+        </select>
+    </td>
+</tr>
+
+<tr>
+    <td>
+       Description
+    </td>
+    <td>
+        <textarea name="desc" id="" cols="30" rows="10" required></textarea>
+    </td>
+</tr>
+
+<tr>
+    <td>
+        Upload File
+    </td>
+    <td>
+        <input type="file" name="notes" id="" required>
+    </td>
+</tr>
+<tr>
+    <td></td>
+    <td ><input type="submit" value="Add"></td>
+</tr>
+ </table>
+
+
+</form>
+
+<script>
+    $(document).ready(function(){
+ 
+
+
+
+  $("#course").change(function(){
+        
+    
+        
+         const c_id = $(this).val(); 
+        
+
+         $.ajax({                      
+         url: "http://127.0.0.1:8000/IIMS/TrainerHome/getModules",                    
+         data: {
+             'c_id': c_id      
+         },
+         success: function (data) {   
+             $("#module").html(data);
+            
+            console.log(data)
+         }
+     });
+
+
+     
+      
+       });
+  
+});
+</script>
+
+
+{% endblock %}

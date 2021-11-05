@@ -2,10 +2,10 @@ from random import randint
 from django.core.mail import send_mail
 from django.conf import settings
 from datetime import date, datetime,timedelta
-
+import os
 from django.db.models.query_utils import Q
 from django.forms.widgets import NullBooleanSelect
-from .models import FeeDetails, SeatingDetails, StudentDetails,TrainerDetails
+from .models import FeeDetails, ModuleDetails, NotesDetails, SeatingDetails, StudentDetails, StudentModule,TrainerDetails
 
 def GetUniqueID(user):
     if user == 'trainer':
@@ -156,3 +156,26 @@ def UpdateSeat(seating_data,student,selected_slot):
                 return "Seat Updated Succesfully"
         else:
             return "Seleted Sytem Not Free"
+
+def getFileName(m_name):
+    path="Notes/"
+    id = randint(10000,99999)
+    module=ModuleDetails.objects.get(m_name=m_name)
+    file_name=module.m_name+str(id)
+    exist=NotesDetails.objects.filter(uploaded_file=file_name).exists()
+
+    if exist:
+        getFileName(module.m_name)
+     
+    return os.path.join(path,file_name)
+    
+
+def AddStudentModule(st_id,c_id):
+    module_details=ModuleDetails.objects.filter(c_id=c_id)
+    st_id=StudentDetails.objects.get(s_id=st_id)
+    print('yes')
+    for module in module_details:
+        mod=ModuleDetails.objects.get(m_id=module.m_id)
+        print('here')
+        data=StudentModule(m_id=mod,s_id=st_id)
+        data.save()

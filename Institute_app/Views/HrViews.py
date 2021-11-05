@@ -1,15 +1,15 @@
 
-from datetime import date
+from datetime import date, timedelta
 from django.core.mail import send_mail
 from django.db.models.query_utils import check_rel_lookup_compatibility
 from datetime import date, datetime, time
 from django.http.request import split_domain_port
-from Institute_app.models import AttendanceDetails, CourseDetails, FollowUpData, FollowupStatus, SeatingDetails, StudentDetails,SystemDetails, TrainerDetails
+from Institute_app.models import AttendanceDetails, CourseDetails, FeeDetails, FollowUpData, FollowupStatus, SeatingDetails, StudentDetails,SystemDetails, TrainerDetails
 from Institute_app.Forms.HrForms import StudentForm
 from django.shortcuts import render,redirect
 from passlib.hash import pbkdf2_sha256
 from django.utils.crypto import get_random_string
-from ..services import GetUniqueID, InsertFeeDetails, email_service,checkSystemAvailability
+from ..services import AddStudentModule, GetUniqueID, InsertFeeDetails, email_service,checkSystemAvailability
 
 def HrHome(request):
     return render(request,'HR/HrHome.html')
@@ -53,6 +53,7 @@ def AddStudent(request):
                 student.save()
                 print('uname',s_id,passwd)
                 InsertFeeDetails(s_id,s_join,[ins1,ins2,ins3])
+                AddStudentModule(s_id,c_id)
                 #email_service(s_email,s_id,passwd)
                 msg="Student Added Successfully"
             else:
@@ -164,3 +165,36 @@ def ViewTrainerAttendance(request):
         attendance_data=AttendanceDetails.objects.filter(tr_id=tr_id,mnth=mnth,yr=yr)
         trainer_name=trainer_data.tr_name
     return render(request,'HR/ViewTrainerAttendance.html',{'trainers':trainers,'attendance_data':attendance_data,'trainer_name':trainer_name})
+
+
+def DueList(request):
+    std_array=[]
+    data=FeeDetails.objects.filter(status='not paid')
+    print(data)
+    ss=0
+    for i in data:
+        dt=i.due_date
+       
+        d=datetime.strptime(dt,'%d/%m/%Y')
+        dd=datetime.now()+timedelta(days=7)
+        if d<=dd:
+            std_array.append(i)
+        print(d)
+        print('array',std_array)
+    return render(request,'HR/DueList.html',{'data':std_array})
+
+def AddPayment(request):
+    if request.method=='GET':
+        request.session['p_id']=request.GET['id']
+        st=request.GET['st']
+    if request.method=='POST':
+        payment_data=FeeDetails.objects.get(id=request.session['p_id'])
+        
+        payment_data.paid_amt=request.POST['p_amt']
+        payment_data.paid_date=request.POST['p_date']
+        payment_data.pay_type="offline"
+        payment_data.status="paid"
+        payment_data.save()
+        return redirect("institute_app:hr_due_list")
+    
+    return render(request,'HR/OfflinePayment.html',{'st':st})
