@@ -1,0 +1,38 @@
+{% extends 'HR/HrMaster.html' %}
+
+{% block content%}
+
+
+
+
+</form>
+<table class="tb">
+ <tr>
+
+    <th>Student Name</th>
+    <th>Course</th>
+    <th>Requested Date</th>
+    <th>Received Date</th>
+    <th>Stataus</th>
+    
+ </tr>
+ 
+{% for d in data %}
+<tr>
+    
+    <td>{{d.s_id.s_name|title}}</td>
+    <td>{{d.s_id.c_id.c_name|title}}</td>
+   
+    <td>{{d.req_date}}</td>  
+    <td> {% if d.rec_date == "" %} Nil {% else %} {{d.rec_date}} {% endif %}</td> 
+    <td>{{d.status}}</td>
+    
+  
+    
+</tr>
+{% endfor %}
+</table>
+
+
+</form>
+{% endblock %}

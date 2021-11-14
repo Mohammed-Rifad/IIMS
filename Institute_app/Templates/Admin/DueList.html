@@ -1,0 +1,42 @@
+
+
+
+{% extends 'Admin/AdminMaster.html' %}
+{% load humanize %}
+{% block content%}
+<div>
+    <table style="margin-left: 200px; margin-top: 20px; border-spacing: 20px;border-collapse: separate;">
+        <tr>
+            <td class="h5"><b>Total Payment To Receive</b></td>
+            <td class="h5 text-danger"><b>Rs {{total|intcomma}}</b></td>
+        </tr>
+    </table>
+    </div>
+<table class="table table-striped">
+    <tr>
+        <th>SID</th>
+        <th>Student Name</th>
+        <th>Mode</th>
+        <th>Course</th>
+        <th>Installment No</th>
+        
+        <th>Due Date</th>
+        <th>Due Amount</th>
+        <th></th>
+    </tr>
+        {% for arr in data %}  
+        <tr>
+            <td>{{arr.s_id.s_id}}</td>
+            <td>{{arr.s_id.s_name|title}}</td>
+            <td>{{arr.s_id.s_type|title}}</td>
+            <td>{{arr.ins_no}}</td>
+            <td>{{arr.s_id.c_id.c_name|title}}</td>
+            <td>{{arr.due_date}}</td>
+            <td>Rs {{arr.due_amt}}</td>
+            
+        </tr> 
+        
+        {% endfor %}
+</table>
+
+{% endblock %}

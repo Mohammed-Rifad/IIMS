@@ -1,0 +1,47 @@
+{% extends 'Trainer/TrainerMaster.html' %}
+
+{% block content%}
+
+<form method="POST" action="{% url 'institute_app:std_att' %}" class="reg-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p  class="text-danger">{{msg}}</p>
+<table class="tb">
+ 
+    <tr>
+        <td>Select Student</td>
+         <td>
+             <select name="student">
+                 {% for student in students %}
+                <option value="{{student.s_id}}">{{student.s_name|title}}</option>
+                {% endfor %}
+         </select>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Date
+        </td>
+        <td>
+            <input type="date" name="date" id="" required>
+        </td>
+    </tr>
+
+        <tr>
+            <td>Status</td>
+            <td>
+                <select name="status" id="">
+                    <option value="present">Present</option>
+                    <option value="leave">Leave</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Add"></td>
+        </tr>
+    </table>
+
+
+</form>
+{% endblock %}

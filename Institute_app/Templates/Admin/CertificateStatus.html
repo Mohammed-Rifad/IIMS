@@ -1,0 +1,41 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+
+
+
+</form>
+<table class="table table-striped">
+ <tr>
+
+    <th>Student Name</th>
+    <th>Course</th>
+    <th>Requested Date</th>
+    <th>HR Comment</th>
+    <th>Received Date</th>
+    <th>Status</th>
+    
+ </tr>
+ 
+{% for d in data %}
+<tr style="font-size: medium;">
+    
+    <td>{{d.s_id.s_name|title}}</td>
+    <td>{{d.s_id.c_id.c_name|title}}</td>
+   
+    <td>{{d.req_date}}</td>  
+    <td>{{d.hr_comment|title}}</td>
+    <td> {% if d.rec_date == "" %} Nil {% else %} {{d.rec_date}} {% endif %}</td> 
+    <td>{{d.status|title}}</td>
+   
+    <td><a style="color: blue;" href="/IIMS/AdminHome/CertStatus?s_id={{d.s_id.s_id}}">Update</a></td>
+    <td><input type="hidden" name="s_id" id="" value="{{d.s_id.s_id}}"></td>
+
+</tr>
+{% endfor %}
+</table>
+
+
+</form>
+{% endblock %}

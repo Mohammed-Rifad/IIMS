@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from ..models import AdminDetails, HrDetails, TrainerDetails
+from ..models import AdminDetails, HrDetails, StudentDetails, TrainerDetails
 from Institute_app.Forms.CommonForms import LoginForm
 from passlib.hash import pbkdf2_sha256
 
@@ -57,6 +57,18 @@ def Login(request):
                     
                 else:
                     msg="Incorrect UserName or Password"
-
+            elif login_id.isdigit()==True and len(login_id)==4:
+                print('here')
+                auth_check=StudentDetails.objects.filter(s_id=login_id).exists()
+                if auth_check:
+                    auth_data=StudentDetails.objects.get(s_id=login_id)
+                    auth_passwd=auth_data.verifyPasswd(login_passwd)
+                    if auth_passwd:
+                        request.session['s_id']=auth_data.s_id
+                        return redirect("institute_app:st_home")
+                    else:
+                        msg="Incorrect Password"
+                else:
+                    msg="Incorrect UserName or Password"
 
     return render(request,'Common/Login.html',{'form':form,'msg':msg})

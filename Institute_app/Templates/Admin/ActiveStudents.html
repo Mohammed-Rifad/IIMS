@@ -4,10 +4,10 @@
 
 <form action="{% url 'institute_app:admin_active_students' %}" method="POST">
  {% csrf_token %}
-<table>
+<table style="border-spacing: 20px; border-collapse: separate;" >
     <tr>
         <td>Select Course</td>
-        <td><select name="course" >
+        <td><select name="course" class="form-control" >
             {% for c in courses %}
             <option value="{{c.c_id}}">{{c.c_name|title}}</option>
             {% endfor %}
@@ -17,20 +17,20 @@
     </tr>
     <tr>
         <td></td>
-        <td><input type="submit"  value="Filter"></td>
+        <td><input type="submit"  value="Filter" class="btn btn-primary"></td>
     </tr>
 </table>
 </form>
-<table class="tb">
+<table class="table table-striped">
  <tr>
     <th></th> 
     <th>Student Name</th>
     <th>Join Date</th>
     <th>Type </th>
     <th>Course</th>
-    <th>Address</th>
+   
     <th>Qualification</th>
-    <th>College</th>
+    
     <th>Passout Year</th>
     <th>Email</th>
     <th>Phone No</th>
@@ -39,22 +39,27 @@
  </tr>
  
 {% for student in students %}
+<form action="{% url 'institute_app:admin_st_status' %}" method="POST">
+    {% csrf_token %}
 <tr>
-    <td><img src="{{student.s_pic.url}}" style="height: 80px; width: 80px;" alt=""></td>
+    <td><img src="{{student.s_pic.url}}" class="rounded-circle"  style="height: 60px; width: 60px;" alt=""></td>
     <td>{{student.s_name|title}}</td>
     <td>{{student.s_join}}</td>
     <td>{{student.s_type}}</td>
     <td>{{student.c_id.c_name|title}}</td>
-    <td>{{student.s_address|capfirst}}</td>
+   
     <td>{{student.s_qual|title}}</td>
-    <td>{{student.s_colg|title}}</td>
+    
     <td>{{student.s_passout}}</td>
     <td>{{student.s_email}}</td>
     <td>{{student.s_phno}}</td>
+    <td><input type="submit" class="btn btn-warning" name="view" value="Status" id=""></td>
+    <td><input type="hidden" name="s_id" id="" value="{{student.s_id}}"></td>
 </tr>
+
+</form>
 {% endfor %}
 </table>
 
 
-</form>
 {% endblock %}

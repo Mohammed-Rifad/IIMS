@@ -1,0 +1,34 @@
+
+{% extends 'Trainer/TrainerMaster.html' %}
+{% load humanize %}
+{% block content%}
+
+
+ <table>
+     <tr>
+
+         <th>Installment No</th>   
+         <th>Due Date</th>
+         <th>Due Amount</th>
+         <th>Payment Date</th>
+         <th>Amount Paid</th>
+         <th>Payment Mode</th>
+         <th>Payment Status</th>
+
+      </tr>
+      {% for data in payment_data %}
+      <tr>
+          <td>{{data.ins_no}}</td>
+          <td>{{data.due_date}}</td>
+          <td>Rs {{data.due_amt|intcomma}}</td>
+          <td>{{data.due_date}}</td>
+          <td>{{data.paid_amt}}</td>
+          <td>{{data.pay_type|title}}</td>
+          <td>{{data.status|title}}</td>
+      </tr>
+
+        {% endfor %}
+    </table>
+
+
+{% endblock %}

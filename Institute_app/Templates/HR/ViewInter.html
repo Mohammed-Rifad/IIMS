@@ -1,0 +1,36 @@
+{% extends 'HR/HrMaster.html' %}
+
+{% block content%}
+
+
+    <p  class="text-danger">{{msg}}</p>
+<table class="tb">
+ <tr>
+    <th>Date Entered</th> 
+    <th>Student Name</th>
+    <th>Interview Date</th>
+    <th>Company Name</th>
+    <th>Address</th>
+    <th>Contact</th>
+    <th>Mode</th>
+    <th>Post</th>
+    <th>Status</th>
+ </tr>
+{% for d in data %}
+<tr>
+
+        <td>{{d.added_date}}</td>
+        <td>{{d.s_id.s_name|title}}</td>
+        <td>{{d.interview_date}}</td>
+        <td>{{d.cmp_name|title}}</td>
+        <td>{{d.cmp_addr|capfirst}}</td>
+        <td>{{d.cmp_contact}}</td>
+        <td>{{d.int_type|title}}</td>
+        <td>{{d.int_post|title}}</td>
+        <td>{{d.status|title}}</td>
+        <td><a href="/IIMS/HrHome/DelInter?id={{d.id}}" >Delete</a></td>
+        <td><a href="">Update Status</a></td>
+</tr>
+{% endfor %}
+</form>
+{% endblock %}

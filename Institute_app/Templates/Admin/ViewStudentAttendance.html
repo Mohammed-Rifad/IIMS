@@ -1,17 +1,17 @@
 {% extends 'Admin/AdminMaster.html' %}
 
 {% block content%}
-<form method="POST" action="{% url 'institute_app:view_tr_attendance'  %}" class="reg-form" enctype="multipart/form-data">
+<form method="POST"  class="reg-form" enctype="multipart/form-data">
 
     
     {% csrf_token %}
-    <table style="border-collapse: separate;border-spacing: 10px;">
+    <table>
         <tr>
-            <td>Select Trainer</td>
+            <td>Select Student</td>
             <td>
-                <select name="trainer" class="form-control">
-                {% for trainer in trainers %}
-               <option value="{{trainer.tr_id}}">{{trainer.tr_name|title}}</option>
+                <select name="student">
+                {% for student in students %}
+               <option value="{{student.s_id}}">{{student.s_name|title}}</option>
                {% endfor %}
         </select>
     </td>
@@ -21,7 +21,7 @@
             Select Month
         </td>
         <td>
-            <select name="mnth" class="form-control">
+            <select name="mnth" >
                 
                 <option value="1">January</option>
                 <option value="2">February</option>
@@ -41,7 +41,7 @@
     </tr>
     <tr>
         <td></td>
-        <td><input type="submit" class="btn btn-primary"></td>
+        <td><input type="submit" ></td>
     </tr>
 </table>
 
@@ -50,9 +50,9 @@
 
 
 {% if attendance_data %}
-<H3 class="text-danger" style="margin-left: 230px; margin-bottom: 20px;margin-top: 20px;">{{trainer_name|title}}</H3>
+<H3>{{student_name|title}}</H3>
 
-<table class="table table-striped ">
+<table>
    <tr>
       
        <th>Date</th>
@@ -64,7 +64,7 @@
 
         <td>{{data.date}}</td>
         <td>{{data.status|title}}</td>
-       <td><input type="hidden" name="tr_id" id="{{data.tr_id.tr_id}}"></td>
+     
 
        
     </tr>

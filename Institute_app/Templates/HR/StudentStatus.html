@@ -1,0 +1,25 @@
+{% extends 'Trainer/TrainerMaster.html' %}
+
+{% block content%}
+
+<form action="{% url  'institute_app:upd_status' %}"  method="POST" enctype="multipart/form-data">
+ {% csrf_token %}
+
+ <table>
+     <tr>
+
+         <th>Module</th>   
+         <th>Status</th>
+
+      </tr>
+      {% for data in student_data %}
+      <tr>
+          <td>{{data.m_id.m_name|title}}</td>
+          <td>{{data.status|title}}</td>
+      </tr>
+
+        {% endfor %}
+    </table>
+
+
+{% endblock %}

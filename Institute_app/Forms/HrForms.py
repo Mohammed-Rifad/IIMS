@@ -1,3 +1,4 @@
+from django.db import models
 from Institute_app.models import StudentDetails
 from django import forms
 import re
@@ -34,3 +35,21 @@ class StudentForm(forms.ModelForm):
         model=StudentDetails
         fields=('s_name','s_colg','s_dob','s_qual','s_gender','s_address','s_passout','s_phno','s_email','s_pic','amt_payable')
 
+
+
+
+class InterviewForm(forms.ModelForm):
+    int_type=(
+        ('direct','direct'),
+        ('online','online')
+    )
+    cmp_name=forms.CharField(label="Company Name",widget=forms.TextInput(attrs={'class':'form-control','style':'width:300px',}))
+    interview_date=forms.CharField(label="Interview Date",widget=forms.TextInput(attrs={'class':'form-control','style':'width:300px',}))
+    cmp_addr=forms.CharField(label="Address",widget=forms.Textarea(attrs={'rows':'5','cols':'25','class':'form-control'}))
+    cmp_contact=forms.CharField(label="Contact",widget=forms.TextInput(attrs={'class':'form-control','style':'width:300px',}))
+    int_type=forms.CharField(label="Type",widget=forms.Select(choices=int_type,attrs={'class':'form-control','style':'width:300px',}))
+    cmp_contact=forms.CharField(label="Contact",widget=forms.TextInput(attrs={'class':'form-control','style':'width:300px',}))
+    int_post=forms.CharField(label="Interview Post",widget=forms.TextInput(attrs={'class':'form-control','style':'width:300px',}))
+    class Meta:   
+        model=StudentDetails
+        fields=('cmp_name','cmp_addr','cmp_contact','int_type','interview_date','int_post')

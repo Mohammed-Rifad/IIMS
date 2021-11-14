@@ -1,0 +1,68 @@
+{% extends 'Hr/HrMaster.html' %}
+
+{% block content%}
+<form method="POST" action="" class="reg-form" enctype="multipart/form-data">
+
+    
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>Select Student</td>
+            <td>
+                <select name="student">
+                {% for student in students %}
+               <option value="{{student.s_id}}">{{student.s_name|title}}</option>
+               {% endfor %}
+        </select>
+    </td>
+        </tr>
+    <tr>
+        <td>
+            Add Comment
+        </td>
+        <td>
+           
+            <textarea name="hr_comnt" id="" cols="30" rows="10" required></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="submit" ></td>
+    </tr>
+</table>
+
+{% if success_msg %}
+{{success_msg}}
+{% endif %}
+
+{% if error_msg %}
+{{error_msg}}
+{% endif %}
+</form>
+
+
+
+{% if attendance_data %}
+<H3>{{student_name|title}}</H3>
+
+<table>
+   <tr>
+      
+       <th>Date</th>
+       <th>Status</th>
+      
+   </tr>
+   <tr>
+       {% for data in attendance_data %}
+
+        <td>{{data.date}}</td>
+        <td>{{data.status|title}}</td>
+     
+
+       
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+{% endblock %}

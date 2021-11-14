@@ -1,0 +1,61 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+<form   method="POST" >
+ {% csrf_token %}
+
+ <table  style="border-spacing: 10px; border-collapse: separate;" >    
+
+<tr>
+    <td>Select Module</td>
+    <td>
+        <select name="module" id="module" class="form-control" required>
+           
+                {% for module in modules %}
+                <option value="{{ module.m_id}}">{{ module.m_name|title }}</option>
+                {% endfor %}
+        </select>
+    </td>
+</tr>
+
+
+<tr>
+    <td></td>
+    <td ><input type="submit" value="Search" class="btn btn-primary" name="search"></td>
+</tr>
+ </table>
+</form>
+
+ <table class="table table-striped">
+     <tr>
+         <th>Module</th>
+         <th>Uploaded By</th>
+         <th>Date Uploaded</th>
+         <th>Description</th>
+         <th>Download</th>
+         <th></th>
+     </tr>
+     {% for note in notes %}
+     
+<form action="" method="POST">
+    {% csrf_token %}
+     <tr>
+         <td>{{note.mod_id.m_name|title}}</td>
+          <td>{{note.uploaded_by|title}}</td>
+          <td>{{note.uploaded_date}}</td>
+          <td>{{note.desc}}</td>
+         <td> <a target="_blank" href="{{note.uploaded_file.url}}">{{note.uploaded_file}}</a></td>
+    
+         
+        </form>
+     {% endfor %}
+    </tr>
+ </table>
+
+
+
+
+
+
+{% endblock %}

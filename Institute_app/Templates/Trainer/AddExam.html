@@ -1,0 +1,84 @@
+{% extends 'Trainer/TrainerMaster.html' %}
+
+{% block content%}
+
+<form   method="POST" enctype="multipart/form-data">
+ {% csrf_token %}
+
+ <table>    
+<tr>
+    <td>Select Student</td>
+    <td>
+        <select name="student" id="student" required>
+            <option value="" selected disabled>Select</option>
+    {% for student in students %}
+
+                <option value="{{student.s_id}}">{{student.s_name|title}}</option>
+
+    {% endfor %}
+    </select>
+    </td>
+</tr>
+<tr>
+    <td>Select Module</td>
+    <td>
+        <select name="module" id="module" required>
+    
+        </select>
+    </td>
+</tr>
+
+<tr>
+    <td>
+       Exam Date
+    </td>
+    <td>
+        <input type="text" name="ex_date" id="" required>
+    </td>
+</tr>
+
+
+<tr>
+    <td></td>
+    <td ><input type="submit" value="Submit "></td>
+</tr>
+ </table>
+
+
+</form>
+
+<script>
+    $(document).ready(function(){
+ 
+
+
+
+  $("#student").change(function(){
+        
+    
+        
+         const s_id = $(this).val(); 
+        
+
+         $.ajax({                      
+         url: "http://127.0.0.1:8000/IIMS/TrainerHome/getStudentModule",                    
+         data: {
+             's_id': s_id      
+         },
+         success: function (data) {   
+             $("#module").html(data);
+            
+            console.log(data)
+         }
+     });
+
+
+     
+      
+       });
+  
+});
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <table style="border-spacing: 10px; border-collapse: separate;">
+        <tr>
+            <td>Received Date</td>
+            <td><input type="date" name="rec_date" id="" required ></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" name="" value="Update" id="" class="btn btn-primary">
+            </td>
+            <td><input type="hidden" name="s_id" value="{{s_id}}" id=""></td>
+        </tr>
+    </table>
+    {{msg}}
+</form>
+
+
+
+{% endblock %}

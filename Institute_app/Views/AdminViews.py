@@ -1,9 +1,9 @@
 
 
-from Institute_app.models import AttendanceDetails, CourseDetails, FollowUpData, FollowupStatus, HrDetails, ModuleDetails, SeatingDetails, StudentDetails, SystemDetails, TrainerDetails
+from Institute_app.models import ExamDetails, AttendanceDetails, CertificateDetails, CourseDetails, FeeDetails, FollowUpData, FollowupStatus, HrDetails, ModuleDetails, NotesDetails, SeatingDetails, StudentDetails, StudentModule, SystemDetails, TrainerDetails
 from django.db import models
 from django.shortcuts import render,redirect
-from datetime import date, datetime, time
+from datetime import date, datetime, time, timedelta
 from passlib.hash import pbkdf2_sha256
 from django.utils.crypto import get_random_string
 from ..services import GetUniqueID, checkSystemAvailability, email_service
@@ -270,3 +270,95 @@ def ViewTrainerAttendance(request):
         attendance_data=AttendanceDetails.objects.filter(tr_id=tr_id,mnth=mnth,yr=yr)
         trainer_name=trainer_data.tr_name
     return render(request,'Admin/ViewTrainerAttendance.html',{'trainers':trainers,'attendance_data':attendance_data,'trainer_name':trainer_name})
+
+def ViewStudentStatus(request):
+    if request.method=='POST':
+        s_id=request.POST['s_id']
+        student=StudentDetails.objects.get(s_id=s_id)
+        data=StudentModule.objects.filter(s_id=s_id)
+        return render(request,'Admin/StudentStatus.html',{'modules':data,'name':student.s_name})
+    
+    return render(request,'Admin/StudentStatus.html',)
+
+
+def DueList(request):
+    std_array=[]
+    data=FeeDetails.objects.filter(status='not paid')
+    print(data)
+    total=0
+    ss=0
+    for i in data:
+        dt=i.due_date
+        
+        d=datetime.strptime(dt,'%d/%m/%Y')
+        dd=datetime.now()+timedelta(days=7)
+        if d<=dd:
+            total+=i.due_amt
+            std_array.append(i)
+        print(d)
+        print('array',std_array)
+    return render(request,'Admin/DueList.html',{'data':std_array,'total':total})
+
+def ViewTrainerAttendance(request):
+    attendance_data=""
+    trainer_name=""
+    trainers=TrainerDetails.objects.filter(tr_status="active")
+    if request.method=='POST':
+        tr_id=request.POST['trainer']
+        mnth=request.POST['mnth']
+        yr=date.today().year
+        trainer_data=TrainerDetails.objects.get(tr_id=tr_id)
+        attendance_data=AttendanceDetails.objects.filter(tr_id=tr_id,mnth=mnth,yr=yr)
+        trainer_name=trainer_data.tr_name
+    return render(request,'Admin/ViewTrainerAttendance.html',{'trainers':trainers,'attendance_data':attendance_data,'trainer_name':trainer_name})
+
+def ViewStudentAttendance(request):
+    attendance_data=""
+    student_name=""
+    students=StudentDetails.objects.filter(status="active")
+    if request.method=='POST':
+        s_id=request.POST['student']
+        mnth=request.POST['mnth']
+        yr=date.today().year
+        student_data=StudentDetails.objects.get(s_id=s_id)
+        attendance_data=AttendanceDetails.objects.filter(s_id=s_id,mnth=mnth,yr=yr)
+        student_name=student_data.s_name
+    return render(request,'Admin/ViewStudentAttendance.html',{'students':students,'attendance_data':attendance_data,'student_name':student_name})
+
+def CertPending(request):
+    data=CertificateDetails.objects.filter(status="pending")
+    
+    return render(request,'Admin/CertificateStatus.html',{'data':data,})
+
+def CertUpdate(request):
+    
+    s_id=request.GET['s_id']
+    if request.method=='POST':
+        rec_date=request.POST['rec_date']
+        dt_convrt=datetime.strptime(rec_date,"%Y-%m-%d").date()
+        dt_str=dt_convrt.strftime("%d/%m/%Y")
+        
+        cert_data=CertificateDetails.objects.get(s_id=request.POST['s_id'])
+        cert_data.rec_date=dt_str
+        cert_data.status="received"
+        cert_data.save()
+        msg="Status Updated Succesfully"
+        return render(request,'Admin/CertUpdate.html',{'s_id':s_id,'msg':msg})
+        
+    
+    return render(request,'Admin/CertUpdate.html',{'s_id':s_id,})
+
+def ViewNotes(request):
+    modules=ModuleDetails.objects.all()
+    notes =NotesDetails.objects.all()
+    if request.method=='POST':
+        
+        if 'search' in request.POST:
+            module=request.POST['module']
+            notes=NotesDetails.objects.filter(mod_id=module)
+    return render(request,'Admin/ViewNotes.html',{'modules':modules,'notes':notes,})
+
+def StudentExam(request):
+    exams=ExamDetails.objects.all()
+    return render(request,'Admin/Exams.html',{'exams':exams,})
+

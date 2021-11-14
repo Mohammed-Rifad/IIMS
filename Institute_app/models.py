@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.base import ModelState
 from django.db.models.fields import CharField
 from django.forms.models import model_to_dict
 from passlib.hash import pbkdf2_sha256
@@ -105,7 +106,7 @@ class StudentDetails(models.Model):
         db_table="tb_student"
     
     def verifyPasswd(self,raw_passwd):
-        return pbkdf2_sha256.verify(raw_passwd,self.tr_passwd)
+        return pbkdf2_sha256.verify(raw_passwd,self.s_passwd)
         
 class StudentModule(models.Model):
     s_id=models.ForeignKey(StudentDetails,on_delete=models.CASCADE,db_column="s_id")
@@ -139,7 +140,7 @@ class FeeDetails(models.Model):
     comment=models.CharField(max_length=50,db_column="comnt")
     # mnth=models.CharField(max_length=10,db_column="mnth")
     # yr=models.IntegerField(db_column="yr")
-    pay_type=models.CharField(max_length=20,db_column="type")
+    pay_type=models.CharField(max_length=20,db_column="type",default="nil")
     status=models.CharField(max_length=20,db_column="status",default="not paid")
 
     class Meta:
@@ -190,3 +191,38 @@ class NotesDetails(models.Model):
     
     class Meta:
         db_table="tb_notes"
+    
+class ExamDetails(models.Model):
+    date_entered=models.CharField(max_length=20,db_column="ent_dt")
+    exam_date=models.CharField(max_length=20,db_column="ex_dt")
+    s_id=models.ForeignKey(StudentDetails,on_delete=models.CASCADE,db_column="s_id")
+    m_id=models.ForeignKey(ModuleDetails,on_delete=models.SET_NULL,null=True,db_column="m_id")
+    status=models.CharField(max_length=20,default="pending",db_column="status")
+
+    class Meta:
+        db_table="tb_exam"
+
+class CertificateDetails(models.Model):
+    s_id=models.ForeignKey(StudentDetails,on_delete=models.CASCADE,db_column="s_id")
+    req_date=models.CharField(max_length=20,db_column="req_dt")
+    rec_date=models.CharField(max_length=20,db_column="rec_dt")
+    hr_comment=models.CharField(max_length=100,db_column="hr_comnt")
+    status=models.CharField(max_length=10,default="pending",db_column="status")
+
+    class Meta:
+        db_table="tb_cert"
+
+class InterviewDetails(models.Model):
+    s_id=models.ForeignKey(StudentDetails,on_delete=models.CASCADE,db_column="s_id")
+    added_date=models.CharField(max_length=20,db_column="add_dt")
+    interview_date=models.CharField(max_length=20,db_column="int_dt")
+    cmp_name=models.CharField(max_length=50,db_column="cmp_name")
+    cmp_addr=models.CharField(max_length=100,db_column="cmp_addr")
+    cmp_contact=models.CharField(max_length=20,db_column="cmp_cont")
+    int_type=models.CharField(max_length=10,db_column="int_type")
+    int_post=models.CharField(max_length=50,default="",db_column="int_post")
+    status=models.CharField(max_length=10,default="pending",db_column="status")
+
+    class Meta:
+        db_table="tb_inter"
+

@@ -1,0 +1,31 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+<table class="table table-striped">    
+    <tr align="center">
+        <th>Student Name</td>
+        <th>Module</th>
+        <th>Date Added</th>
+        <th>Exam Date</th>
+        <th>Status</th>
+        <th></th>
+        <th></th>
+   </tr>
+   <tr>
+   {% for exam in exams %}
+    <td>{{exam.s_id.s_name|title}}</td>
+    <td>{{exam.m_id.m_name|title}}</td>
+    <td>{{exam.date_entered}}</td>
+    <td>{{exam.exam_date}}</td>
+    <td>{{exam.status|capfirst}}</td>
+    <td><a href="/IIMS/TrainerHome/ExamDel?id={{exam.id}}" style="color: red;"> Delete</a></td>
+    <td><a href="/IIMS/TrainerHome/ExamUp?id={{exam.id}}" style="color: blue;"> Update</a></td>
+   
+    {% endfor %}
+</tr>   
+</table>
+   
+
+
+{% endblock %}

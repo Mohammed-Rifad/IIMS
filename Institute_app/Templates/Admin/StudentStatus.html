@@ -1,0 +1,26 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+<form action="{% url  'institute_app:admin_st_status' %}"  method="POST" enctype="multipart/form-data">
+ {% csrf_token %}
+
+ <p class="h2 text-danger" style="margin-left: 360px;margin-bottom: 40px;">{{name|title}}</p>
+ <table class="table table-striped">
+     <tr>
+
+         <th>Module</th>   
+         <th>Status</th>
+
+      </tr>
+      {% for mod in modules %}
+      <tr>
+          <td>{{mod.m_id.m_name|title}}</td>
+          <td>{{mod.status|title}}</td>
+      </tr>
+
+        {% endfor %}
+    </table>
+
+
+{% endblock %}

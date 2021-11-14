@@ -1,7 +1,7 @@
 {% extends 'Admin/AdminMaster.html' %}
 
 {% block content%}
-<form method="POST" action="{% url 'institute_app:view_seating_hr'  %}" class="reg-form" enctype="multipart/form-data">
+<form method="POST" action="{% url 'institute_app:view_seating_admin'  %}" class="reg-form" enctype="multipart/form-data">
 
     {% csrf_token %}
     <table>

@@ -1,0 +1,24 @@
+{% extends 'Trainer/TrainerMaster.html' %}
+
+{% block content%}
+
+<form action="" method="post">
+
+    {% csrf_token %}
+<table>    
+    <tr>
+        <td>Status</td>
+        <td><textarea name="status" id="" cols="30" rows="10" required></textarea></td>
+      </tr>
+    <tr>
+        <td>
+
+        </td>
+        <td><input type="submit" name="" id="" value="Submit"></td>
+        <td><input type="hidden" name="id" value="{{id}}" id=""></td>
+    </tr>
+</table>
+   
+</form>
+
+{% endblock %}

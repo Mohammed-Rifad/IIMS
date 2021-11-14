@@ -1,0 +1,19 @@
+{% extends 'Student/StudentMaster.html' %}
+
+{% block content%}
+
+<!-- <a href="{% url 'institute_app:tr_active_students' %}"> Notes</a>
+<br>
+<a href="{% url 'institute_app:tr_assign_seat' %}">Seating</a>
+<br>
+<a href="{% url 'institute_app:add_notes' %}">Notes upload</a>
+
+<br> -->
+<a href="{% url 'institute_app:st_notes' %}">View Notes</a>
+
+
+<br> 
+<a href="{% url 'institute_app:st_exam' %}">Exam</a>
+
+
+{% endblock %}
