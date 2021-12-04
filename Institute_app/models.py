@@ -67,7 +67,7 @@ class TrainerDetails(models.Model):
     tr_address=models.CharField(max_length=200,db_column="tr_add")
     tr_email=models.CharField(max_length=50,db_column="tr_email")
     tr_phno=models.CharField(max_length=10,db_column="tr_phno")
-    tr_pic=models.ImageField(upload_to="HR/",db_column="tr_pic")
+    tr_pic=models.ImageField(upload_to="Trainer/",db_column="tr_pic")
     tr_passwd=models.CharField(max_length=20,db_column="tr_passwd")
     tr_join=models.CharField(max_length=10,db_column="tr_join")
     log_permission=models.IntegerField(default=0,db_column="log_permission")

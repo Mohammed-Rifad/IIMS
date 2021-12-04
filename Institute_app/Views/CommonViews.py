@@ -10,6 +10,8 @@ def AdminData(request):
     qry.save()
     return redirect("e_nursery:login")
 
+def ProjectHome(request):
+    return render(request,'Common/ProjectHome.html')
 def Login(request):
     form=LoginForm()
     msg=""
@@ -70,5 +72,8 @@ def Login(request):
                         msg="Incorrect Password"
                 else:
                     msg="Incorrect UserName or Password"
-
+            else:
+                    msg="Incorrect UserName or Password"
+        else:
+            print('error')
     return render(request,'Common/Login.html',{'form':form,'msg':msg})

@@ -8,8 +8,8 @@ app_name="institute_app"
 
 urlpatterns = [
 
-
-    path('',CommonViews.Login,name="login"),
+    path('',CommonViews.ProjectHome,name="proj_home"),
+    path('login',CommonViews.Login,name="login"),
     path('AdminHome',AdminViews.AdminHome,name="admin_home"),
     path('AdminHome/AddCourse',AdminViews.AddCourse,name="add_course"),
     path('AdminHome/AddModule',AdminViews.AddModule,name="add_module"),

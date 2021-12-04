@@ -1,9 +1,167 @@
-{% extends 'Trainer/TrainerMaster.html' %}
 
-{% block content%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/assets/css/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/templatemo-style.css' %}">
+    <title>Document</title>
+</head>
+<body style="background-image: url('{% static 'training.png' %}');background-size:cover">
+ 
+    <div class="container">
+        <div class="row" >
+            <div class="col-md-12">
+                <nav class="navbar navbar-expand-lg">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">
+                            <i class="fas fa-film mr-2"></i>
+                            Catalog-Z
+                        </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-1 active" aria-current="page" href="index.html">Photos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-2" href="videos.html">Videos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-3" href="about.html">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-4" href="contact.html">Logout</a>
+                            </li>
+                        </ul>
+                        </div>
+                    </div>
+                </nav>
+            
+            </div>
+        </div>
+        <div class="row tm-mb-90 tm-gallery" style="margin-top: 50px; opacity: 0.8;">
+        
+            <div class="col-md-3 col-sm-4" >
+                <figure class="effect-ming tm-video-item text-center" style="width: 200px;">
+                    <img src="{% static 'std.jpg' %}" alt="Image" class="img-fluid img-rounded " style="border-radius: 2px;height: 100px;width: 100px; background-size: fill;">
+                    <figcaption class="d-flex align-items-center justify-content-center">
+                        <h2>Students</h2>
+                        <a href=" {% url 'institute_app:tr_active_students' %}">Students</a>
+                    </figcaption>                    
+                </figure>
+                
+            </div>
 
-<a href="{% url 'institute_app:tr_active_students' %}">Students</a>
-<br>
+            <div class="col-md-3 col-sm-4" >
+                <figure class="effect-ming tm-video-item" style="width: 200px;">
+                    <img src="{% static 'img/img-03.jpg' %}" alt="Image" class="img-fluid img-rounded" style="border-radius: 2px;">
+                    <figcaption class="d-flex align-items-center justify-content-center">
+                        <h2>Students</h2>
+                        <a href="photo-detail.html">Students</a>
+                    </figcaption>                    
+                </figure>
+                
+            </div>
+
+
+            <div class="col-md-3 col-sm-4">
+                <figure class="effect-ming tm-video-item" style="width: 200px;">
+                    <img src="{% static 'img/img-03.jpg' %}" alt="Image" class="img-fluid img-rounded" style="border-radius: 2px;">
+                    <figcaption class="d-flex align-items-center justify-content-center">
+                        <h2>Students</h2>
+                        <a href="photo-detail.html">Students</a>
+                    </figcaption>                    
+                </figure>
+                
+            </div>
+
+            <div class="col-md-3 col-sm-4" >
+                <figure class="effect-ming tm-video-item" style="width: 200px;">
+                    <img src="{% static 'img/img-03.jpg' %}" alt="Image" class="img-fluid img-rounded" style="border-radius: 2px;">
+                    <figcaption class="d-flex align-items-center justify-content-center">
+                        <h2>Students</h2>
+                        <a href="photo-detail.html">Students</a>
+                    </figcaption>                    
+                </figure>
+                
+            </div>
+
+
+
+        </div>
+        
+
+
+        <div class="row tm-mb-90 tm-gallery" style="margin-top: 50px; opacity: 0.8;">
+        	<div class="col-md-3 col-sm-4" >
+                <figure class="effect-ming tm-video-item" style="width: 200px;">
+                    <img src="{% static 'img/img-03.jpg' %}" alt="Image" class="img-fluid img-rounded" style="border-radius: 2px;">
+                    <figcaption class="d-flex align-items-center justify-content-center">
+                        <h2>Students</h2>
+                        <a href="photo-detail.html">Students</a>
+                    </figcaption>                    
+                </figure>
+                
+            </div>
+
+
+            <div class="col-md-3 col-sm-4" >
+                <figure class="effect-ming tm-video-item" style="width: 200px;">
+                    <img src="{% static 'img/img-03.jpg' %}" alt="Image" class="img-fluid img-rounded" style="border-radius: 2px;">
+                    <figcaption class="d-flex align-items-center justify-content-center">
+                        <h2>Students</h2>
+                        <a href="photo-detail.html">Students</a>
+                    </figcaption>                    
+                </figure>
+                
+            </div>
+
+
+            <div class="col-md-3 col-sm-4">
+                <figure class="effect-ming tm-video-item" style="width: 200px;">
+                    <img src="{% static 'img/img-03.jpg' %}" alt="Image" class="img-fluid img-rounded" style="border-radius: 2px;">
+                    <figcaption class="d-flex align-items-center justify-content-center">
+                        <h2>Students</h2>
+                        <a href="photo-detail.html">Students</a>
+                    </figcaption>                    
+                </figure>
+                
+            </div>
+
+            <div class="col-md-3 col-sm-4" >
+                <figure class="effect-ming tm-video-item" style="width: 200px;">
+                    <img src="{% static 'img/img-03.jpg' %}" alt="Image" class="img-fluid img-rounded" style="border-radius: 2px;">
+                    <figcaption class="d-flex align-items-center justify-content-center">
+                        <h2>Students</h2>
+                        <a href="photo-detail.html">Students</a>
+                    </figcaption>                    
+                </figure>
+                
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+    </div>
+
+
+<!-- <br>
 <a href="{% url 'institute_app:tr_assign_seat' %}">Seating</a>
 <br>
 <a href="{% url 'institute_app:add_notes' %}">Notes upload</a>
@@ -15,5 +173,7 @@
 <a href="{% url 'institute_app:tr_add_exam' %}">Add Exam</a>
 <br> 
 <a href="{% url 'institute_app:tr_st_att' %}">View Attendance</a>
+ -->
 
-{% endblock %}
+</body>
+</html>
