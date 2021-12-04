@@ -26,7 +26,7 @@ SECRET_KEY = 'wzd3(e*l4(7in!d720ep5rd14jz#bh5ot=z@ky(lego1te+z7a'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
