@@ -5,7 +5,8 @@
 <form action="{% url  'institute_app:upd_status' %}"  method="POST" enctype="multipart/form-data">
  {% csrf_token %}
 
- <table>
+ <div class="container">
+ <table class="table table-primary table-hover w-75" style="position: relative; top: 60px;left: 100px;opacity: 0.9;">
      <tr>
 
          <th>Module</th>   
@@ -21,5 +22,5 @@
         {% endfor %}
     </table>
 
-
+</div>
 {% endblock %}

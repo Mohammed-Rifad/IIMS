@@ -1,13 +1,21 @@
 import datetime
 from Institute_app.services import UpdateSeat, getFileName
 from django.shortcuts import render,redirect
-from ..models import AttendanceDetails, CourseDetails, ExamDetails, ModuleDetails, NotesDetails, SeatingDetails,StudentDetails, StudentModule, TrainerDetails
+from ..models import AttendanceDetails, CourseDetails, ExamDetails, ModuleDetails, NotesDetails, SeatingDetails,StudentDetails, StudentModule, SystemDetails, TrainerDetails
 
 def TrainerHome(request):
     return render(request,'Trainer/TrainerHome.html')
 
+
+# ajax
+def getSystem(request):
+    lab_no=request.GET['lab_no']
+    systems=SystemDetails.objects.filter(lab_no=lab_no)
+    return render(request,'Trainer/system_dropdown.html',{'systems':systems})
+
 def ViewActiveStudents(request):
     courses=CourseDetails.objects.all()
+    tab_selection="View Students"
     students=StudentDetails.objects.filter(status="active")
     if request.method=='POST':
         if 'filter' in request.POST:
@@ -17,13 +25,14 @@ def ViewActiveStudents(request):
             s_id=request.POST['s_id']
             data=StudentModule.objects.filter(s_id=s_id)
             print('data',data)
-            return render(request,'Trainer/StudentStatus.html',{'modules':data,})
+            tab_selection="Module Status"
+            return render(request,'Trainer/StudentStatus.html',{'modules':data,'tab_selection':tab_selection})
         if 'update' in request.POST:
             s_id=request.POST['s_id']
             data=StudentModule.objects.filter(s_id=s_id)
-            print('SSSSSSSSSS',data)
-            return render(request,'Trainer/UpdateStudentModule.html',{'s_id':s_id,'modules':data})
-    return render(request,'Trainer/ActiveStudents.html',{'students':students,'courses':courses})
+            tab_selection="Update Status"
+            return render(request,'Trainer/UpdateStudentModule.html',{'s_id':s_id,'modules':data,'tab_selection':tab_selection})
+    return render(request,'Trainer/ActiveStudents.html',{'students':students,'courses':courses,'tab_selection':tab_selection})
 
 
 def UpdateStatus(request):
@@ -48,6 +57,7 @@ def UpdateSeating(request):
         seating_data=SeatingDetails.objects.get(lab_no=lab,sys_no=system)
 
         status=UpdateSeat(seating_data,student,slot)
+        print(status)
     return render(request,'Trainer/UpdateSeating.html',{'students':students,'status':status})
 
 def AddNotes(request):
@@ -93,7 +103,7 @@ def ViewStudentStatus(request):
     return render(request,'Trainer/StudentModule.html',)
 
 def AddExam(request):
-    
+    tab_selection="Add Exam"
     students=StudentDetails.objects.filter(status="active")
     if request.method=='POST':
         st_id=request.POST['student']
@@ -109,11 +119,11 @@ def AddExam(request):
             exam=ExamDetails(s_id=student,m_id=module,exam_date=exam_date,date_entered=date_entered)
             exam.save()
             success_msg="Exam Added Succesfully"
-            return render(request,'Trainer/AddExam.html',{'students':students,'success_msg':success_msg})
+            return render(request,'Trainer/AddExam.html',{'students':students,'success_msg':success_msg,'tab_selection':tab_selection})
         else:
             error_msg="Exam Already Added"
-            return render(request,'Trainer/AddExam.html',{'students':students,'error_msg':error_msg})
-    return render(request,'Trainer/AddExam.html',{'students':students})
+            return render(request,'Trainer/AddExam.html',{'students':students,'error_msg':error_msg,'tab_selection':tab_selection})
+    return render(request,'Trainer/AddExam.html',{'students':students,'tab_selection':tab_selection})
 
 def getStudentModule(request):
     data=StudentDetails.objects.get(s_id=request.GET['s_id'])

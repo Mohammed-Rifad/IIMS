@@ -29,14 +29,12 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link nav-link-1 active" aria-current="page" href="index.html">Photos</a>
+                                <a class="nav-link nav-link-1 active" aria-current="page" href="index.html">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link nav-link-2" href="videos.html">Videos</a>
+                                <a class="nav-link nav-link-2" href="videos.html">Notification</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link nav-link-3" href="about.html">About</a>
-                            </li>
+                          
                             <li class="nav-item">
                                 <a class="nav-link nav-link-4" href="contact.html">Logout</a>
                             </li>
@@ -47,7 +45,7 @@
             
             </div>
         </div>
-        <div class="row tm-mb-90 tm-gallery" style="margin-top: 50px; opacity: 0.8;">
+        <div class="row tm-mb-10 tm-gallery" style="margin-top: 50px; opacity: 0.8;">
         
             <div class="col-md-3 col-sm-4" >
                 <figure class="effect-ming tm-video-item text-center" style="width: 200px;">
@@ -57,41 +55,43 @@
                         <a href=" {% url 'institute_app:tr_active_students' %}">Students</a>
                     </figcaption>                    
                 </figure>
-                
+                <span class="h6" style="margin-left: 40px;color:black ;font-weight: bolder;">Students</span>  
             </div>
 
             <div class="col-md-3 col-sm-4" >
-                <figure class="effect-ming tm-video-item" style="width: 200px;">
-                    <img src="{% static 'img/img-03.jpg' %}" alt="Image" class="img-fluid img-rounded" style="border-radius: 2px;">
+                <figure class="effect-ming tm-video-item text-center" style="width: 200px;">
+                    <img src="{% static 'std.jpg' %}" alt="Image" class="img-fluid img-rounded " style="border-radius: 2px;height: 100px;width: 100px; background-size: fill;">
                     <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Students</h2>
-                        <a href="photo-detail.html">Students</a>
+                        <h2>Seating</h2>
+                        <a href=" {% url 'institute_app:tr_assign_seat' %}">Seating</a>
                     </figcaption>                    
                 </figure>
-                
+               <span class="h6" style="margin-left: 40px;color:black ;font-weight: bolder;">Update Seating</span>
             </div>
 
 
             <div class="col-md-3 col-sm-4">
-                <figure class="effect-ming tm-video-item" style="width: 200px;">
-                    <img src="{% static 'img/img-03.jpg' %}" alt="Image" class="img-fluid img-rounded" style="border-radius: 2px;">
+                <figure class="effect-ming tm-video-item text-center" style="width: 200px;">
+                    <img src="{% static 'std.jpg' %}" alt="Image" class="img-fluid img-rounded " style="border-radius: 2px;height: 100px;width: 100px; background-size: fill;">
                     <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Students</h2>
-                        <a href="photo-detail.html">Students</a>
-                    </figcaption>                    
+                        <h2>Notes</h2>
+                        <a href=" {% url 'institute_app:add_notes' %}">Notes</a>
+                    </figcaption>   
+                                  
                 </figure>
+                <span class="h6" style="margin-left: 40px;color:black ;font-weight: bolder;">Add Notes</span>  
                 
             </div>
 
             <div class="col-md-3 col-sm-4" >
-                <figure class="effect-ming tm-video-item" style="width: 200px;">
-                    <img src="{% static 'img/img-03.jpg' %}" alt="Image" class="img-fluid img-rounded" style="border-radius: 2px;">
+                <figure class="effect-ming tm-video-item text-center" style="width: 200px;">
+                    <img src="{% static 'std.jpg' %}" alt="Image" class="img-fluid img-rounded " style="border-radius: 2px;height: 100px;width: 100px; background-size: fill;">
                     <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Students</h2>
-                        <a href="photo-detail.html">Students</a>
+                        <h2>View<br>Notes</h2>
+                        <a href=" {% url 'institute_app:tr_view_notes' %}">Notes</a>
                     </figcaption>                    
                 </figure>
-                
+                <span class="h6" style="margin-left: 40px;color:black ;font-weight: bolder;">View Notes</span>  
             </div>
 
 
@@ -100,16 +100,16 @@
         
 
 
-        <div class="row tm-mb-90 tm-gallery" style="margin-top: 50px; opacity: 0.8;">
+        <div class="row tm-mb-10 tm-gallery" style="margin-top: 50px; opacity: 0.8;">
         	<div class="col-md-3 col-sm-4" >
                 <figure class="effect-ming tm-video-item" style="width: 200px;">
                     <img src="{% static 'img/img-03.jpg' %}" alt="Image" class="img-fluid img-rounded" style="border-radius: 2px;">
                     <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Students</h2>
-                        <a href="photo-detail.html">Students</a>
+                        <h2>Add Exam</h2>
+                        <a href="{% url 'institute_app:tr_add_exam' %}">Add Exam</a>
                     </figcaption>                    
                 </figure>
-                
+                <span class="h6" style="margin-left: 40px;color:black ;font-weight: bolder;">Add Exam</span>  
             </div>
 
 
@@ -117,11 +117,11 @@
                 <figure class="effect-ming tm-video-item" style="width: 200px;">
                     <img src="{% static 'img/img-03.jpg' %}" alt="Image" class="img-fluid img-rounded" style="border-radius: 2px;">
                     <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Students</h2>
-                        <a href="photo-detail.html">Students</a>
+                        <h2>View Exam</h2>
+                        <a href="{% url 'institute_app:tr_view_exam' %}"></a>
                     </figcaption>                    
                 </figure>
-                
+                <span class="h6" style="margin-left: 40px;color:black ;font-weight: bolder;">View Exam</span>  
             </div>
 
 
@@ -129,22 +129,22 @@
                 <figure class="effect-ming tm-video-item" style="width: 200px;">
                     <img src="{% static 'img/img-03.jpg' %}" alt="Image" class="img-fluid img-rounded" style="border-radius: 2px;">
                     <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Students</h2>
+                        <h2>Attendance</h2>
                         <a href="photo-detail.html">Students</a>
                     </figcaption>                    
                 </figure>
-                
+                <span class="h6" style="margin-left: 40px;color:black ;font-weight: bolder;">Add Attendance</span>  
             </div>
 
             <div class="col-md-3 col-sm-4" >
                 <figure class="effect-ming tm-video-item" style="width: 200px;">
                     <img src="{% static 'img/img-03.jpg' %}" alt="Image" class="img-fluid img-rounded" style="border-radius: 2px;">
                     <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>Students</h2>
+                        <h2>View</h2>
                         <a href="photo-detail.html">Students</a>
                     </figcaption>                    
                 </figure>
-                
+                <span class="h6" style="margin-left: 40px;color:black ;font-weight: bolder;">View Attendance</span>  
             </div>
 
 

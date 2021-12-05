@@ -2,12 +2,13 @@
 
 {% block content%}
 
+
 <form  action="{% url  'institute_app:upd_status' %}"  method="POST">
     {% csrf_token %}
 
- <table>
+ <table style="border-spacing: 10px;border-collapse: separate;position: relative; left:400px">
      <tr>
-         <th>Select Module</th>
+         <th class="h5" style="color: teal;font-weight: bold;">Select Module</th>
          <th><select name="module" id="">
              {% for mod in modules %}
 
@@ -19,9 +20,14 @@
      </tr>
      <tr>
          <td></td>
-         <td><input type="submit" value="Change" name="" id=""></td>
+         <td><input type="submit" value="Change" name="" id="btn" class="btn btn-primary " style="width: 100px; text-align: center;" ></td>
          <td><input type="hidden" name="s_id" value="{{s_id}}" id=""></td>
      </tr>
  </table>
 </form>
+<script>
+document.getElementById('btn').addEventListener('click',()=>{
+    alert('Module Status Updated Succesfully')
+})
+</script>
 {% endblock %}

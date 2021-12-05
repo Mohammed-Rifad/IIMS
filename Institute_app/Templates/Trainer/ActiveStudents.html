@@ -21,45 +21,47 @@
     </tr>
 </table>
 </form>
-<table class="table table-primary table-responsive" style="opacity: 0.9;">
- <tr style="text-align: center;">
-    <th></th> 
-    <th>Name</th>
-    <th>Join Date</th>
-    <th>Type </th>
-    <th>Course</th>
-   
-    <th>Qualification</th>
-    
-    <th>Email</th>
-    <th>Phone No</th>
-
-    
- </tr>
- 
-{% for student in students %}
-<form action="" method="POST">
-    {% csrf_token %}
-<tr style="text-align: center;">
-    <td><img src="{{student.s_pic.url}}" style="height: 50px; width: 50px;" alt=""></td>
-    <td>{{student.s_name|title}}</td>
-    <td>{{student.s_join}}</td>
-    <td>{{student.s_type|capfirst}}</td>
-    <td>{{student.c_id.c_name|title}}</td>
-  
-    <td>{{student.s_qual|title}}</td>
-   
-    <td>{{student.s_email}}</td>
-    <td>{{student.s_phno}}</td>
-    
-    <td><input type="submit" name="status" value="View Status" style="background-color: blueviolet;"   id=""></td>
-    <td><input type="submit" name="update" value="Update" id="" style="background-color: red;"></td>
-    <td><input type="hidden" name="s_id" id="" value="{{student.s_id}}"></td>
-</tr>
-</form>
-{% endfor %}
-</table>
-
+<div style="min-height: 300px;">
+    <table class="table table-primary table-responsive" style="opacity: 0.9;">
+        <tr style="text-align: center;">
+           <th></th> 
+           <th>Name</th>
+           <th>Join Date</th>
+           <th>Type </th>
+           <th>Course</th>
+          
+           <th>Qualification</th>
+           
+           <th>Email</th>
+           <th>Phone No</th>
+       
+           
+        </tr>
+        
+       {% for student in students %}
+       <form action="" method="POST">
+           {% csrf_token %}
+       <tr style="text-align: center;">
+           <td><img src="{{student.s_pic.url}}" style="height: 50px; width: 50px;" alt=""></td>
+           <td>{{student.s_name|title}}</td>
+           <td>{{student.s_join}}</td>
+           <td>{{student.s_type|capfirst}}</td>
+           <td>{{student.c_id.c_name|title}}</td>
+         
+           <td>{{student.s_qual|title}}</td>
+          
+           <td>{{student.s_email}}</td>
+           <td>{{student.s_phno}}</td>
+           
+           <td><input type="submit" name="status" value="View Status" style="background-color: blueviolet;"   id=""></td>
+           <td><input type="submit" name="update" value="Update" id="" style="background-color: red;"></td>
+           <td><input type="hidden" name="s_id" id="" value="{{student.s_id}}"></td>
+       </tr>
+       </form>
+       {% endfor %}
+       </table>
+       
+</div>
 
 </form>
 {% endblock %}

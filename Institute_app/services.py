@@ -115,7 +115,7 @@ def UpdateSeat(seating_data,student,selected_slot):
             current_seating.save()  
             return "Seat Updated Succesfully"
         else:
-            return "Seleted Sytem Not Free"
+            return "Seleted System Not Free"
     if selected_slot=="slot2":
         if seating_data.slot2=="free":
                 seating_data.slot2=student.s_name+" ("+student.c_id.c_name+")"
@@ -135,7 +135,7 @@ def UpdateSeat(seating_data,student,selected_slot):
                 current_seating.save()  
                 return "Seat Updated Succesfully"
         else:
-            return "Seleted Sytem Not Free"
+            return "Seleted System Not Free"
     if selected_slot=="slot3":
         if seating_data.slot3=="free":
                 seating_data.slot3=student.s_name+" ("+student.c_id.c_name+")"
@@ -155,7 +155,7 @@ def UpdateSeat(seating_data,student,selected_slot):
                 current_seating.save()
                 return "Seat Updated Succesfully"
         else:
-            return "Seleted Sytem Not Free"
+            return "Seleted System Not Free"
 
 def getFileName(m_name):
     path="Notes/"

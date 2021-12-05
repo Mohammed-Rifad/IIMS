@@ -2,14 +2,14 @@
 
 {% block content%}
 
-<form   method="POST" enctype="multipart/form-data">
+<form   method="POST" enctype="multipart/form-data" style="margin-left: 400px;">
  {% csrf_token %}
 
- <table>    
+ <table style="border-spacing: 10px;border-collapse: separate;font-weight: bolder;">    
 <tr>
     <td>Select Student</td>
     <td>
-        <select name="student" id="student" required>
+        <select name="student" id="student" required class="form-control w-50">
             <option value="" selected disabled>Select</option>
     {% for student in students %}
 
@@ -22,7 +22,7 @@
 <tr>
     <td>Select Module</td>
     <td>
-        <select name="module" id="module" required>
+        <select name="module" id="module" required class="form-control w-50">
     
         </select>
     </td>
@@ -33,17 +33,31 @@
        Exam Date
     </td>
     <td>
-        <input type="text" name="ex_date" id="" required>
+        <input type="text" name="ex_date" id="" required class="form-control w-50"> 
     </td>
 </tr>
 
 
 <tr>
     <td></td>
-    <td ><input type="submit" value="Submit "></td>
+    <td ><input type="submit" value="Submit" class="btn-primary" style="opacity: .9;"></td>
 </tr>
  </table>
 
+ {% if success_msg  %}
+ <div class="alert alert-success w-50" style="border-radius: 10px;margin-top: 10px ;opacity: .9;" role="alert">
+  {{success_msg}}
+ </div>
+ {% endif %}
+ 
+ 
+ {% if error_msg  %}
+ <div class="alert alert-danger w-50" style="border-radius: 10px;margin-top: 10px; opacity: .9;" role="alert">
+  {{error_msg}}
+ </div>
+
+ 
+ {% endif %}
 
 </form>
 
@@ -61,7 +75,7 @@
         
 
          $.ajax({                      
-         url: "http://127.0.0.1:8000/IIMS/TrainerHome/getStudentModule",                    
+         url: "http://127.0.0.1:8000/TrainerHome/getStudentModule",                    
          data: {
              's_id': s_id      
          },

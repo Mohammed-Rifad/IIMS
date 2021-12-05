@@ -59,7 +59,7 @@ urlpatterns = [
     path('TrainerHome/ActiveStudents',TrainerViews.ViewActiveStudents,name="tr_active_students"),
     path('TrainerHome/Attendance',TrainerViews.StudentAttendance,name="std_att"),
     path('TrainerHome/AttendanceView',TrainerViews.ViewStudentAttendance,name="tr_st_att"),
- 
+    path('TrainerHome/getSystem',TrainerViews.getSystem),
     path('TrainerHome/UpdateSeat',TrainerViews.UpdateSeating,name="tr_assign_seat"),
     path('TrainerHome/AddNotes',TrainerViews.AddNotes,name="add_notes"),
     path('TrainerHome/Status',TrainerViews.ViewStudentStatus,name="tr_st_status"),
