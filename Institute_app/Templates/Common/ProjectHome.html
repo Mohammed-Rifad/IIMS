@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="{% static 'assets/assets/css/bootstrap/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
 </head>
 <body style="background-image: url({% static 'logo.png' %}); background-size:cover">
     {% block content%}
@@ -17,25 +17,27 @@
         <div class="row">
           
         <div class="col-md-4 no-gutters col-12 col-sm-12 ">
-            <a href="/login?type=ad">
+            
             <div style=" height: 100px;width:200px;border-radius: 5px; margin-top: 100px;margin-left: 180px;background-color:#4c4c4c;opacity: 0.9;">
-                <p style="position: relative;top:10px;left:60px;color: white;font-weight: bolder;">Admin</p>
-                <i class="fa-user" aria-hidden="true"></i>   
+                <a href="/login?type=ad">     <p class="h5" style="position: relative;top:10px;left:60px;color: white;font-weight: bolder;">Admin</p>
+                <i class="fas fa-user-shield text-white fa-2x" style="position: relative;left:75px;top: 10px;"></i>  
+                </a>
             </div>
             
-        </a>
+       
 
         </div>
 
        
         <div class="col-md-4 col-sm-12 col-12 ">
-            <a href="/login?type=hr">
+           
             <div style=" height: 100px;width:200px;border-radius: 5px; margin-top: 100px;margin-left: 180px;background-color:#4c4c4c;opacity: 0.9;">
-                <p style="position: relative;top:10px;left:60px;color: white;font-weight: bolder;">HR</p>
-                <i class="fa-user" aria-hidden="true"></i>   
+                <a href="/login?type=hr">  <p class="h5 text-white" style="position: relative;top:10px;left:80px;color: white;font-weight: bolder;">HR</p>
+                <i class="far fa-user text-white fa-2x" style="position: relative;left:75px;top: 10px;"></i>   
+            </a>
             </div>
             
-        </a>
+        
 
         </div>
         </div>
@@ -43,27 +45,30 @@
         <div class="row">
            
             <div class="col-md-4 no-gutters col-12 col-sm-12 ">
-                <a href="/login?type=tr">
+              
                 <div style=" height: 100px;width:200px;border-radius: 5px; margin-top: 40px;margin-left: 180px;background-color:#4c4c4c;opacity: 0.9;">
-                    <p style="position: relative;top:10px;left:60px;color: white;font-weight: bolder;">Trainer</p>
-                    <i class="fa-user" aria-hidden="true"></i>   
+                    <a href="/login?type=tr">     <p style="position: relative;top:10px;left:60px;color: white;font-weight: bolder;">Trainer</p>
+                    <i class="fas fa-check-circle text-white fa-2x" style="position: relative;left:72px;top: 5px;"></i>   
+                </a>
                 </div>
-            </a>
+           
                 
     
             </div>
     
     
             <div class="col-md-4 col-sm-12 col-12 ">
-                <a href="/login?type=st">
+             
                 <div style=" height: 100px;width:200px;border-radius: 5px; margin-top: 40px;margin-left: 180px;background-color:#4c4c4c;opacity: 0.9;">
-                    <p style="position: relative;top:10px;left:60px;color: white;font-weight: bolder;">Student</p>
-                    <i class="fa-user" aria-hidden="true"></i>   
-                </div>
+                    <a href="/login?type=st">  <p class="h5 text-white" style="position: relative;top:10px;left:60px;color: white;font-weight: bolder;">Student</p>
+                <i class="fas fa-user-graduate text-white fa-2x"style="position: relative;left:75px;top: 10px;"></i>  
             </a>
+            </div>
+            
                 
     
             </div>
+            
       
             </div>
 

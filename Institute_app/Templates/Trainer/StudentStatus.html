@@ -2,10 +2,12 @@
 
 {% block content%}
 
+
 <form action="{% url  'institute_app:upd_status' %}"  method="POST" enctype="multipart/form-data">
  {% csrf_token %}
 
  <div class="container">
+     <span class="h2 text-white" style="position: relative; top: 40px;left: 380px;opacity: 0.9; ">{{s_name.s_name|title}}</span>
  <table class="table table-primary table-hover w-75" style="position: relative; top: 60px;left: 100px;opacity: 0.9;">
      <tr>
 

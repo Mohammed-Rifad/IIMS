@@ -64,6 +64,7 @@ urlpatterns = [
     path('TrainerHome/AddNotes',TrainerViews.AddNotes,name="add_notes"),
     path('TrainerHome/Status',TrainerViews.ViewStudentStatus,name="tr_st_status"),
     path('TrainerHome/getModules',TrainerViews.getModules),
+    path('TrainerHome/Seating',TrainerViews.ViewSeating,name="tr_view_seat"),
     path('TrainerHome/Update',TrainerViews.UpdateStatus,name="upd_status"),
     path('TrainerHome/ViewNotes',TrainerViews.ViewNotes,name="tr_view_notes"),
     path('TrainerHome/ExamAdd',TrainerViews.AddExam,name="tr_add_exam"),

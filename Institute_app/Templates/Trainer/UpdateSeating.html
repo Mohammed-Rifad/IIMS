@@ -3,7 +3,7 @@
 {% block content%}
 
 
-<form method="POST" action="{% url 'institute_app:tr_assign_seat' %}" class="reg-form" enctype="multipart/form-data" style="position: relative;left:420px;color: teal;font-weight: bold; top: 5px;">
+<form method="POST" action="{% url 'institute_app:tr_assign_seat' %}" class="reg-form" enctype="multipart/form-data" style="position: relative;left:420px;color: white;font-weight: bold; top: 5px;">
     {% csrf_token %}
     <p  class="text-danger">{{msg}}</p>
 <table style="border-spacing: 10px;border-collapse: separate; ">
@@ -11,7 +11,7 @@
     <tr>
         <td>Select Student</td>
          <td>
-             <select name="student">
+             <select name="student" class="form-control">
                  {% for student in students %}
                 <option value="{{student.s_id}}">{{student.s_name|title}}</option>
                 {% endfor %}
@@ -21,7 +21,7 @@
     <tr>
         <td>Select Lab</td>
          <td>
-             <select name="lab" id="lab" required>
+             <select name="lab" id="lab" required  class="form-control">
                 <option disabled selected=selected>-----------</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -33,7 +33,7 @@
     <tr>
         <td>Select System</td>
          <td>
-             <select required name="system" id="system" class="form-control w-50" >
+             <select required  class="form-control" name="system" id="system" class="form-control w-50" >
                 
                 
                
@@ -61,14 +61,14 @@
 <input type="submit" value="Update" class="btn btn-primary" style="margin-left: 60px;"/>
 {% if status %}
 {% if status == 'Seat Updated Succesfully'  %}
-<div class="alert alert-success w-50" style="border-radius: 10px;margin-top: 10px;" role="alert">
+<div class="alert alert-success w-25" style="border-radius: 10px;margin-top: 10px;" role="alert">
  {{status}}
 </div>
 {% endif %}
 
 
 {% if status == 'Seleted System Not Free'  %}
-<div class="alert alert-danger w-50" style="border-radius: 10px;margin-top: 10px;" role="alert">
+<div class="alert alert-danger w-25" style="border-radius: 10px;margin-top: 10px;" role="alert">
  {{status}}
 </div>
 {% endif %}

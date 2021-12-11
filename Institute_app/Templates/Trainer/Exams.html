@@ -2,13 +2,15 @@
 
 {% block content%}
 
-<table>    
+<table class="table table-primary table-hover" style="opacity: 0.8;">    
     <tr>
         <th>Student Name</td>
         <th>Module</th>
         <th>Date Added</th>
         <th>Exam Date</th>
         <th>Status</th>
+        <th></th>
+        <th></th>
    </tr>
    {% for exam in exams %}
     <td>{{exam.s_id.s_name|title}}</td>
@@ -16,8 +18,9 @@
     <td>{{exam.date_entered}}</td>
     <td>{{exam.exam_date}}</td>
     <td>{{exam.status|title}}</td>
-    <td><a href="/IIMS/TrainerHome/ExamDel?id={{exam.id}}"> Delete</a></td>
-    <td><a href="/IIMS/TrainerHome/ExamUp?id={{exam.id}}"> Update</a></td>
+
+    <td><a href="/TrainerHome/ExamDel?id={{exam.id}}" class="btn btn-danger"> Delete</a></td>
+    <td><a href="/TrainerHome/ExamUp?id={{exam.id}}" class="btn btn-primary"> Update</a></td>
    <tr>
     {% endfor %}
   

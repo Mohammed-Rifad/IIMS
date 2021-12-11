@@ -6,8 +6,8 @@
  {% csrf_token %}
 <table style="border-spacing: 10px; border-collapse: separate; height: 30px; margin-left: 430px; margin-bottom: 10px;">
     <tr>
-        <td style="color: teal;font-weight: bold;">Select Course</td>
-        <td><select name="course" class="form-control" >
+        <td style="color: white;font-weight: bold;" class="h5">Select Course</td>
+        <td><select name="course" class="form-control"  >
             {% for c in courses %}
             <option value="{{c.c_id}}">{{c.c_name|title}}</option>
             {% endfor %}
@@ -17,10 +17,21 @@
     </tr>
     <tr>
         <td></td>
-        <td><input type="submit"  value="Filter" name="filter" class="btn" style="background-color: blueviolet; width: 100px;"></td>
+        <td><center><button type="submit"   name="filter" class="btn btn-primary" style="background-color: blueviolet; ;text-align: center; width: 100px;"><span style="position: relative;left: 0px;">Filter</span></button></center></td>
     </tr>
 </table>
 </form>
+<center>
+    <!-- <nav aria-label="Page navigation example" style="margin-left: 300px; ">
+     <ul class="pagination">
+       <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+       <li class="page-item"><a class="page-link" href="#">1</a></li>
+       <li class="page-item"><a class="page-link" href="#">2</a></li>
+       <li class="page-item"><a class="page-link" href="#">3</a></li>
+       <li class="page-item"><a class="page-link" href="#">Next</a></li>
+     </ul>
+   </nav> -->
+ </center>
 <div style="min-height: 300px;">
     <table class="table table-primary table-responsive" style="opacity: 0.9;">
         <tr style="text-align: center;">
@@ -34,7 +45,9 @@
            
            <th>Email</th>
            <th>Phone No</th>
-       
+       <th></th>
+       <th></th>
+       <th></th>
            
         </tr>
         
@@ -53,14 +66,14 @@
            <td>{{student.s_email}}</td>
            <td>{{student.s_phno}}</td>
            
-           <td><input type="submit" name="status" value="View Status" style="background-color: blueviolet;"   id=""></td>
-           <td><input type="submit" name="update" value="Update" id="" style="background-color: red;"></td>
+           <td><input type="submit" name="status" value="View Status" class="btn" style="background-color: blueviolet;"   id=""></td>
+           <td><input type="submit" name="update" value="Update" class="btn" id="" style="background-color: red;"></td>
            <td><input type="hidden" name="s_id" id="" value="{{student.s_id}}"></td>
        </tr>
        </form>
        {% endfor %}
        </table>
-       
+      
 </div>
 
 </form>

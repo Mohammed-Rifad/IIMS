@@ -5,11 +5,11 @@
 <form   method="POST" enctype="multipart/form-data" style="margin-left: 400px;">
  {% csrf_token %}
 
- <table style="border-spacing: 10px;border-collapse: separate;font-weight: bolder;">    
+ <table style="border-spacing: 10px;border-collapse: separate;font-weight: bolder;color: white;">    
 <tr>
     <td>Select Student</td>
     <td>
-        <select name="student" id="student" required class="form-control w-50">
+        <select name="student" id="student" required class="form-control ">
             <option value="" selected disabled>Select</option>
     {% for student in students %}
 
@@ -22,7 +22,7 @@
 <tr>
     <td>Select Module</td>
     <td>
-        <select name="module" id="module" required class="form-control w-50">
+        <select name="module" id="module" required class="form-control ">
     
         </select>
     </td>
@@ -33,14 +33,14 @@
        Exam Date
     </td>
     <td>
-        <input type="text" name="ex_date" id="" required class="form-control w-50"> 
+        <input type="date" name="ex_date" id="" required class="form-control "> 
     </td>
 </tr>
 
 
 <tr>
     <td></td>
-    <td ><input type="submit" value="Submit" class="btn-primary" style="opacity: .9;"></td>
+    <td ><input type="submit" value="Submit" class="btn"  style="background-color: blueviolet;""></td>
 </tr>
  </table>
 

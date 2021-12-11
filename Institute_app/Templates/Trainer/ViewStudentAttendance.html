@@ -5,11 +5,11 @@
 
     
     {% csrf_token %}
-    <table>
+    <table  style='border-collapse: separate;border-spacing: 10px;color: white;font-weight: bold;margin-left: 330px;margin-top: 10px;'>
         <tr>
             <td>Select Student</td>
             <td>
-                <select name="student">
+                <select name="student" class="form-control">
                 {% for student in students %}
                <option value="{{student.s_id}}">{{student.s_name|title}}</option>
                {% endfor %}
@@ -21,7 +21,7 @@
             Select Month
         </td>
         <td>
-            <select name="mnth" >
+            <select name="mnth" class="form-control">
                 
                 <option value="1">January</option>
                 <option value="2">February</option>
@@ -41,7 +41,7 @@
     </tr>
     <tr>
         <td></td>
-        <td><input type="submit" ></td>
+        <td><input type="submit" class="btn" style="background-color: blueviolet;" ></td>
     </tr>
 </table>
 
@@ -50,26 +50,28 @@
 
 
 {% if attendance_data %}
-<H3>{{student_name|title}}</H3>
+<H3 class="text-white" style="margin-left: 320px;width: 300px;">{{student_name|title}}</H3>
 
-<table>
-   <tr>
-      
-       <th>Date</th>
-       <th>Status</th>
-      
-   </tr>
-   <tr>
-       {% for data in attendance_data %}
-
-        <td>{{data.date}}</td>
-        <td>{{data.status|title}}</td>
+<div style="min-height: 300px;max-height: 400px; overflow: scroll;">
+    <table class="table table-primary table-hover" style="opacity: 0.8;">
+        <tr>
+           
+            <th>Date</th>
+            <th>Status</th>
+           
+        </tr>
+        <tr>
+            {% for data in attendance_data %}
      
-
-       
-    </tr>
-    {% endfor %}
-</table>
+             <td>{{data.date}}</td>
+             <td>{{data.status|title}}</td>
+          
+     
+            
+         </tr>
+         {% endfor %}
+     </table>
+</div>
 {% endif %}
 
 {% endblock %}

@@ -2,15 +2,19 @@
 
 {% block content%}
 
-<form   method="POST" enctype="multipart/form-data">
+<form  method="POST" enctype="multipart/form-data" style="margin-left: 250px;">
  {% csrf_token %}
-
- <table>    
+ {% if msg %}
+ <div class="alert alert-success w-50" style="border-radius: 10px;margin-top: 10px;" role="alert">
+    {{msg}}
+   </div>
+   {% endif %}
+ <table style="border-spacing: 10px;border-collapse: separate;color: white; font-weight: bold;">    
 <tr>
     <td>Select Course</td>
     <td>
-        <select name="course" id="course" required>
-            <option value="" selected disabled>Select</option>
+        <select name="course" id="course" required class="form-control">
+            <option value="" selected disabled class="form-control">Select</option>
     {% for course in courses %}
 
                 <option value="{{course.c_id}}">{{course.c_name|title}}</option>
@@ -22,7 +26,7 @@
 <tr>
     <td>Select Module</td>
     <td>
-        <select name="module" id="module" required>
+        <select name="module" id="module" required class="form-control">
     
         </select>
     </td>
@@ -33,7 +37,7 @@
        Description
     </td>
     <td>
-        <textarea name="desc" id="" cols="30" rows="10" required></textarea>
+        <textarea class="form-control" name="desc" id="" cols="30" rows="10" required></textarea>
     </td>
 </tr>
 
@@ -42,12 +46,12 @@
         Upload File
     </td>
     <td>
-        <input type="file" name="notes" id="" required>
+        <input type="file" name="notes" id="" required class="form-control">
     </td>
 </tr>
 <tr>
     <td></td>
-    <td ><input type="submit" value="Add"></td>
+    <td ><input type="submit" value="Add" class="btn" style="background-color: blueviolet;width: 100px;"></td>
 </tr>
  </table>
 
@@ -68,7 +72,7 @@
         
 
          $.ajax({                      
-         url: "http://127.0.0.1:8000/IIMS/TrainerHome/getModules",                    
+         url: "http://127.0.0.1:8000/TrainerHome/getModules",                    
          data: {
              'c_id': c_id      
          },
