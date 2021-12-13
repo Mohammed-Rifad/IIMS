@@ -43,6 +43,9 @@ urlpatterns = [
     path('HrHome/Schedhule',HrViews.SchedhuleInterview,name="hr_schedhule"),
     path('HrHome/ViewInter',HrViews.ViewInterview,name="hr_view_inter"),
     path('HrHome/DelInter',HrViews.DelInterview,name="hr_del_inter"),
+    path('HrHome/UpdateInter',HrViews.UpdateInterview,name="hr_upd_inter"),
+    path('HrHome/Logout',HrViews.Logout,name="hr_logout"),
+
     path('HrHome/CompletedStudents',HrViews.CompletedStudents,name="hr_com_st"),
     path('HrHome/ActiveStudents',HrViews.ViewActiveStudents,name="hr_active_students"),
     path('HrHome/ActiveFollowup',HrViews.ActiveFollowUp,name="hr_act_followup"),

@@ -15,6 +15,7 @@
      <th></th>
      <th></th>
      <th></th>
+     <th></th>
  </tr>
 {% for data in followup_data %}
 <form method="POST" action="{% url 'institute_app:hr_act_followup' %}" class="reg-form" enctype="multipart/form-data">
@@ -31,7 +32,7 @@
 <td><a href="{% url 'institute_app:hr_add_followup' data.f_id %}" class="btn btn-info">Update</a></td>
 <td><a href="{% url 'institute_app:hr_followup_hst' data.f_id %}" class="btn btn-warning">View History</a></td>
 <td><input type="submit" class="btn btn-danger" value="Complete" style="width: 100px;"></a></td>
-<td><input type="text" name="f_id" value="{{data.f_id}}" id=""></td>
+<td><input type="hidden" name="f_id" value="{{data.f_id}}" id=""></td>
  </tr>
  </form>
  {% endfor %}

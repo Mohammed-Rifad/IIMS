@@ -9,8 +9,10 @@ from Institute_app.Forms.HrForms import InterviewForm, StudentForm
 from django.shortcuts import render,redirect
 from passlib.hash import pbkdf2_sha256
 from django.utils.crypto import get_random_string
+from .auth_gaurd import auth_hr
 from ..services import AddStudentModule, GetUniqueID, InsertFeeDetails, email_service,checkSystemAvailability
 
+@auth_hr
 def HrHome(request):
     return render(request,'HR/HrHome.html')
 
@@ -245,6 +247,7 @@ def DueList(request):
     return render(request,'HR/DueList.html',{'data':std_array,'tab_selection':tab_selection,'total':total})
 
 def AddPayment(request):
+    tab_selection="Add Payment"
     if request.method=='GET':
         request.session['p_id']=request.GET['id']
         st=request.GET['st']
@@ -262,7 +265,7 @@ def AddPayment(request):
         payment_data.save()
         return redirect("institute_app:hr_due_list")
     
-    return render(request,'HR/OfflinePayment.html',{'st':st})
+    return render(request,'HR/OfflinePayment.html',{'st':st,'tab_selection':tab_selection})
 
 
 
@@ -330,13 +333,21 @@ def CertStatus(request):
     
     return render(request,'Hr/CertificateStatus.html',{'data':data,'tab_selection':tab_selection})
 
+def Logout(request):
+     
+    if 'hr' in request.session:
+        del request.session['hr_id']
+    request.session.flush()
+    return redirect("institute_app:login")
+
 def CompletedStudents(request):
     students=StudentDetails.objects.filter(status="completed")
     courses=CourseDetails.objects.all()
+    tab_selection="Completed Students"
     if request.method=='POST':
         course=request.POST['course']
         students=StudentDetails.objects.filter(c_id=course, status="completed")
-    return render(request,'Hr/CompletedStudents.html',{'students':students,'courses':courses})
+    return render(request,'Hr/CompletedStudents.html',{'students':students,'courses':courses,'tab_selection':tab_selection})
 
 def AddInterView(request):
     form=InterviewForm()
@@ -362,13 +373,15 @@ def SchedhuleInterview(request) :
             cmp_addr=form.cleaned_data['cmp_addr'].lower()
             cmp_contact=form.cleaned_data['cmp_contact']
             int_post=form.cleaned_data['int_post'].lower()
-            interview_date=form.cleaned_data['interview_date']
+            interview_date=request.POST['interview_date']
             int_type=form.cleaned_data['int_type']
             student=StudentDetails.objects.get(s_id=id)
             dt=date.today()
             added_date=dt.strftime("%d/%m/%Y")
+            dt_convrt=datetime.strptime(interview_date,"%Y-%m-%d").date()
+            dt_str=dt_convrt.strftime("%d/%m/%Y")
             interview=InterviewDetails(cmp_name=cmp_name,cmp_addr=cmp_addr,cmp_contact=cmp_contact,
-            interview_date=interview_date,int_type=int_type,s_id=student,added_date=added_date,int_post=int_post)
+            interview_date=dt_str,int_type=int_type,s_id=student,added_date=added_date,int_post=int_post)
             interview.save()
             msg="Data Submitted Succesfully"
     return render(request,'HR/SchedhuleInterview.html',{'form':form,'id':id,'msg':msg,'tab_selection':tab_selection})
@@ -376,10 +389,25 @@ def SchedhuleInterview(request) :
 
 def ViewInterview(request):
     data=InterviewDetails.objects.all()
-    return render(request,'Hr/ViewInter.html',{'data':data,})
+    tab_selection="View Interview"
+    return render(request,'Hr/ViewInter.html',{'data':data,'tab_selection':tab_selection})
 
 def DelInterview(request):
     id=request.GET['id']
     data=InterviewDetails.objects.get(id=id)
     data.delete()
     return redirect("institute_app:hr_view_inter")
+
+def UpdateInterview(request):
+    tab_selection="Update Interview Status"
+    
+    if request.method=='POST':
+        id=request.POST['int_id']
+        data=InterviewDetails.objects.get(id=id)
+        data.status=request.POST['int_status']
+        data.save()
+        msg="Updated Succesfully"
+        return render(request,'Hr/UpdateInterview.html',{'tab_selection':tab_selection,'id':id,'msg':msg})
+
+    id=request.GET['id']
+    return render(request,'Hr/UpdateInterview.html',{'tab_selection':tab_selection,'id':id})

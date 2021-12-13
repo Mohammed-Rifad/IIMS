@@ -1,12 +1,4 @@
 
-<a href="{% url 'institute_app:hr_due_list' %}"> Fee Due</a>
-
-<br>
-<a href="{% url 'institute_app:hr_req_cert' %}"> Request Certificate</a>
-
-<br>
-<a href="{% url 'institute_app:hr_cert_status' %}">Certificate Status</a>
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -66,14 +58,14 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link nav-link-1 active" aria-current="page" href="index.html"><span class=text-white>Home</span></a>
+                                <a class="nav-link nav-link-1 active" aria-current="page" href="{% url 'institute_app:hr_home' %}"><span class=text-white>Home</span></a>
                             </li>
                             <li class="nav-item text-primary">
-                                <a class="nav-link nav-link-2" href="videos.html"><span class=text-white>Notification</span></a>
+                                <a class="nav-link nav-link-2" href=""><span class=text-white>Notification</span></a>
                             </li>
                           
                             <li class="nav-item">
-                                <a class="nav-link nav-link-4" href="contact.html"><span class=text-white>Logout</span></a>
+                                <a class="nav-link nav-link-4" href="{% url 'institute_app:hr_logout' %}"><span class=text-white>Logout</span></a>
                             </li>
                         </ul>
                         </div>
@@ -338,14 +330,7 @@
             </div>
 
             <div class="col-md-3 col-sm-4" >
-                <!-- <figure class="effect-ming tm-video-item" style="width: 200px;">
-                    <img src="{% static 'img/img-03.jpg' %}" alt="Image" class="img-fluid img-rounded" style="border-radius: 2px;">
-                    <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2>View</h2>
-                        <a href="photo-detail.html">Students</a>
-                    </figcaption>                    
-                </figure>
-                <span class="h6" style="margin-left: 40px;color:black ;font-weight: bolder;">View Attendance</span>   -->
+               
            
                 <div class=" text-center text-info opt " id=vatt>
                     <a href="{% url 'institute_app:hr_add_int' %}">
@@ -358,10 +343,57 @@
                  </div>
             </div>
 
-</div>
 
 
 
+        </div>
+
+
+        <div class="row tm-mb-10 tm-gallery" style="margin-top: 50px; opacity: 0.8; margin-bottom: 10px;">
+           
+            <div class="col-md-3 col-sm-4" >
+                <!-- <figure class="effect-ming tm-video-item" style="width: 200px;">
+                    <img src="{% static 'img/img-03.jpg' %}" alt="Image" class="img-fluid img-rounded" style="border-radius: 2px;">
+                    <figcaption class="d-flex align-items-center justify-content-center">
+                        <h2>View</h2>
+                        <a href="photo-detail.html">Students</a>
+                    </figcaption>                    
+                </figure>
+                <span class="h6" style="margin-left: 40px;color:black ;font-weight: bolder;">View Attendance</span>   -->
+           
+                <div class=" text-center text-info opt " id=vatt>
+                    <a href="{% url 'institute_app:hr_view_inter' %}">
+                    <h5 class="mt-2">Update Interview</h5>
+                    <i class="fas fa-book-open fa-2x"></i>
+    
+                     <br>
+                     </a>
+    <i class="fas fa-chevron-right" style="position: relative; left: 40px;"></i>
+                 </div>
+            </div>
+           
+            <div class="col-md-3 col-sm-4" >
+                <!-- <figure class="effect-ming tm-video-item" style="width: 200px;">
+                    <img src="{% static 'img/img-03.jpg' %}" alt="Image" class="img-fluid img-rounded" style="border-radius: 2px;">
+                    <figcaption class="d-flex align-items-center justify-content-center">
+                        <h2>View</h2>
+                        <a href="photo-detail.html">Students</a>
+                    </figcaption>                    
+                </figure>
+                <span class="h6" style="margin-left: 40px;color:black ;font-weight: bolder;">View Attendance</span>   -->
+           
+                <div class=" text-center text-info opt " id=vatt>
+                    <a href="{% url 'institute_app:hr_com_st' %}">
+                    <h5 class="mt-2">Completed Students</h5>
+                    <i class="fas fa-book-open fa-2x"></i>
+    
+                     <br>
+                     </a>
+    <i class="fas fa-chevron-right" style="position: relative; left: 40px;"></i>
+                 </div>
+            </div>
+          
+        </div>
 
     </div>
 

@@ -4,7 +4,7 @@
 
 
     <p  class="text-danger">{{msg}}</p>
-<table class="tb">
+<table class="table table-primary table-hover" style="opacity: 0.8;">
  <tr>
     <th>Date Entered</th> 
     <th>Student Name</th>
@@ -15,10 +15,14 @@
     <th>Mode</th>
     <th>Post</th>
     <th>Status</th>
+    <th></th>
+    <th></th>
+    <th></th>
  </tr>
 {% for d in data %}
 <tr>
-
+   
+{% csrf_token %}
         <td>{{d.added_date}}</td>
         <td>{{d.s_id.s_name|title}}</td>
         <td>{{d.interview_date}}</td>
@@ -28,9 +32,11 @@
         <td>{{d.int_type|title}}</td>
         <td>{{d.int_post|title}}</td>
         <td>{{d.status|title}}</td>
-        <td><a href="/IIMS/HrHome/DelInter?id={{d.id}}" >Delete</a></td>
-        <td><a href="">Update Status</a></td>
+        <td><a href="/HrHome/DelInter?id={{d.id}}" class="btn btn-danger" >Delete</a></td>
+        <td><a href="/HrHome/UpdateInter?id={{d.id}}"class="btn btn-primary">Update</a></td>
+        <td><input type="hidden" name="int_id" value= id=""></td>
 </tr>
+</form>
 {% endfor %}
 </form>
 {% endblock %}

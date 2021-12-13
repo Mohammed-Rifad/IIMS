@@ -4,10 +4,10 @@
 
 <form method="POST">
  {% csrf_token %}
-<table>
+<table style="border-spacing: 10px; border-collapse: separate;margin-left: 410px;color: white;font-weight: bold;">
     <tr>
         <td>Select Course</td>
-        <td><select name="course" >
+        <td><select name="course" class="form-control">
             {% for c in courses %}
             <option value="{{c.c_id}}">{{c.c_name|title}}</option>
             {% endfor %}
@@ -17,11 +17,11 @@
     </tr>
     <tr>
         <td></td>
-        <td><input type="submit"  value="Filter"></td>
+        <td><input type="submit"  value="Filter" class="btn" style="background-color: blueviolet;"></td>
     </tr>
 </table>
 </form>
-<table class="tb">
+<table class="table table-primary table-hover" style="opacity: 0.9;">
  <tr>
     <th></th> 
     <th>Student Name</th>

@@ -1,0 +1,30 @@
+{% extends 'HR/HrMaster.html' %}
+
+{% block content%}
+<form action="" method="POST">
+    {% csrf_token %}
+<table style="margin-left: 340px;margin-top: 20px;border-spacing: 10px;border-collapse: separate;color: white;font-weight: bold;">
+    <tr>
+        <td>
+            Add Comment
+        </td>
+        <td>
+            <textarea name="int_status" id="" cols="15" rows="4" class="form-control" required></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="submit" name="" value="Update" id="" class="btn" style="background-color: blueviolet;"></td>
+        <td><input type="hidden" name="int_id" value="{{id}}" id=""></td>
+    </tr>
+
+</table>
+
+
+</form>
+{% if msg  %}
+<div class="alert alert-success w-25"  style="margin-top: 10px; opacity: .9;margin-left: 390px;" role="alert">
+ {{msg}}
+</div>
+{% endif %}
+{% endblock %}

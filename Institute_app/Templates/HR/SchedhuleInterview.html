@@ -5,13 +5,15 @@
 <form method="POST"  class="reg-form" enctype="multipart/form-data">
     {% csrf_token %}
     {% if msg  %}
-    <div class="alert alert-success w-25" style="border-radius: 10px;margin-top: 10px ;opacity: .9;margin-left: 430px;" role="alert">
+    <div class="alert alert-success w-25"  style="border-radius: 10px;margin-top: 10px ;opacity: .9;margin-left: 430px;" role="alert">
      {{msg}}
+
     </div>
     {% endif %}
     
-    
-   
+    <div class="alert alert-danger w-25" id='msg' style="border-radius: 10px;margin-top: 10px ;opacity: .9;margin-left: 430px;display: none;" role="alert">
+  
+    </div>
 <table class="tb">
  <tr>
 
@@ -41,15 +43,33 @@
 </tr>
 <tr>
 
-    <td>{{form.interview_date.label}}</td>
-    <td>{{form.interview_date}}</td>
+    <td>Interview Date</td>
+    <td> <input type="date" required name="interview_date" id="interview_date" class="form-control"></td>
 </tr>
 <tr>
     <td><input type="hidden" value="{{id}}" name="s_id" id=""></td>
-    <td><input type="submit" name="" value="Submit" id=""></td>
+    <td><input type="submit" name="" value="Submit" id="btn" class="btn" style="background-color: blueviolet;"></td>
 </tr>
 </table>
 
 
 </form>
+
+<script>
+    $(document).ready(()=>{
+        $('#btn').click(()=>{
+            var mob_format=/^[6-9]\d{9}$/
+            var mob_no=$("#id_cmp_contact").val()
+            if(mob_format.test(mob_no)==false){
+               $("#msg").html('Invalid Contact No.')
+               $("#msg").css('display','block')
+                return false;
+            }
+            else{
+                
+                $("#msg").css('display','none')
+            }
+        })
+    })
+</script>
 {% endblock %}
