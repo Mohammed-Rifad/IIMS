@@ -4,13 +4,13 @@
 
 <form method="POST" action="{% url 'institute_app:trainer_att' %}" class="reg-form" enctype="multipart/form-data">
     {% csrf_token %}
-    <p  class="text-danger">{{msg}}</p>
+  
 <table class="tb">
  
     <tr>
         <td>Select Trainer</td>
          <td>
-             <select name="trainer">
+             <select name="trainer" class="form-control">
                  {% for trainer in trainers %}
                 <option value="{{trainer.tr_id}}">{{trainer.tr_name|title}}</option>
                 {% endfor %}
@@ -22,14 +22,14 @@
             Date
         </td>
         <td>
-            <input type="date" name="date" id="" required>
+            <input type="date" name="date" id="" required class="form-control">
         </td>
     </tr>
 
         <tr>
             <td>Status</td>
             <td>
-                <select name="status" id="">
+                <select name="status" id="" class="form-control">
                     <option value="present">Present</option>
                     <option value="leave">Leave</option>
                 </select>
@@ -38,10 +38,14 @@
 
         <tr>
             <td></td>
-            <td><input type="submit" value="Add"></td>
+            <td><input type="submit" value="Add" class="btn" style="background-color: blueviolet;"></td>
         </tr>
     </table>
 
-
+    {% if msg %}
+    <div class="alert alert-success w-25" style="border-radius: 10px;margin-top: 10px;margin-left: 350px; " role="alert">
+       {{msg}}
+      </div>
+      {% endif %}
 </form>
 {% endblock %}

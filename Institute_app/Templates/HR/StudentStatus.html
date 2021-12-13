@@ -4,8 +4,8 @@
 
 <form action="{% url  'institute_app:upd_status' %}"  method="POST" enctype="multipart/form-data">
  {% csrf_token %}
-
- <table>
+        <h3 class="text-white fw-bold" style="margin-left: 490px;">{{name|title}}</h3>
+ <table class="table table-primary table-hover" style="opacity: 0.8;" >
      <tr>
 
          <th>Module</th>   

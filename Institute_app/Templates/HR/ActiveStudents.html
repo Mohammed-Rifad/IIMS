@@ -4,10 +4,10 @@
 
 <form action="{% url 'institute_app:hr_active_students' %}" method="POST">
  {% csrf_token %}
-<table>
+<table style="border-spacing: 10px;border-collapse: separate;color: white;font-weight: bold;margin-left: 330px;">
     <tr>
         <td>Select Course</td>
-        <td><select name="course" >
+        <td><select name="course" class="form-control" >
             {% for c in courses %}
             <option value="{{c.c_id}}">{{c.c_name|title}}</option>
             {% endfor %}
@@ -17,46 +17,52 @@
     </tr>
     <tr>
         <td></td>
-        <td><input type="submit"  value="Filter"></td>
+        <td><input type="submit"  value="Filter" class="btn" style="background-color: blueviolet;"></td>
     </tr>
 </table>
 </form>
-<table class="tb">
- <tr>
-    <th></th> 
-    <th>Student Name</th>
-    <th>Join Date</th>
-    <th>Type </th>
-    <th>Course</th>
-    <th>Address</th>
-    <th>Qualification</th>
-    <th>College</th>
-    <th>Passout Year</th>
-    <th>Email</th>
-    <th>Phone No</th>
 
-    
- </tr>
- 
-{% for student in students %}
-<tr>
-    <td><img src="{{student.s_pic.url}}" style="height: 80px; width: 80px;" alt=""></td>
-    <td>{{student.s_name|title}}</td>
-    <td>{{student.s_join}}</td>
-    <td>{{student.s_type}}</td>
-    <td>{{student.c_id.c_name|title}}</td>
-    <td>{{student.s_address|capfirst}}</td>
-    <td>{{student.s_qual|title}}</td>
-    <td>{{student.s_colg|title}}</td>
-    <td>{{student.s_passout}}</td>
-    <td>{{student.s_email}}</td>
-    <td>{{student.s_phno}}</td>
-    <td><a href="/IIMS/HrHome/Status?id={{student.s_id}}">Student Status</a></td>
-    <td><a href="/IIMS/HrHome/PayStatus?id={{student.s_id}}">Payment Status</a></td>
-</tr>
-{% endfor %}
-</table>
 
+<div style="margin-left: 20px;overflow: scroll; min-height: 500px;max-height: 500x; min-width:1000px;max-width: 1000px;">
+
+    <table class="table table-primary table-hover" style="opacity: 0.8;">
+        <tr>
+           <th></th> 
+           <th>Name</th>
+           <th>Join Date</th>
+           <th>Type </th>
+           <th>Course</th>
+           <th>Address</th>
+           <th>Qualification</th>
+           <th>College</th>
+           <th>Passout Year</th>
+           <th>Email</th>
+           <th>Phone No</th>
+       
+           <th></th>
+           <th></th>
+        </tr>
+        
+       {% for student in students %}
+       <tr>
+           <td><img src="{{student.s_pic.url}}" style="height: 40px; width: 40px;" alt=""></td>
+           <td>{{student.s_name|title}}</td>
+           <td>{{student.s_join}}</td>
+           <td>{{student.s_type}}</td>
+           <td>{{student.c_id.c_name|title}}</td>
+           <td>{{student.s_address|capfirst}}</td>
+           <td>{{student.s_qual|title}}</td>
+           <td>{{student.s_colg|title}}</td>
+           <td>{{student.s_passout}}</td>
+           <td>{{student.s_email}}</td>
+           <td>{{student.s_phno}}</td>
+           <td><a href="/HrHome/Status?id={{student.s_id}}&st_name={{student.s_name}}">Status</a></td>
+           <td><a href="/HrHome/PayStatus?id={{student.s_id}}&st_name={{student.s_name}}">Payment</a></td>
+       </tr>
+       {% endfor %}
+       </table>
+       
+</div>
 
 </form>
 {% endblock %}

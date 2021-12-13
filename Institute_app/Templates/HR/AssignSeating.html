@@ -4,13 +4,13 @@
 
 <form method="POST" action="{% url 'institute_app:assign_seat' %}" class="reg-form" enctype="multipart/form-data">
     {% csrf_token %}
-    <p  class="text-danger">{{msg}}</p>
+   
 <table class="tb">
     
     <tr>
         <td>Select Student</td>
          <td>
-             <select name="student">
+             <select name="student" class="form-control">
                  {% for student in students %}
                 <option value="{{student.s_id}}">{{student.s_name|title}}</option>
                 {% endfor %}
@@ -20,8 +20,8 @@
     <tr>
         <td>Select Lab</td>
          <td>
-             <select name="lab" id="lab">
-                <option disabled selected>-----------</option>
+             <select name="lab" id="lab" required class="form-control">
+           <option selected disabled>-------</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                
@@ -32,7 +32,7 @@
     <tr>
         <td>Select System</td>
          <td>
-             <select name="system" id="system">
+             <select name="system" id="system" class="form-control" required>
                 
                 
                
@@ -43,7 +43,7 @@
     <tr>
         <td>Select Slot</td>
          <td>
-             <select name="slot" id="slot">
+             <select name="slot" id="slot" required class="form-control">
                 
                 <option value="slot1">Slot 1</option>
                 <option value="slot2">Slot 2</option>
@@ -57,9 +57,32 @@
     
 </table>
 
-<input type="submit" value="Login" class="btn btn-primary" style="margin-left: 60px;"/>
+<input type="submit" value="Login" class="btn btn-primary" style="margin-left: 410px;"/>
 </form>
-{{status}}
+{% if status == 'Seat Allocated Succesfully' %}
+<div class="alert alert-success w-25" style="border-radius: 10px;margin-top: 10px;margin-left: 420px;" role="alert">
+   {{status}}
+  </div>
+  {% endif %}
+
+  {% if status == 'Selected System Not free' %}
+  <div class="alert alert-danger w-25" style="border-radius: 10px;margin-top: 10px;margin-left: 420px;" role="alert">
+     {{status}}
+    </div>
+
+
+    {% endif %}
+
+    {% if st %}
+    <div class="alert alert-danger " style="border-radius: 10px;margin-top: 10px;margin-left: 420px; width: 300px;" role="alert">
+       {{status}}
+      </div>
+  
+  
+      {% endif %}
+
+
+  
 
 <script>
     $(document).ready(function(){
@@ -75,7 +98,7 @@
         
 
          $.ajax({                      
-         url: "http://127.0.0.1:8000/IIMS/HrHome/getSystem",                    
+         url: "http://127.0.0.1:8000/HrHome/getSystem",                    
          data: {
              'lab_no': lab_no      
          },

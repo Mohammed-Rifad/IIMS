@@ -5,11 +5,11 @@
 
     
     {% csrf_token %}
-    <table>
+    <table style="border-spacing: 10px;border-collapse: separate;color: white;font-weight: bold;margin-left: 410px;">
         <tr>
             <td>Select Student</td>
             <td>
-                <select name="student">
+                <select name="student" class="form-control">
                 {% for student in students %}
                <option value="{{student.s_id}}">{{student.s_name|title}}</option>
                {% endfor %}
@@ -22,21 +22,27 @@
         </td>
         <td>
            
-            <textarea name="hr_comnt" id="" cols="30" rows="10" required></textarea>
+            <textarea name="hr_comnt" id="" cols="13" rows="5" class="form-control" required></textarea>
         </td>
     </tr>
     <tr>
         <td></td>
-        <td><input type="submit" ></td>
+        <td><input type="submit" class="btn" style="background-color: blueviolet;" ></td>
     </tr>
 </table>
-
-{% if success_msg %}
-{{success_msg}}
+{% if success_msg  %}
+<div class="alert alert-success w-25" style="border-radius: 10px;margin-top: 10px ;opacity: .9;margin-left: 430px;" role="alert">
+ {{success_msg}}
+</div>
 {% endif %}
 
-{% if error_msg %}
-{{error_msg}}
+
+{% if error_msg  %}
+<div class="alert alert-danger w-25" style="border-radius: 10px;margin-top: 10px; opacity: .9;margin-left: 430px;" role="alert">
+ {{error_msg}}
+</div>
+
+
 {% endif %}
 </form>
 

@@ -4,7 +4,14 @@
 
 <form method="POST"  class="reg-form" enctype="multipart/form-data">
     {% csrf_token %}
-    <p  class="text-danger">{{msg}}</p>
+    {% if msg  %}
+    <div class="alert alert-success w-25" style="border-radius: 10px;margin-top: 10px ;opacity: .9;margin-left: 430px;" role="alert">
+     {{msg}}
+    </div>
+    {% endif %}
+    
+    
+   
 <table class="tb">
  <tr>
 

@@ -2,10 +2,8 @@
 
 {% block content%}
 
-<form method="POST" action="{% url 'institute_app:hr_act_followup' %}" class="reg-form" enctype="multipart/form-data">
-    {% csrf_token %}
-    <p  class="text-danger">{{msg}}</p>
-<table class="tb">
+
+<table class="table table-hover table-primary" style="opacity: 0.8;"
  <tr>
      <th>Date Entered</th>
      <th>Name</th>
@@ -14,8 +12,14 @@
      <th>Passout</th>
      <th>Email</th>
      <th>Phone No</th>
+     <th></th>
+     <th></th>
+     <th></th>
  </tr>
 {% for data in followup_data %}
+<form method="POST" action="{% url 'institute_app:hr_act_followup' %}" class="reg-form" enctype="multipart/form-data">
+    {% csrf_token %}
+   
  <tr>
     <td>{{data.date_entered}}</td>
 <td>{{data.s_name|title}}</td>
@@ -24,10 +28,12 @@
 <td>{{data.s_passout}}</td>
 <td>{{data.s_email}}</td>
 <td>{{data.s_phno}}</td>
-<td><a href="{% url 'institute_app:hr_add_followup' data.f_id %}">Update</a></td>
-<td><a href="{% url 'institute_app:hr_followup_hst' data.f_id %}">View History</a></td>
-<td><a href="">complete</a></td>
+<td><a href="{% url 'institute_app:hr_add_followup' data.f_id %}" class="btn btn-info">Update</a></td>
+<td><a href="{% url 'institute_app:hr_followup_hst' data.f_id %}" class="btn btn-warning">View History</a></td>
+<td><input type="submit" class="btn btn-danger" value="Complete" style="width: 100px;"></a></td>
+<td><input type="text" name="f_id" value="{{data.f_id}}" id=""></td>
  </tr>
+ </form>
  {% endfor %}
     
 </table>

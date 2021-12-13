@@ -4,10 +4,12 @@
 
 
     <p  class="text-danger">{{msg}}</p>
-<table class="tb">
+<table class="table table-primary table-hover">
  <tr>
     <th>Date</th> 
     <th>Status</th>
+    <th></th>
+    <th></th>
     
  </tr>
  
@@ -18,11 +20,12 @@
     <td>{{d.date}}</td>
 <td>{{d.status|capfirst}}</td>
 
-<td><input type="submit" value="Delete" name="" id=""></td>
-<td><input type="hidden" name="id" id="" value="{{d.id}}"></td>
+<td><input type="submit" value="Delete" name="" id="" class="btn btn-danger" ></td>
+<td><input type="hidden" name="id" id="" value="{{d.id}}" ></td>
  </tr>
- {% endfor %}
+ 
     </form>
+    {% endfor %}
 </table>
 
 

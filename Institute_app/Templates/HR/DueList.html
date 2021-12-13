@@ -3,9 +3,17 @@
 
 {% extends 'HR/HrMaster.html' %}
 
+{% load humanize %}
 {% block content%}
-
-<table>
+<div>
+    <table style="margin-left: 200px; margin-top: 20px; border-spacing: 20px;border-collapse: separate;">
+        <tr>
+            <td class="h5 text-white"><b>Total Payment To Receive</b> : </td>
+            <td class="h5" style="color: bisque;"><b>Rs {{total|intcomma}}</b></td>
+        </tr>
+    </table>
+    </div>
+<table class="table table-primary table-hover" style="opacity: 0.8;">
     <tr>
         <th>SID</th>
         <th>Student Name</th>
@@ -21,12 +29,13 @@
             <td>{{arr.s_id.s_id}}</td>
             <td>{{arr.s_id.s_name|title}}</td>
             <td>{{arr.s_id.s_type|title}}</td>
-            <td>{{arr.ins_no}}</td>
+           
             <td>{{arr.s_id.c_id.c_name|title}}</td>
+            <td>{{arr.ins_no}}</td>
             <td>{{arr.due_date}}</td>
             <td>Rs {{arr.due_amt}}</td>
-            <td><a href="/IIMS/HrHome/AddPayment?id={{arr.id}}&st={{arr.s_id.s_name}}">Add Payment</a></td>
-            {{arr.id}}
+            <td><a href="/HrHome/AddPayment?id={{arr.id}}&st={{arr.s_id.s_name}}">Add Payment</a></td>
+           
         </tr> 
         
         {% endfor %}

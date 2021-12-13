@@ -18,6 +18,7 @@ def HrHome(request):
 def AddStudent(request):
     form=StudentForm()
     msg=""
+    tab_selection="Register Student"
     courses=CourseDetails.objects.all()
     if request.method=='POST':
         form=StudentForm(request.POST,request.FILES)
@@ -60,8 +61,8 @@ def AddStudent(request):
                 msg="Email Already Added"
         else:
             print(form.errors)
-        return render(request,'HR/AddStudent.html',{'form':form,'courses':courses,'msg':msg}) 
-    return render(request,'HR/AddStudent.html',{'form':form,'courses':courses})
+        return render(request,'HR/AddStudent.html',{'form':form,'courses':courses,'msg':msg,'tab_selection':tab_selection}) 
+    return render(request,'HR/AddStudent.html',{'form':form,'courses':courses,'tab_selection':tab_selection})
 
 # ajax
 def getSystem(request):
@@ -72,6 +73,9 @@ def getSystem(request):
 
 def AssignSeating(request):
     status=""
+    s_name=""
+    tab_selection="Assign Seat"
+    st=False
     students=StudentDetails.objects.filter(status="active",s_type="offline")
     if request.method=='POST':
 
@@ -84,24 +88,33 @@ def AssignSeating(request):
         seating_data=SeatingDetails.objects.get(sys_no=sys_no,lab_no=lab)
 
         status=checkSystemAvailability(seating_data,selected_slot,student)
-        
-    return render(request,'HR/AssignSeating.html',{'students':students,'status':status})
+        if status=="Seat Already Allocated For "+student.s_name.title():
+            st=True
+        else:
+            st=False
+    return render(request,'HR/AssignSeating.html',{'students':students,'status':status,'tab_selection':tab_selection,'s_name':s_name,'st':st})
 
 
 def ViewSeating(request):
     seating_details=""
+    tab_selection="View Seating"
     if request.method=='POST':
         lab_no=request.POST['lab']
         seating_details=SeatingDetails.objects.filter(lab_no=lab_no)
-    return render(request,'HR/ViewSeating.html',{'seating_details':seating_details})
+    return render(request,'HR/ViewSeating.html',{'seating_details':seating_details,'tab_selection':tab_selection})
 
 
 def ActiveFollowUp(request):
+    tab_selection="Follow Up"
     followup_data=FollowUpData.objects.filter(status="active")
-    return render(request,'HR/ActiveFollowUp.html',{'followup_data':followup_data,})
+    if request.method=='POST':
+        data=FollowUpData.objects.get(f_id=request.POST['f_id'])
+        data.status='completed'
+        data.save()
+    return render(request,'HR/ActiveFollowUp.html',{'followup_data':followup_data,'tab_selection':tab_selection})
 
 def AddFollowUp(request,id):
-
+    tab_selection="Update Follow Up"
     if request.method=='POST':
         id=FollowUpData.objects.get(f_id=id)
         cur_date=date.today()
@@ -114,43 +127,87 @@ def AddFollowUp(request,id):
         
         return redirect("institute_app:hr_act_followup")
        
-    return render(request,'HR/FollowUp.html',{'id':id})
+    return render(request,'HR/FollowUp.html',{'id':id,'tab_selection':tab_selection})
 
 def FollowUpHistory(request,f_id):
     data=FollowupStatus.objects.filter(f_id=f_id)
+    tab_selection="Follow Up History"
     if request.method=='POST':
         id=request.POST['id']
         hst_data=FollowupStatus(id=id)
         hst_data.delete()
-    return render(request,'HR/FollowUpHistory.html',{'data':data})
+    return render(request,'HR/FollowUpHistory.html',{'data':data,'tab_selection':tab_selection})
 
 def ViewActiveStudents(request):
+    tab_selection="Active Students"
     courses=CourseDetails.objects.all()
     students=StudentDetails.objects.filter(status="active")
     if request.method=='POST':
         course=request.POST['course']
         students=StudentDetails.objects.filter(c_id=course, status="active")
-    return render(request,'HR/ActiveStudents.html',{'students':students,'courses':courses})
+    return render(request,'HR/ActiveStudents.html',{'students':students,'courses':courses,'tab_selection':tab_selection})
 
 def TrainerAttendance(request):
     trainers=TrainerDetails.objects.filter(tr_status="active")
+    tab_selection="Trainers Attendance"
+    msg=""
     if request.method=='POST':
         trainer=TrainerDetails.objects.get(tr_id=request.POST['trainer'])
         dt=request.POST['date']
         status=request.POST['status']
-        mnth=date.today().month
+        mnth=datetime.strptime(dt,"%Y-%m-%d").date().month
+        
         yr =date.today().year
         dt_convrt=datetime.strptime(dt,"%Y-%m-%d").date()
         dt_str=dt_convrt.strftime("%d/%m/%Y")
-        print(mnth,yr,dt_convrt,dt_str)
+        print('lplpp',dt_str)
+        is_mnth_added=AttendanceDetails.objects.filter(tr_id=trainer.tr_id,mnth=mnth).exists()
+       
+        if not is_mnth_added:
 
-        already_added=AttendanceDetails.objects.filter(tr_id=trainer,date=dt_str).exists()
-        if not already_added:
-            attendance=AttendanceDetails(type="trainer",tr_id=trainer,date=dt_str,status=status,mnth=mnth,yr=yr)
-            attendance.save()
-            success_msg="Attendance Added Succesfully"
-            return render(request,'HR/TrainerAttendance.html',{'trainers':trainers,'success_msg':success_msg})
-    return render(request,'HR/TrainerAttendance.html',{'trainers':trainers})
+            mnth_data=[31,28,31,30,31,30,31,31,30,31,30,31]
+            selected_mnth=mnth_data[mnth-1]
+            # print('mnth',mnth)
+            # print('***********************',selected_mnth)
+            for d in range(1,selected_mnth+1):
+                
+                # date_to_enter=datetime.datetime.date()+datetime.timedelta(days=1)
+                if d<10:
+                    date_to_enter=f'0{d}/{mnth}/{yr}'
+                else:
+                    date_to_enter=f'{d}/{mnth}/{yr}'
+
+                print('date',date_to_enter)
+        
+                attendance=AttendanceDetails(type="trainer",tr_id=trainer,mnth=mnth,date=date_to_enter,yr=yr,status="N/A")
+                attendance.save()
+            selected_attendance=AttendanceDetails.objects.get(tr_id=trainer.tr_id,mnth=mnth,yr=yr,date=dt_str)
+            selected_attendance.status=status
+            selected_attendance.save()
+            print('edjkdhf',selected_attendance.status)
+        else:
+             
+            selected_attendance=AttendanceDetails.objects.get(tr_id=trainer.tr_id,date=dt_str)
+            selected_attendance.status=status
+            selected_attendance.save()
+        msg="Attendance Added Succesfully"
+    # if request.method=='POST':
+    #     trainer=TrainerDetails.objects.get(tr_id=request.POST['trainer'])
+    #     dt=request.POST['date']
+    #     status=request.POST['status']
+    #     mnth=date.today().month
+    #     yr =date.today().year
+    #     dt_convrt=datetime.strptime(dt,"%Y-%m-%d").date()
+    #     dt_str=dt_convrt.strftime("%d/%m/%Y")
+    #     print(mnth,yr,dt_convrt,dt_str)
+
+    #     already_added=AttendanceDetails.objects.filter(tr_id=trainer,date=dt_str).exists()
+    #     if not already_added:
+    #         attendance=AttendanceDetails(type="trainer",tr_id=trainer,date=dt_str,status=status,mnth=mnth,yr=yr)
+    #         attendance.save()
+    #         msg="Attendance Added Succesfully"
+    #         return render(request,'HR/TrainerAttendance.html',{'trainers':trainers,'msg':msg})
+    return render(request,'HR/TrainerAttendance.html',{'trainers':trainers,'tab_selection':tab_selection,'msg':msg})
 
 
 def ViewTrainerAttendance(request):
@@ -173,16 +230,19 @@ def DueList(request):
     data=FeeDetails.objects.filter(status='not paid')
     print(data)
     ss=0
+    total=0
+    tab_selection="Due List"
     for i in data:
         dt=i.due_date
        
         d=datetime.strptime(dt,'%d/%m/%Y')
         dd=datetime.now()+timedelta(days=7)
         if d<=dd:
+            total+=i.due_amt
             std_array.append(i)
         print(d)
         print('array',std_array)
-    return render(request,'HR/DueList.html',{'data':std_array})
+    return render(request,'HR/DueList.html',{'data':std_array,'tab_selection':tab_selection,'total':total})
 
 def AddPayment(request):
     if request.method=='GET':
@@ -191,8 +251,12 @@ def AddPayment(request):
     if request.method=='POST':
         payment_data=FeeDetails.objects.get(id=request.session['p_id'])
         
+        # payment_data.paid_amt=request.POST['p_amt']
+        # payment_data.paid_date=request.POST['p_date']
+        dt_convrt=datetime.strptime(request.POST['p_date'],"%Y-%m-%d").date()
+        dt_str=dt_convrt.strftime("%d/%m/%Y")
         payment_data.paid_amt=request.POST['p_amt']
-        payment_data.paid_date=request.POST['p_date']
+        payment_data.paid_date=dt_str
         payment_data.pay_type="offline"
         payment_data.status="paid"
         payment_data.save()
@@ -204,13 +268,18 @@ def AddPayment(request):
 
 def StudentStatus(request):
     id=request.GET['id']
+    name=request.GET['st_name']
+    tab_selection="Student Status"
     student_data=StudentModule.objects.filter(s_id=id)
-    return render(request,'HR/StudentStatus.html',{'student_data':student_data})
+    return render(request,'HR/StudentStatus.html',{'student_data':student_data,'tab_selection':tab_selection,'name':name})
 
 def PaymentStatus(request):
     id=request.GET['id']
+    name=request.GET['st_name']
+    tab_selection="Payment Status"
     payment_data=FeeDetails.objects.filter(s_id=id)
-    return render(request,'HR/PaymentStatus.html',{'payment_data':payment_data})
+    
+    return render(request,'HR/PaymentStatus.html',{'payment_data':payment_data,'name':name,'tab_selection':tab_selection})
 
 def ViewStudentAttendance(request):
     attendance_data=""
@@ -219,7 +288,7 @@ def ViewStudentAttendance(request):
     if request.method=='POST':
         s_id=request.POST['student']
         mnth=request.POST['mnth']
-        yr=datetime.date.today().year
+        yr=date.today().year
         student_data=StudentDetails.objects.get(s_id=s_id)
         attendance_data=AttendanceDetails.objects.filter(s_id=s_id,mnth=mnth,yr=yr)
         student_name=student_data.s_name
@@ -227,6 +296,7 @@ def ViewStudentAttendance(request):
 
 def RequestCertificate(request):
     students=StudentDetails.objects.filter(status="active")
+    tab_selection="Request Certificate"
     if request.method=='POST':
         student=StudentDetails.objects.get(s_id=request.POST['student'])
         hr_comnt=request.POST['hr_comnt']
@@ -240,13 +310,14 @@ def RequestCertificate(request):
             return render(request,'Hr/RequestCertificate.html',{'students':students,'success_msg':success_msg,})
         else:
             error_msg="Certificate Already Requested"
-            return render(request,'Hr/RequestCertificate.html',{'students':students,'error_msg':error_msg,})
+            return render(request,'Hr/RequestCertificate.html',{'students':students,'error_msg':error_msg,'tab_selection':tab_selection})
 
-    return render(request,'Hr/RequestCertificate.html',{'students':students,})
+    return render(request,'Hr/RequestCertificate.html',{'students':students,'tab_selection':tab_selection})
 
 
 def CertStatus(request):
     data=CertificateDetails.objects.all()
+    tab_selection="Certificate Status"
     if request.method=='POST':
         rec_date=request.POST['rec_date']
         dt_convrt=datetime.strptime(rec_date,"%Y-%m-%d").date()
@@ -257,7 +328,7 @@ def CertStatus(request):
         cert_data.status="received"
         cert_data.save()
     
-    return render(request,'Hr/CertificateStatus.html',{'data':data,})
+    return render(request,'Hr/CertificateStatus.html',{'data':data,'tab_selection':tab_selection})
 
 def CompletedStudents(request):
     students=StudentDetails.objects.filter(status="completed")
@@ -270,17 +341,19 @@ def CompletedStudents(request):
 def AddInterView(request):
     form=InterviewForm()
     courses=CourseDetails.objects.all()
+    tab_selection="Assign Interview"
     students=StudentDetails.objects.filter(status="active")
     if request.method=='POST':
         course=request.POST['course']
         students=StudentDetails.objects.filter(c_id=course, status="active")
-    return render(request,'HR/AddInterview.html',{'students':students,'courses':courses,'form':form})
+    return render(request,'HR/AddInterview.html',{'students':students,'courses':courses,'form':form,'tab_selection':tab_selection})
 
     
 def SchedhuleInterview(request) :
     id=request.GET['id']
     msg=""
     form=InterviewForm()
+    tab_selection="Schedhule Interview"
     if request.method=='POST':
 
         form=InterviewForm(request.POST)
@@ -298,7 +371,7 @@ def SchedhuleInterview(request) :
             interview_date=interview_date,int_type=int_type,s_id=student,added_date=added_date,int_post=int_post)
             interview.save()
             msg="Data Submitted Succesfully"
-    return render(request,'HR/SchedhuleInterview.html',{'form':form,'id':id,'msg':msg})
+    return render(request,'HR/SchedhuleInterview.html',{'form':form,'id':id,'msg':msg,'tab_selection':tab_selection})
 
 
 def ViewInterview(request):

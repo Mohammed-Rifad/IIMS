@@ -1,16 +1,16 @@
-{% extends 'HR/HrMaster.html' %}
+{% extends 'Hr/HrMaster.html' %}
 
 {% block content%}
 <form method="POST" action="{% url 'institute_app:view_seating_hr'  %}" class="reg-form" enctype="multipart/form-data">
 
     {% csrf_token %}
-    <table>
+    <table style="border-spacing: 10px; border-collapse: separate; margin-left: 330px;">
     <tr>
-        <td>
+        <td class="text-white" style="font-weight: bold;">
             Select Lab
         </td>
         <td>
-            <select name="lab" >
+            <select name="lab" class="form-control">
                 <option value="1">1</option>
                 <option value="2">2</option>
             </select>
@@ -18,7 +18,7 @@
     </tr>
     <tr>
         <td></td>
-        <td><input type="submit" ></td>
+        <td><input type="submit" class="btn btn-primary" style="background-color: blueviolet;" ></td>
     </tr>
 </table>
 
@@ -28,7 +28,7 @@
 
 {% if seating_details %}
 
-<table>
+<table class="table table-primary">
    <tr>
       
        <th>Sys No</th>

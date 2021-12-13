@@ -1,23 +1,41 @@
 {% extends 'HR/HrMaster.html' %}
 
 {% block content%}
-
+<div class="bd">
+    
 <form method="POST" action="{% url 'institute_app:add_student' %}" class="reg-form" enctype="multipart/form-data">
     {% csrf_token %}
-    <p  class="text-danger">{{msg}}</p>
-<table class="tb">
+   
+    {% if error_msg  %}
+ <div class="alert alert-danger w-50 tb"  style="border-radius: 10px;margin-top: 10px; opacity: .9;" role="alert">
+  {{error_msg}}
+ </div>
+
+ 
+ {% endif %}
+
+
+ <div class="alert alert-danger tb"  id="err_display" style="border-radius: 10px;margin-top: 10px; opacity: .9;display: none;margin-left: 400px; width: 360px;" role="alert">
+  
+ </div>
+
+ 
+
+
+
+<table class="tb" >
     <tr>
         <td>{{form.s_name.label}}</td>
          <td>{{form.s_name}}</td>
     </tr>
     <tr>
-        <td>{{form.s_gender.label}}</td>
-         <td>{{form.s_gender}}</td>
+        <td >{{form.s_gender.label}}</td>
+         <td style="color: black;">{{form.s_gender}}</td>
     </tr>
     <tr>
         <td>Course Selected</td>
          <td>
-             <select name="course">
+             <select name="course" class="form-control">
                  {% for course in courses %}
                 <option value="{{course.c_id}}">{{course.c_name|title}}</option>
                 {% endfor %}
@@ -71,15 +89,157 @@
     <tr>
 
         <td>Enter Installment</td>
-        <td><input type="number" name="ins1" required style="width: 80px;">
-            <input type="number" name="ins2" required style="width: 80px;">
+        <td><input type="number" name="ins1" required style="width: 80px;" id="ins1" min="100">
+            <input type="number" name="ins2" required style="width: 80px;" id="ins2" min=100>
             
-            <input type="number" name="ins3" required style="width: 80px;"></td>
+            <input type="number" name="ins3" required style="width: 80px;" id="ins3" min=100></td>
     </tr>
    
     
 </table>
 
-<input type="submit" value="Add" class="btn btn-primary" style="margin-left: 60px;"/>
+<input type="submit" id='btn' value="Add" class="btn btn-primary"  style="margin-left: 480px;"/>
 </form>
+</div>
+
+<script>
+$(document).ready(()=>{
+    $('#btn').click(()=>{
+       
+    
+    var sname=$('#id_s_name') 
+    var dob=$('#id_s_dob')
+    var colg=$('#id_s_colg')
+    var passout=$('#id_s_passout')
+    var address=$('#id_s_address')
+    var email=$('#id_s_email') 
+    var phno=$('#id_s_phno') 
+    var amt=$('#id_amt_payable')     
+    var ins1=$('#ins1').val()
+    var ins2=$('#ins2').val()
+    var ins3=$('#ins3').val()
+    var err=$('#err_display')
+    var name_format=/^[a-z A-Z]+$/
+    var reg_email = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+      
+    dob_format = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/
+   
+    if(sname.val()==''){
+        err.css({'display':'block','color':'red'})
+        err.html('Please Enter Name')
+        sname.focus()
+        return false
+    }
+    else{
+        err.css({'display':'none'})
+    }
+
+
+
+    if(address.val()==''){
+        err.css({'display':'block','color':'red'})
+        err.html('Please Enter Address')
+        address.focus()
+        return false
+    }
+    else{
+        err.css({'display':'none'})
+    }
+    if(email.val()==''){
+        err.css({'display':'block','color':'red'})
+        err.html('Please Enter Email')
+        email.focus()
+        return false
+    }
+    else{
+        err.css({'display':'none'})
+    }
+    
+    if(!reg_email.test(email)){
+         
+        err.css({'display':'block','color':'red'})
+        err.html('Invalid Email Format')
+        phno.focus()
+        
+        return false;
+    }
+
+    else{
+        err.css({'display':'none'})
+    }
+
+    if(phno.val()==''){
+        err.css({'display':'block','color':'red'})
+        err.html('Please Enter Phone')
+        phno.focus()
+        return false
+    }
+    else{
+        err.css({'display':'none'})
+    }
+ 
+
+    if(name_format.test(sname.val())==false){
+        
+        err.css({'display':'block','color':'red'})
+        err.html('Name Should Not Contain Numbers')
+        sname.focus()
+        return false
+    }
+    else{
+        err.css({'display':'none'})
+    }
+
+
+
+    if(dob_format.test(dob.val())==false){
+        alert('yes')
+        err.css({'display':'block','color':'red'})
+        err.html('Invalid DOB')
+        dob.focus()
+        return false
+    }
+    else{
+        err.css({'display':'none'})
+    }
+
+
+    if(dob.val()==''){
+        
+        err.css({'display':'block','color':'red'})
+        err.html('Enter D.O.B')
+        dob.focus()
+        return false
+    }
+    else{
+        err.css({'display':'none'})
+    }
+
+    if(colg.val()==''){
+        err.css({'display':'block','color':'red'})
+        err.html('Please Enter College Name')
+        colg.focus()
+        return false
+    }
+    else{
+        err.css({'display':'none'})
+    }
+    
+   
+
+    if(passout.val().length!=4){
+       
+        err.css({'display':'block','color':'red'})
+        err.html('Enter Valid Passout Year')
+        passout.focus()
+        return false
+    }
+
+    else{
+        err.css({'display':'none'})
+    }
+
+    })
+})
+</script>
 {% endblock %}
