@@ -12,6 +12,7 @@ from django.utils.crypto import get_random_string
 from .auth_gaurd import auth_hr
 from ..services import AddStudentModule, GetUniqueID, InsertFeeDetails, email_service,checkSystemAvailability
 
+
 @auth_hr
 def HrHome(request):
     return render(request,'HR/HrHome.html')
@@ -335,7 +336,7 @@ def CertStatus(request):
 
 def Logout(request):
      
-    if 'hr' in request.session:
+    if 'hr_id' in request.session:
         del request.session['hr_id']
     request.session.flush()
     return redirect("institute_app:login")

@@ -1,8 +1,12 @@
 import datetime
 
+from django.db.models.query_utils import Q
+
 from Institute_app.services import UpdateSeat, getFileName
 from django.shortcuts import render,redirect
 from django.core.paginator import Paginator
+from passlib.hash import pbkdf2_sha256
+
 from ..models import AttendanceDetails, CourseDetails, ExamDetails, ModuleDetails, NotesDetails, SeatingDetails,StudentDetails, StudentModule, SystemDetails, TrainerDetails
 
 def TrainerHome(request):
@@ -215,9 +219,15 @@ def ViewStudentAttendance(request):
 
 
 def StudentExam(request):
-    tab_selection="View Exam"
+    tab_selection="Update Exam"
     exams=ExamDetails.objects.filter(status='pending')
     return render(request,'Trainer/Exams.html',{'exams':exams,'tab_selection':tab_selection})
+
+def ViewAllExam(request):
+    tab_selection="View Exam"
+    exams=ExamDetails.objects.filter(~Q(status='pending'))
+    return render(request,'Trainer/AllExams.html',{'exams':exams,'tab_selection':tab_selection})
+
 
 def DeleteExam(request):
     id=request.GET['id']
@@ -226,7 +236,7 @@ def DeleteExam(request):
     return redirect("institute_app:tr_view_exam")
 
 def UpdateExam(request):
-    
+    tab_selection="Update Exam"
     if request.method=='POST':
         id=request.POST['id']
         exam=ExamDetails.objects.get(id=id)
@@ -235,7 +245,7 @@ def UpdateExam(request):
         return redirect("institute_app:tr_view_exam")
     id=request.GET['id']
     
-    return render(request,'Trainer/UpdateExam.html',{'id':id,})
+    return render(request,'Trainer/UpdateExam.html',{'id':id,'tab_selection':tab_selection})
 
 
 def ViewSeating(request):
@@ -246,3 +256,53 @@ def ViewSeating(request):
         seating_details=SeatingDetails.objects.filter(lab_no=lab_no)
     return render(request,'Trainer/ViewSeating.html',{'seating_details':seating_details,'tab_selection':tab_selection})
 
+
+def ChangePassword(request):
+    tab_selection="Change Password"
+    if request.method=='POST':
+
+        old_passwd=request.POST['old_passwd']
+        new_passwd=request.POST['new_passwd']
+        con_passwd=request.POST['con_passwd']
+
+        trainer_data=TrainerDetails.objects.get(tr_id=request.session['tr_id'])
+        is_true=pbkdf2_sha256.verify(old_passwd,trainer_data.tr_passwd)
+        if is_true:
+            if len(new_passwd)>8:
+                if new_passwd==con_passwd:
+                    new_encrypted_passwd=pbkdf2_sha256.hash(new_passwd,rounds=1000,salt_size=32)
+                    trainer_data.tr_passwd=new_encrypted_passwd
+                    trainer_data.save()
+                    success_msg="Password Changed Succesfully"
+                    return render(request,'Trainer/ChangePassword.html',{'success_msg':success_msg,})
+                else:
+                    error_msg="Password Mismatch"
+                    return render(request,'Trainer/ChangePassword.html',{'error_msg':error_msg,})
+            else:
+                error_msg="Password Should be atleast 8 characters"
+                return render(request,'Trainer/ChangePassword.html',{'error_msg':error_msg,})
+        else:
+            error_msg="Invalid Password! enter Your correct password"
+            return render(request,'Trainer/ChangePassword.html',{'error_msg':error_msg,})
+
+    return render(request,'Trainer/ChangePassword.html',{'tab_selection':tab_selection,})
+
+def Logout(request):
+     
+    if 'tr_id' in request.session:
+        del request.session['tr_id']
+    request.session.flush()
+    return redirect("institute_app:login")
+
+def MyAttendance(request):
+    tab_selection="My Attendance"
+    attendance_data=""
+    if request.method=='POST':
+       
+        mnth=request.POST['mnth']
+        yr=datetime.date.today().year
+     
+        
+        attendance_data=AttendanceDetails.objects.filter(tr_id=request.session['tr_id'],mnth=mnth,yr=yr)
+        
+    return render(request,'Trainer/MyAttendance.html',{'attendance_data':attendance_data,'tab_selection':tab_selection})

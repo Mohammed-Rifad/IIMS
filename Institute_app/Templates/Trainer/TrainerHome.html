@@ -57,14 +57,16 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link nav-link-1 active" aria-current="page" href="index.html"><span class=text-white>Home</span></a>
+                                <a class="nav-link nav-link-1 active" aria-current="page" href="{% url 'institute_app:tr_home' %"><span class=text-white>Home</span></a>
                             </li>
                             <li class="nav-item text-primary">
-                                <a class="nav-link nav-link-2" href="videos.html"><span class=text-white>Notification</span></a>
+                                <a class="nav-link nav-link-2" href="{% url 'institute_app:tr_chnge' %}"><span class=text-white>Change Password</span></a>
                             </li>
-                          
+                            <li class="nav-item text-primary">
+                                <a class="nav-link nav-link-2" href="{% url 'institute_app:tr_my_att' %}"><span class=text-white>My Attendance</span></a>
+                            </li>
                             <li class="nav-item">
-                                <a class="nav-link nav-link-4" href="contact.html"><span class=text-white>Logout</span></a>
+                                <a class="nav-link nav-link-4" href="{% url 'institute_app:tr_logout' %}"><span class=text-white>Logout</span></a>
                             </li>
                         </ul>
                         </div>
@@ -277,7 +279,29 @@
            
                 <div class=" text-center text-info opt " id=vatt>
                     <a href="{% url 'institute_app:tr_view_exam' %}">
-                    <h5 class="mt-2">View Exam</h5>
+                    <h5 class="mt-2">Update Exam</h5>
+                    <i class="fas fa-book-open fa-2x"></i>
+    
+                     <br>
+                     </a>
+    <i class="fas fa-chevron-right" style="position: relative; left: 40px;"></i>
+                 </div>
+            </div>
+
+
+            <div class="col-md-3 col-sm-4" >
+                <!-- <figure class="effect-ming tm-video-item" style="width: 200px;">
+                    <img src="{% static 'img/img-03.jpg' %}" alt="Image" class="img-fluid img-rounded" style="border-radius: 2px;">
+                    <figcaption class="d-flex align-items-center justify-content-center">
+                        <h2>View</h2>
+                        <a href="photo-detail.html">Students</a>
+                    </figcaption>                    
+                </figure>
+                <span class="h6" style="margin-left: 40px;color:black ;font-weight: bolder;">View Attendance</span>   -->
+           
+                <div class=" text-center text-info opt " id=vatt>
+                    <a href="{% url 'institute_app:tr_all_exam' %}">
+                    <h5 class="mt-2">View Exams</h5>
                     <i class="fas fa-book-open fa-2x"></i>
     
                      <br>

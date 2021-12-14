@@ -28,13 +28,17 @@
                         <div class="collapse navbar-collapse d-flex justify-content-right" id="navbarSupportedContent">
                             <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                                 <li class="nav-item">
-                                    <a class="nav-link nav-link-1 active" aria-current="page" href="index.html">  <span class="">  <span class="">Home</span></span></a>
+                                    <a class="nav-link nav-link-1 active" aria-current="page" href="{% url 'institute_app:tr_home' %}">  <span class="">  <span class="">Home</span></span></a>
+                                </li>
+                               
+                                <li class="nav-item">
+                                    <a class="nav-link nav-link-2" href="{% url 'institute_app:tr_chnge' %}">  <span class="">  <span class="">Change Password</span></span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link nav-link-2" href="videos.html">  <span class="">  <span class="">Notification</span></span></a>
+                                    <a class="nav-link nav-link-2" href= "{% url 'institute_app:tr_my_att' %}">  <span class="">  <span class="">Change Password</span></span></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link nav-link-3" href="about.html">  <span class="">Logout</span></a>
+                                    <a class="nav-link nav-link-3" href="{% url 'institute_app:tr_logout' %}">  <span class="">Logout</span></a>
                                 </li>
                                
                             </ul>

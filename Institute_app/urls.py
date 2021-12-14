@@ -77,5 +77,10 @@ urlpatterns = [
     path('TrainerHome/ExamUp',TrainerViews.UpdateExam,name="tr_up_exam"),
     path('Student/StudentHome',StudentViews.StudentHome,name="st_home"),
     path('Student/Notes',StudentViews.ViewNotes,name="st_notes"),
-    path('Student/Exam',StudentViews.ExamShedhule,name="st_exam")
+    path('Student/Exam',StudentViews.ExamShedhule,name="st_exam"),
+    path('TrainerHome/ChangePasswd',TrainerViews.ChangePassword,name="tr_chnge"),
+    path('TrainerHome/Logout',TrainerViews.Logout,name="tr_logout"),
+    path('TrainerHome/AllExams',TrainerViews.ViewAllExam,name="tr_all_exam"),
+    path('TrainerHome/MyAtt',TrainerViews.MyAttendance,name="tr_my_att"),
+
 ]
