@@ -1,0 +1,29 @@
+{% extends 'Student/StudentMaster.html' %}
+
+{% block content%}
+
+<table class="table table-primary table-hover" style="opacity: 0.8;">    
+    <tr>
+    
+        <th>Module</th>
+        <th>Date Added</th>
+        <th>Exam Date</th>
+        <th>Status</th>
+        
+   </tr>
+   {% for exam in exams %}
+   
+    <td>{{exam.m_id.m_name|title}}</td>
+    <td>{{exam.date_entered}}</td>
+    <td>{{exam.exam_date}}</td>
+    <td>{{exam.status|title}}</td>
+
+    
+   <tr>
+    {% endfor %}
+  
+</table>
+   
+
+
+{% endblock %}

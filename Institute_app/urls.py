@@ -75,12 +75,18 @@ urlpatterns = [
     path('TrainerHome/getStudentModule',TrainerViews.getStudentModule),
     path('TrainerHome/ExamDel',TrainerViews.DeleteExam,name="tr_del_exam"),
     path('TrainerHome/ExamUp',TrainerViews.UpdateExam,name="tr_up_exam"),
-    path('Student/StudentHome',StudentViews.StudentHome,name="st_home"),
-    path('Student/Notes',StudentViews.ViewNotes,name="st_notes"),
-    path('Student/Exam',StudentViews.ExamShedhule,name="st_exam"),
     path('TrainerHome/ChangePasswd',TrainerViews.ChangePassword,name="tr_chnge"),
     path('TrainerHome/Logout',TrainerViews.Logout,name="tr_logout"),
     path('TrainerHome/AllExams',TrainerViews.ViewAllExam,name="tr_all_exam"),
     path('TrainerHome/MyAtt',TrainerViews.MyAttendance,name="tr_my_att"),
+   
+    path('Student/StudentHome',StudentViews.StudentHome,name="st_home"),
+    path('Student/Notes',StudentViews.ViewNotes,name="st_notes"),
+    path('Student/Exam',StudentViews.ExamShedhule,name="st_exam"),
+    path('Student/MyAtt',StudentViews.MyAttendance,name="st_att"),
+    path('Student/Exams',StudentViews.ViewAllExam,name="st_exam"),
+    path('Student/PayStatus',StudentViews.PaymentStatus,name="st_pay"),
+    path('Student/Interview',StudentViews.ViewInterview,name="st_inter"),
+    path('Student/ChangePass',StudentViews.ChangePassword,name="st_chpass"),
 
 ]

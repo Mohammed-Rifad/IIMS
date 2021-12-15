@@ -1,0 +1,45 @@
+{% extends 'Student/StudentMaster.html' %}
+
+{% block content%}
+
+
+   {% if data %}
+<table class="table table-primary table-hover" style="opacity: 0.8;">
+ <tr>
+    <th>Date Entered</th> 
+    <th>Student Name</th>
+    <th>Interview Date</th>
+    <th>Company Name</th>
+    <th>Address</th>
+    <th>Contact</th>
+    <th>Mode</th>
+    <th>Post</th>
+    <th>Status</th>
+    <th></th>
+    <th></th>
+    <th></th>
+ </tr>
+{% for d in data %}
+<tr>
+   
+{% csrf_token %}
+        <td>{{d.added_date}}</td>
+        <td>{{d.s_id.s_name|title}}</td>
+        <td>{{d.interview_date}}</td>
+        <td>{{d.cmp_name|title}}</td>
+        <td>{{d.cmp_addr|capfirst}}</td>
+        <td>{{d.cmp_contact}}</td>
+        <td>{{d.int_type|title}}</td>
+        <td>{{d.int_post|title}}</td>
+        <td>{{d.status|title}}</td>
+        
+        <td><input type="hidden" name="int_id" value= id=""></td>
+</tr>
+</form>
+{% endfor %}
+</form>
+
+{% else %}
+<p class="h3 text-danger fw-bolder" style="margin-left: 430px;margin-top: 120px;">No Data Found</p>
+{% endif %}
+{% endblock %}

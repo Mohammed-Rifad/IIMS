@@ -5,12 +5,12 @@
 <form   method="POST" >
  {% csrf_token %}
 
- <table>    
+ <table style="border-spacing: 10px;border-collapse: separate;color: white;font-weight: bold;margin-left: 370px;">    
 
 <tr>
     <td>Select Module</td>
     <td>
-        <select name="module" id="module" required>
+        <select name="module" id="module" required class="form-control">
            
                 {% for module in modules %}
                 <option value="{{ module.m_id}}">{{ module.m_name|title }}</option>
@@ -22,12 +22,12 @@
 
 <tr>
     <td></td>
-    <td ><input type="submit" value="Search" name="search"></td>
+    <td ><input type="submit" value="Search" name="search" class="btn" style="background-color: blueviolet;"></td>
 </tr>
  </table>
 </form>
 
- <table>
+ <table class="table table-primary table-hover" style="opacity: 0.9;">
      <tr>
          <th>Module</th>
          <th>Uploaded By</th>

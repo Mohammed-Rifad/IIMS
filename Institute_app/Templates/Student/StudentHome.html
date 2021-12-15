@@ -1,19 +1,232 @@
-{% extends 'Student/StudentMaster.html' %}
 
-{% block content%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/assets/css/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/templatemo-style.css' %}">
+    <title>Document</title>
+    <style>
+        .opt{
+        border: 2px solid black; 
+        background-color: blanchedalmond; 
+        height: 100px;
+        width: 165px;
+        opacity: 0.8;
+        border-radius: 5px; 
+        }
+        #opst:hover{
+            background-color:cornflowerblue ;
+            opacity: 0.8;
+        }
+        #opseat:hover{
+            background-color:crimson ;
+            opacity: 0.8;
+        }
 
-<!-- <a href="{% url 'institute_app:tr_active_students' %}"> Notes</a>
-<br>
+        #opnote:hover{
+            background-color:yellow ;
+            opacity: 0.8;
+        }
+        #opvnote:hover{
+            background-color:blue ;
+            opacity: 0.8;
+        }
+.extra{
+    background-color: blueviolet;
+}
+        </style>
+</head>
+<body style="background-image: url('{% static 'student.jpg' %}');background-size:cover">
+ 
+    <div class="container">
+        <div class="row" >
+            <div class="col-md-12">
+                <nav class="navbar navbar-expand-lg">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">
+                            <i class="fas fa-film mr-2 text-white"></i>
+                            <span class="text-white">Catalog-Z</span>
+                        </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-1 active" aria-current="page" href="{% url 'institute_app:st_home' %"><span class=text-white>Home</span></a>
+                            </li>
+                            <li class="nav-item text-primary">
+                                <a class="nav-link nav-link-2" href="{% url 'institute_app:tr_chnge' %}"><span class=text-white>My Profile</span></a>
+                            </li>
+                          
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-4" href="{% url 'institute_app:tr_logout' %}"><span class=text-white>Logout</span></a>
+                            </li>
+                        </ul>
+                        </div>
+                    </div>
+                </nav>
+            
+            </div>
+        </div>
+        <div class="row tm-mb-10 tm-gallery" style="margin-top: 50px; opacity: 0.8;">
+        
+            <div class="col-md-3 col-sm-4" >
+                <div class=" text-center text-primary opt " id=opst>
+                    <a href="{% url 'institute_app:st_notes' %}">
+                   <h5 class="mt-2">View Notes</h5>
+                    <i class="fas fa-graduation-cap fa-2x"></i>
+                    <br>
+                    </a>
+ <i class="fas fa-chevron-right" style="position: relative; left: 40px;"></i>
+                </div>
+              
+              
+               
+            </div>
+
+            
+
+
+            <div class="col-md-3 col-sm-4">
+       
+                 <div class=" text-center text-warning opt " id=opnote>
+                    <a href="{% url 'institute_app:st_att' %}">
+                    <h5 class="mt-2">Attendance</h5>
+                    <i class="fas fa-book-open fa-2x"></i>
+    
+                     <br>
+                     </a>
+    <i class="fas fa-chevron-right" style="position: relative; left: 40px;"></i>
+                 </div>
+            </div>
+
+            <div class="col-md-3 col-sm-4" >
+                <!-- <figure class="effect-ming tm-video-item text-center" style="width: 200px;">
+                    <img src="{% static 'std.jpg' %}" alt="Image" class="img-fluid img-rounded " style="border-radius: 2px;height: 100px;width: 100px; background-size: fill;">
+                    <figcaption class="d-flex align-items-center justify-content-center">
+                        <h2>View<br>Notes</h2>
+                        <a href=" {% url 'institute_app:tr_view_notes' %}">Notes</a>
+                    </figcaption>                    
+                </figure>
+                <span class="h6" style="margin-left: 40px;color:black ;font-weight: bolder;">View Notes</span>   -->
+                <div class=" text-center text-info opt " id=opvnote>
+                    <a href="{% url 'institute_app:st_exam' %}">
+                    <h5 class="mt-2">View Exam</h5>
+                    <i class="fas fa-book-open fa-2x"></i>
+    
+                     <br>
+                     </a>
+    <i class="fas fa-chevron-right" style="position: relative; left: 40px;"></i>
+                 </div>
+            </div>
+
+
+
+            <div class="col-md-3 col-sm-4" >
+                <!-- <figure class="effect-ming tm-video-item text-center" style="width: 200px;">
+                    <img src="{% static 'std.jpg' %}" alt="Image" class="img-fluid img-rounded " style="border-radius: 2px;height: 100px;width: 100px; background-size: fill;">
+                    <figcaption class="d-flex align-items-center justify-content-center">
+                        <h2>View<br>Notes</h2>
+                        <a href=" {% url 'institute_app:tr_view_notes' %}">Notes</a>
+                    </figcaption>                    
+                </figure>
+                <span class="h6" style="margin-left: 40px;color:black ;font-weight: bolder;">View Notes</span>   -->
+                <div class=" text-center text-info opt " id=opvnote>
+                    <a href="{% url 'institute_app:st_pay' %}">
+                    <h5 class="mt-2">Payment Status</h5>
+                    <i class="fas fa-book-open fa-2x"></i>
+    
+                     <br>
+                     </a>
+    <i class="fas fa-chevron-right" style="position: relative; left: 40px;"></i>
+                 </div>
+            </div>
+
+        </div>
+        
+
+
+        <div class="row tm-mb-10 tm-gallery" style="margin-top: 50px; opacity: 0.8;">
+        
+
+
+          
+
+
+           
+
+          
+
+
+
+        </div>
+
+
+        <div class="row tm-mb-10 tm-gallery" style="margin-top: 50px; opacity: 0.8; margin-bottom: 10px;">
+            <div class="col-md-3 col-sm-4" >
+               
+           
+                <div class=" text-center text-info opt " id=vatt>
+                    <a href="{% url 'institute_app:st_inter' %}">
+                    <h5 class="mt-2">Interviews</h5>
+                    <i class="fas fa-book-open fa-2x"></i>
+    
+                     <br>
+                     </a>
+    <i class="fas fa-chevron-right" style="position: relative; left: 40px;"></i>
+                 </div>
+            </div>
+
+
+            <div class="col-md-3 col-sm-4" >
+                <!-- <figure class="effect-ming tm-video-item" style="width: 200px;">
+                    <img src="{% static 'img/img-03.jpg' %}" alt="Image" class="img-fluid img-rounded" style="border-radius: 2px;">
+                    <figcaption class="d-flex align-items-center justify-content-center">
+                        <h2>View</h2>
+                        <a href="photo-detail.html">Students</a>
+                    </figcaption>                    
+                </figure>
+                <span class="h6" style="margin-left: 40px;color:black ;font-weight: bolder;">View Attendance</span>   -->
+           
+                <div class=" text-center text-info opt " id=vatt>
+                    <a href="{% url 'institute_app:st_chpass' %}">
+                    <h5 class="mt-2">Change Password</h5>
+                    <i class="fas fa-book-open fa-2x"></i>
+    
+                     <br>
+                     </a>
+    <i class="fas fa-chevron-right" style="position: relative; left: 40px;"></i>
+                 </div>
+            </div>
+
+</div>
+
+
+
+
+    </div>
+
+
+<!-- <br>
 <a href="{% url 'institute_app:tr_assign_seat' %}">Seating</a>
 <br>
 <a href="{% url 'institute_app:add_notes' %}">Notes upload</a>
 
-<br> -->
-<a href="{% url 'institute_app:st_notes' %}">View Notes</a>
+<br>
+<a href="{% url 'institute_app:tr_view_notes' %}">View Notes</a>
 
-
+<br>
+<a href="{% url 'institute_app:tr_add_exam' %}">Add Exam</a>
 <br> 
-<a href="{% url 'institute_app:st_exam' %}">Exam</a>
+<a href="{% url 'institute_app:tr_st_att' %}">View Attendance</a>
+ -->
 
-
-{% endblock %}
+</body>
+</html>
