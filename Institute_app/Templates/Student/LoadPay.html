@@ -1,0 +1,161 @@
+
+{% extends 'Student/StudentMaster.html' %}
+{% load humanize %}
+{% block content %}
+ <!-- <input type="text" id="s_name" value="{{student.s_name|title}}">
+ <input type="text" id="s_email" value="{{student.s_email}}">
+ <input type="text" id="s_phno" value="{{student.s_phno}}">
+<input type="text" name="" id="amt">frff -->
+ <!-- {% for i in fee %}
+ <input type="text" id="ins{{forloop.counter}}" value="{{i.due_amt}}">
+ {% endfor %} -->
+ <form action="" method="POST">
+     {% csrf_token %}
+ <table   style="opacity: 0.8;margin-top: 30px; margin-left: 300px;border-spacing: 10px; border-collapse: separate;color: white;font-weight: bold;">
+     
+    <tr>
+        <td>Installment No</td>
+        <td>
+            <select name="ins_no"  class="form-control" required id="ins_no">
+                <option selected disabled>Select Installment </option>
+                {% for i in data  %}
+                
+                <option value="{{i.id}}">{{i.ins_no}}</option>
+                {% endfor %}
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>Amount To Pay</td>
+        <td><input type="text" name="amt_to_pay" value="{{amt_to_pay}}" required readonly class="form-control" id="amt_to_pay"></td>
+    </tr>
+  
+ <!--
+    <tr>
+        <td>Add Comment</td>
+        <td><textarea name="commnt" id="" placeholder=optional cols="20" rows="5"  class="form-control"></textarea></td>
+    </tr> -->
+    <tr>
+        <td></td>
+        <!-- <td> <input id="rzp-button1" type="submit" {{checkOutDisble}} name="checkout_proceed" style="background-color: orange;width: 440px;" class="btn btn-warning" value="Pay with Razor "></td> -->
+        <td><input type="submit" value="Submit" name="" id="btnPay" class="btn " style="width: 200px;background-color: blueviolet;"></td>
+    </tr>
+
+</table>
+</form>
+
+<!-- 
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  
+-->
+
+ <script>
+   
+    // $(document).ready(()=>{
+    //     var amt=""
+    //     $('#ins_no').change(function(){
+  
+    //         $.ajax({
+    //             type:'get',
+    //             ins:document.getElementById('ins_no').value,
+    //             url:'http://127.0.0.1:8000/Student/Pay?ins='+document.getElementById('ins_no').value,
+    //             success:function(response){
+    //                 console.log('klkl',JSON.parse(response['amt']))
+    //                 $('#amt_to_pay').val(JSON.parse(response['amt']))
+    //                 $('#amt').val(JSON.parse(response['amt'])) 
+    //                 document.createElement(Text)
+    //             }
+    //         })
+    //     })
+$(document).ready(()=>{
+    $('#ins_no').change(function(){
+        $.ajax({
+            type:'get',
+                ins:document.getElementById('ins_no').value,
+                url:'http://127.0.0.1:8000/Student/Pay?ins='+document.getElementById('ins_no').value,
+                success:function(response){
+                    console.log('klkl',JSON.parse(response['amt']))
+                    $('#amt_to_pay').val(JSON.parse(response['amt']))
+                    $('#amt').val(JSON.parse(response['amt'])) 
+                    
+                }
+        
+            })
+    })
+})
+        </script>
+        {% endblock %}      
+
+              
+
+ //   var amount=parseInt(JSON.parse(response['amt']).value)*100
+// console.log(JSON.parse(response['inst']))
+//                   var  actual_amt=JSON.parse(response['inst'])
+                  
+//                   console.log(actual_amt,'lalall')
+//                     if(actual_amt=='1')
+//                     {
+//                         console.log('first')
+//                         amt=parseInt(document.getElementById('ins1').value)*100
+//                     }
+//                     if(actual_amt=='2')
+//                     { console.log('second')
+//                         amt=parseInt(document.getElementById('ins2').value)*100
+//                     }
+//                     if(actual_amt=='3')
+//                     { console.log('third')
+//                         amt=parseInt(document.getElementById('ins3').value)*100
+//                     }
+
+// //                     console.log(amt)
+//                 }
+//             })
+            
+//         })
+//     });
+
+  
+      
+    // console.console.log('amount is',amt)
+
+    // var options = {
+       
+      
+    //     "key": "rzp_test_uDR5CKMGQFhq9N", // Enter the Key ID generated from the Dashboard
+    //     "amount":'1000000', // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    //     "currency": "INR",
+    //     "name": "Acme Corp",
+    //     "description": "Course Fee",
+    //     "image": "https://cdn.freelogovectors.net/wp-content/uploads/2020/11/razorpay-logo.png",
+    //     "order_id":"{{payment.id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    //     "handler": function (response){
+    //         alert("Payment Succcesfull");
+    //         // var addr=document.getElementById("shipping_addr").value
+    //         window.location.href="http://127.0.0.1:8000/Student/Pay/Success?no="+$("#ins_no").val()+"&amt=10000"
+         
+    //       //   alert(response.razorpay_order_id);
+    //       //   alert(response.razorpay_signature)
+    //     },
+    //     "prefill": {
+    //         "name": document.getElementById('s_name').value,
+    //         "email":  document.getElementById('s_email').value,
+    //         "contact": document.getElementById('s_phno').value
+    //     },
+    //     "notes": {
+    //         "address": "Razorpay Corporate Office"
+    //     },
+    //     "theme": {
+    //         "color": "#3399cc"
+    //     }
+    // };
+    // var rzp1 = new Razorpay(options);
+    // rzp1.on('payment.failed', function (response){
+    //         alert("Payment Cancelled");
+         
+    // });
+    // document.getElementById('rzp-button1').onclick = function(e){
+    //     rzp1.open();
+    //     e.preventDefault();
+    // }
+    // </script> 
+    

@@ -3,7 +3,7 @@
 {% block content%}
 <div class="bd">
     
-<form method="POST" action="" class="reg-form" enctype="multipart/form-data">
+<form method="POST" action="{% url 'institute_app:add_student' %}" class="reg-form" enctype="multipart/form-data">
     {% csrf_token %}
    
     {% if error_msg  %}
@@ -22,83 +22,59 @@
  
 
 
+<img src="{{data.s_pic.url}}" alt="" height="150px" width="150px" style="border-radius: 150px;margin-left: 280px; ">
+<table style="border-spacing: 10px;border-collapse: separate;margin-left: 330px; color: white;font-weight: bold;">
+    <tr>
+        <td>Name</td>
+         <td><input type="text" name="st_name" value="{{data.s_name|title}}" class="form-control" id="st_name" readonly></td>
+    </tr>
+    <tr>
+        <td >Gender</td>
+        <td><input type="text" name="st_gender" value="{{data.s_gender|title}}" class="form-control" id="st_name" readonly></td>
 
-<table class="tb" >
-    <tr>
-        <td>{{form.s_name.label}}</td>
-         <td>{{form.s_name}}</td>
     </tr>
     <tr>
-        <td >{{form.s_gender.label}}</td>
-         <td style="color: black;">{{form.s_gender}}</td>
+        <td>Course</td>
+        <td><input type="text" name="st_course" value="{{data.c_id.c_name|title}}" class="form-control" id="st_name" readonly></td>
+        
     </tr>
+  
     <tr>
-        <td>Course Selected</td>
-         <td>
-             <select name="course" class="form-control">
-                 {% for course in courses %}
-                <option value="{{course.c_id}}">{{course.c_name|title}}</option>
-                {% endfor %}
-         </select>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            {{form.s_type.label}}
-        </td>
-        <td>
-           {{form.s_type}}
-       </td>
-    </tr>
-    <tr>
-        <td>{{form.s_dob.label}}</td>
-         <td>{{form.s_dob}}</td>
-    </tr>
-    <tr>
-        <td>{{form.s_colg.label}}</td>
-         <td>{{form.s_colg}}</td>
-    </tr>
-    <tr>
-        <td>{{form.s_qual.label}}</td>
-         <td>{{form.s_qual}}</td>
-    </tr>
-    <tr>
-        <td>{{form.s_passout.label}}</td>
-         <td>{{form.s_passout}}</td>
-    </tr>
-    <tr>
-        <td>{{form.s_address.label}}</td>
-         <td>{{form.s_address}}</td>
-    </tr>
-    <tr>
-        <td>{{form.s_email.label}}</td>
-         <td>{{form.s_email}}</td>
-    </tr>
-    <tr>
-        <td>{{form.s_phno.label}}</td>
-         <td>{{form.s_phno}}</td>
-    </tr>
-    <tr>
-        <td>{{form.amt_payable.label}}</td>
-         <td>{{form.amt_payable}}</td>
-    </tr>
-    <tr>
-        <td>{{form.s_pic.label}}</td>
-         <td>{{form.s_pic}}</td>
-    </tr>
-    <tr>
+        <td>D.O.B</td>
+        <td><input type="text" name="st_dob" value="{{data.s_dob}}" class="form-control" id="st_name" readonly></td>
 
-        <td>Enter Installment</td>
-        <td><input type="number" name="ins1" required style="width: 80px;" id="ins1" min="100">
-            <input type="number" name="ins2" required style="width: 80px;" id="ins2" min=100>
-            
-            <input type="number" name="ins3" required style="width: 80px;" id="ins3" min=100></td>
     </tr>
-   
+    <tr>
+        <td>College</td>
+        <td><input type="text" name="st_colg" value="{{data.s_colg|title}}" class="form-control" id="st_name" readonly></td>
+
+    </tr>
+    <tr>
+        <td>Qualification</td>
+        <td><input type="text" name="st_qual" value="{{data.s_qual|title}}" class="form-control" id="st_name" readonly></td>
+
+    </tr>
+    <tr>
+        <td>PassOut</td>
+        <td><input type="text" name="st_name" value="{{data.s_passout}}" class="form-control" id="st_name" readonly></td>
+
+    </tr>
+    
+    <tr>
+        <td>Email</td>
+            <td><input type="text" name="st_email" value="{{data.s_email}}" class="form-control" id="st_name" readonly></td>
+
+    </tr>
+    <tr>
+        <td>Phone No</td>
+        <td><input type="text" name="st_phno" value="{{data.s_phno}}" class="form-control" id="st_name" readonly></td>
+         
+    </tr>
+    
+  
     
 </table>
 
-<input type="submit" id='btn' value="Add" class="btn btn-primary"  style="margin-left: 480px;"/>
 </form>
 </div>
 

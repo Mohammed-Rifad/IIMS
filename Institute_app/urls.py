@@ -45,6 +45,7 @@ urlpatterns = [
     path('HrHome/DelInter',HrViews.DelInterview,name="hr_del_inter"),
     path('HrHome/UpdateInter',HrViews.UpdateInterview,name="hr_upd_inter"),
     path('HrHome/Logout',HrViews.Logout,name="hr_logout"),
+    path('HrHome/ChangePass',HrViews.ChangePassword,name="hr_pass"),
 
     path('HrHome/CompletedStudents',HrViews.CompletedStudents,name="hr_com_st"),
     path('HrHome/ActiveStudents',HrViews.ViewActiveStudents,name="hr_active_students"),
@@ -88,5 +89,10 @@ urlpatterns = [
     path('Student/PayStatus',StudentViews.PaymentStatus,name="st_pay"),
     path('Student/Interview',StudentViews.ViewInterview,name="st_inter"),
     path('Student/ChangePass',StudentViews.ChangePassword,name="st_chpass"),
+    path('Student/Pay',StudentViews.LoadPay,name="st_loadpay"),
+    path('Student/Pay/Success',StudentViews.PaySuccess,name="st_pay_success"),
+    path('Student/Logout',StudentViews.Logout,name="st_logout"),
+    path('Student/MyProfile',StudentViews.MyProfile,name="st_prof"),
+
 
 ]

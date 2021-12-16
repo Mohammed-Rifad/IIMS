@@ -4,7 +4,7 @@ from django.core.mail import send_mail
 from django.db.models.query_utils import check_rel_lookup_compatibility
 from datetime import date, datetime, time
 from django.http.request import split_domain_port
-from Institute_app.models import AttendanceDetails, CertificateDetails, CourseDetails, FeeDetails, FollowUpData, FollowupStatus, InterviewDetails, SeatingDetails, StudentDetails, StudentModule,SystemDetails, TrainerDetails
+from Institute_app.models import AttendanceDetails, CertificateDetails, CourseDetails, FeeDetails, FollowUpData, FollowupStatus, HrDetails, InterviewDetails, SeatingDetails, StudentDetails, StudentModule,SystemDetails, TrainerDetails
 from Institute_app.Forms.HrForms import InterviewForm, StudentForm
 from django.shortcuts import render,redirect
 from passlib.hash import pbkdf2_sha256
@@ -412,3 +412,35 @@ def UpdateInterview(request):
 
     id=request.GET['id']
     return render(request,'Hr/UpdateInterview.html',{'tab_selection':tab_selection,'id':id})
+
+
+
+def ChangePassword(request):
+    tab_selection="Change Password"
+    if request.method=='POST':
+
+        old_passwd=request.POST['old_passwd']
+        new_passwd=request.POST['new_passwd']
+        con_passwd=request.POST['con_passwd']
+
+        hr_data=HrDetails.objects.get(hr_id=request.session['hr_id'])
+        is_true=pbkdf2_sha256.verify(old_passwd,hr_data.hr_passwd)
+        if is_true:
+            if len(new_passwd)>8:
+                if new_passwd==con_passwd:
+                    new_encrypted_passwd=pbkdf2_sha256.hash(new_passwd,rounds=1000,salt_size=32)
+                    hr_data.hr_passwd=new_encrypted_passwd
+                    hr_data.save()
+                    success_msg="Password Changed Succesfully"
+                    return render(request,'Hr/ChangePassword.html',{'success_msg':success_msg,'tab_selection':tab_selection,})
+                else:
+                    error_msg="Password Mismatch"
+                    return render(request,'Hr/ChangePassword.html',{'error_msg':error_msg,'tab_selection':tab_selection,})
+            else:
+                error_msg="Password Should be atleast 8 characters"
+                return render(request,'Hr/ChangePassword.html',{'error_msg':error_msg,'tab_selection':tab_selection,})
+        else:
+            error_msg="Invalid Password! enter Your correct password"
+            return render(request,'Hr/ChangePassword.html',{'error_msg':error_msg,'tab_selection':tab_selection,})
+
+    return render(request,'Hr/ChangePassword.html',{'tab_selection':tab_selection,})

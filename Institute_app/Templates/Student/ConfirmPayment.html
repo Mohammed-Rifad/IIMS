@@ -1,0 +1,88 @@
+
+{% extends 'Student/StudentMaster.html' %}
+{% load humanize %}
+{% block content %}
+ 
+<input type="text" name="amt" value="{{amt}}" id="">
+<input type="text" name="no" value="{{no}}" id="ins_no">
+ 
+<input type="text" id="s_name" value="{{d.s_id.s_name|title}}" >
+<input type="text" id="s_email" value="{{d.s_id.s_email}}" >
+<input type="text" id="s_phno" value="{{d.s_id.s_phno}}" >
+
+ <table   style="opacity: 0.8;margin-top: 30px; margin-left: 300px;border-spacing: 10px; border-collapse: separate;color: white;font-weight: bold;">
+     
+    <tr>
+        <td>Installment No</td>
+        <td>
+           <input type="text" class="form-control" value="{{d.ins_no}}" name="" id="">
+        </td>
+    </tr>
+    <tr>
+        <td>Amount To Pay</td>
+        <td><input type="text" name="amt_to_pay" value="{{amt}}" readonly class="form-control" id="amt_to_pay"></td>
+    </tr>
+  
+ <!--
+    <tr>
+        <td>Add Comment</td>
+        <td><textarea name="commnt" id="" placeholder=optional cols="20" rows="5"  class="form-control"></textarea></td>
+    </tr> -->
+    <tr>
+        <td></td>
+        <td> <input id="rzp-button1" type="submit" {{checkOutDisble}} name="checkout_proceed" style="background-color: orange;width: 440px;" class="btn btn-warning" value="Pay with Razor "></td>
+        <!-- <td><input type="submit" value="Submit" name="" id="btnPay" class="btn " style="width: 200px;background-color: blueviolet;"></td> -->
+    </tr>
+
+</table>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+
+   
+ 
+var options = {
+
+    "key": "rzp_test_uDR5CKMGQFhq9N", // Enter the Key ID generated from the Dashboard
+    "amount": parseInt(document.getElementById('amt_to_pay').value)*100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Acme Corp",
+    "description": "Test Transaction",
+    "image": "https://cdn.freelogovectors.net/wp-content/uploads/2020/11/razorpay-logo.png",
+    "order_id":"{{payment.id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": function (response){
+        alert("Payment Succcesfull");
+        
+        window.location.href="/Student/Pay/Success?no="+ document.getElementById('ins_no').value+"&amt="+ document.getElementById('amt_to_pay').value 
+     
+      //   alert(response.razorpay_order_id);
+      //   alert(response.razorpay_signature)
+    },
+    "prefill": {
+        "name": document.getElementById('s_name').value,
+        "email": document.getElementById('s_email').value,
+        "contact": document.getElementById('s_phno').value
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#3399cc"
+    }
+};
+var rzp1 = new Razorpay(options);
+rzp1.on('payment.failed', function (response){
+        alert("Payment Cancelled");
+      //   alert(response.error.description);
+      //   alert(response.error.source);
+      //   alert(response.error.step);
+      //   alert(response.error.reason);
+      //   alert(response.error.metadata.order_id);
+      //   alert(response.error.metadata.payment_id);
+});
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+</script>
+    {% endblock %}      
