@@ -7,7 +7,7 @@
     {% csrf_token %}
    
     {% if error_msg  %}
- <div class="alert alert-danger w-50 tb"  style="border-radius: 10px;margin-top: 10px; opacity: .9;" role="alert">
+ <div class="alert alert-danger w-50 tb"  style="border-radius: 10px;margin-top: 10px; opacity: .9;margin-left: 200px;" role="alert">
   {{error_msg}}
  </div>
 
@@ -15,7 +15,7 @@
  {% endif %}
 
 
- <div class="alert alert-danger tb"  id="err_display" style="border-radius: 10px;margin-top: 10px; opacity: .9;display: none;margin-left: 400px; width: 360px;" role="alert">
+ <div class="alert alert-danger tb"  id="err_display" style="border-radius: 10px;margin-top: 10px; opacity: .9;display: none;margin-left: 200px; width: 360px;" role="alert">
   
  </div>
 

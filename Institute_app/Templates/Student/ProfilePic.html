@@ -1,0 +1,49 @@
+{% extends 'Student/StudentMaster.html' %}
+
+{% block content%}
+
+<form  method="POST" enctype="multipart/form-data" style="margin-left: 250px;">
+ {% csrf_token %}
+ {% if success_msg %}
+ <div class="alert alert-success w-50" style="border-radius: 10px;margin-top: 10px;" role="alert">
+    {{success_msg}}
+   </div>
+   {% endif %}
+   {% if error_msg %}
+   <div class="alert alert-danger w-50" style="border-radius: 10px;margin-top: 10px;" role="alert">
+      {{error_msg}}
+     </div>
+     {% endif %}
+ <table style="border-spacing: 10px;border-collapse: separate;color: white; font-weight: bold;margin-top: 20px;">    
+<tr>
+    <td>Old Password</td>
+    <td>
+      <input type="password" name="old_passwd" id="" class="form-control" required>
+    </td>
+</tr>
+<tr>
+    <td>New Password</td>
+    <td>
+      <input type="password" name="new_passwd" id=""  class="form-control" required>
+    </td>
+</tr>
+
+<tr>
+    <td>Confirm Password</td>
+    <td>
+      <input type="password" name="con_passwd" id=""  class="form-control" required>
+    </td>
+</tr>
+
+<tr>
+    <td></td>
+    <td ><input type="submit" value="Change" class="btn" style="background-color: blueviolet;width: 100px;"></td>
+</tr>
+ </table>
+
+
+</form>
+
+
+
+{% endblock %}

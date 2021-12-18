@@ -4,13 +4,13 @@
 <form method="POST" action="{% url 'institute_app:view_seating_admin'  %}" class="reg-form" enctype="multipart/form-data">
 
     {% csrf_token %}
-    <table>
+    <table style="border-spacing: 20px;border-collapse: separate;margin-left: 280px;margin-top: 50px;">
     <tr>
         <td>
             Select Lab
         </td>
         <td>
-            <select name="lab" >
+            <select name="lab"  class="form-control" style="width: 100px;">
                 <option value="1">1</option>
                 <option value="2">2</option>
             </select>
@@ -18,7 +18,7 @@
     </tr>
     <tr>
         <td></td>
-        <td><input type="submit" ></td>
+        <td><input type="submit" class="btn" style="background-color: blueviolet;"></td>
     </tr>
 </table>
 
@@ -27,8 +27,8 @@
 
 
 {% if seating_details %}
-
-<table>
+<div class="container">
+<table class="table table-striped table-hover">
    <tr>
       
        <th>Sys.No</th>
@@ -48,6 +48,7 @@
     </tr>
     {% endfor %}
 </table>
+</div>
 {% endif %}
 
 {% endblock %}

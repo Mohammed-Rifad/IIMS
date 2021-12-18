@@ -1,13 +1,14 @@
 {% extends 'Admin/AdminMaster.html' %}
 
 {% block content%}
-
+<div class="container mt-5">
 <form action="" method="POST">
     {% csrf_token %}
-    <table style="border-spacing: 10px; border-collapse: separate;">
+
+    <table style="border-spacing: 20px; border-collapse: separate; margin-left: 200px;margin-top: 100px;">
         <tr>
             <td>Received Date</td>
-            <td><input type="date" name="rec_date" id="" required ></td>
+            <td><input type="date" name="rec_date" id="" required class="form-control" ></td>
         </tr>
         <tr>
             <td></td>
@@ -17,9 +18,14 @@
             <td><input type="hidden" name="s_id" value="{{s_id}}" id=""></td>
         </tr>
     </table>
-    {{msg}}
+    {% if msg %}
+    <div class="alert alert-success w-25" style="border-radius: 10px;margin-top: 10px;width:100px;margin-left: 230px;" role="alert">
+       {{msg}}
+      </div>
+      {% endif %}
+      
 </form>
-
+</div>
 
 
 {% endblock %}

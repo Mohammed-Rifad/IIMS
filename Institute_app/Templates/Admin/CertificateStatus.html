@@ -5,8 +5,8 @@
 
 
 
-</form>
-<table class="table table-striped">
+<div class="contaier">
+<table class="table table-striped mt-5">
  <tr>
 
     <th>Student Name</th>
@@ -16,6 +16,7 @@
     <th>Received Date</th>
     <th>Status</th>
     
+     
  </tr>
  
 {% for d in data %}
@@ -29,7 +30,7 @@
     <td> {% if d.rec_date == "" %} Nil {% else %} {{d.rec_date}} {% endif %}</td> 
     <td>{{d.status|title}}</td>
    
-    <td><a style="color: blue;" href="/IIMS/AdminHome/CertStatus?s_id={{d.s_id.s_id}}">Update</a></td>
+    <td><a style="color: blue;" href="/AdminHome/CertStatus?s_id={{d.s_id.s_id}}">Update</a></td>
     <td><input type="hidden" name="s_id" id="" value="{{d.s_id.s_id}}"></td>
 
 </tr>
@@ -37,5 +38,5 @@
 </table>
 
 
-</form>
+</div>
 {% endblock %}

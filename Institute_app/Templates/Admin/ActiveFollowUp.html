@@ -1,11 +1,11 @@
 {% extends 'Admin/AdminMaster.html' %}
 
 {% block content%}
-
-<form method="POST" action="{% url 'institute_app:hr_act_followup' %}" class="reg-form" enctype="multipart/form-data">
+<div class="container">
+<form method="POST" action="{% url 'institute_app:hr_act_followup' %}" style="margin-left: 10px;" enctype="multipart/form-data">
     {% csrf_token %}
-    <p  class="text-danger">{{msg}}</p>
-<table class="tb">
+   
+<table class="table  table-hover table-striped mt-5" style="opacity: 0.9;">
  <tr>
      <th>Date Entered</th>
      <th>Name</th>
@@ -14,6 +14,7 @@
      <th>Passout</th>
      <th>Email</th>
      <th>Phone No</th>
+     <th></th>
  </tr>
 {% for data in followup_data %}
  <tr>
@@ -34,4 +35,5 @@
 
 
 </form>
+</div>
 {% endblock %}

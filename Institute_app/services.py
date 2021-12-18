@@ -25,7 +25,7 @@ def GetUniqueID(user):
 
 def email_service(mail_recipient,user_name,passwd):
     subject="username and password"
-    message="Hi your username is "+user_name+" and temporary password is "+passwd
+    message="Hi your username is "+str(user_name)+" and temporary password is "+str(passwd)
     email_from=settings.EMAIL_HOST_USER
     recipient_list=[mail_recipient,]
     send_mail(subject,message,email_from,recipient_list)

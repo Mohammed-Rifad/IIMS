@@ -4,7 +4,7 @@
 
 <form action="{% url 'institute_app:admin_active_students' %}" method="POST">
  {% csrf_token %}
-<table style="border-spacing: 20px; border-collapse: separate;" >
+<table style="border-spacing: 20px; border-collapse: separate; margin-left: 200px;" >
     <tr>
         <td>Select Course</td>
         <td><select name="course" class="form-control" >
@@ -20,46 +20,81 @@
         <td><input type="submit"  value="Filter" class="btn btn-primary"></td>
     </tr>
 </table>
-</form>
+
+
+
+
+<!-- <div style="max-width: 800px;border: 2px solid red;overflow: scroll;"> -->
+<!--     
 <table class="table table-striped">
- <tr>
-    <th></th> 
-    <th>Student Name</th>
-    <th>Join Date</th>
-    <th>Type </th>
-    <th>Course</th>
+    <tr>
+       <th></th> 
+       <th>Student Name</th>
+       <th>Join Date</th>
+       <th>Type </th>
+       <th>Course</th>
+      
+       <th>Qualification</th>
+       
+       <th>Passout Year</th>
+       <th>Email</th>
+       <th>Phone No</th>
    
-    <th>Qualification</th>
+       
+    </tr>
     
-    <th>Passout Year</th>
-    <th>Email</th>
-    <th>Phone No</th>
-
-    
- </tr>
- 
+   {% for student in students %}
+   <form action="{% url 'institute_app:admin_st_status' %}" method="POST">
+       {% csrf_token %}
+   <tr>
+       <td><img src="{{student.s_pic.url}}" class="rounded-circle"  style="height: 60px; width: 60px;" alt=""></td>
+       <td>{{student.s_name|title}}</td>
+       <td>{{student.s_join}}</td>
+       <td>{{student.s_type}}</td>
+       <td>{{student.c_id.c_name|title}}</td>
+      
+       <td>{{student.s_qual|title}}</td>
+       
+       <td>{{student.s_passout}}</td>
+       <td>{{student.s_email}}</td>
+       <td>{{student.s_phno}}</td>
+       <td><input type="submit" class="btn btn-warning" name="view" value="Status" id=""></td>
+       <td><input type="hidden" name="s_id" id="" value="{{student.s_id}}"></td>
+   </tr>
+   
+   </form>
+   {% endfor %}
+   </table> -->
+   
+   
+<!-- </div> -->
+<div class="container">
+<div class="row">
 {% for student in students %}
-<form action="{% url 'institute_app:admin_st_status' %}" method="POST">
+
+<div class="col-md-4 mt-3">
+    <form action="{% url 'institute_app:admin_viewpro' %}" method="POST">
     {% csrf_token %}
-<tr>
-    <td><img src="{{student.s_pic.url}}" class="rounded-circle"  style="height: 60px; width: 60px;" alt=""></td>
-    <td>{{student.s_name|title}}</td>
-    <td>{{student.s_join}}</td>
-    <td>{{student.s_type}}</td>
-    <td>{{student.c_id.c_name|title}}</td>
-   
-    <td>{{student.s_qual|title}}</td>
-    
-    <td>{{student.s_passout}}</td>
-    <td>{{student.s_email}}</td>
-    <td>{{student.s_phno}}</td>
-    <td><input type="submit" class="btn btn-warning" name="view" value="Status" id=""></td>
-    <td><input type="hidden" name="s_id" id="" value="{{student.s_id}}"></td>
-</tr>
+        <div class="card" style="width:400px">
+        <img class="card-img-top rounded" src="{{student.s_pic.url}}" style="height: 100px; width:100px" alt="Card image">
+        <div class="card-body">
+          <h4 class="card-title text-primary">{{student.s_name|title}}</h4>
+          <p class="card-text">{{student.c_id.c_name|title}}</p>
+          <input type="submit" class="btn btn-primary" value="See Profile"></a>
+          <input type="hidden" name="id" value="{{student.s_id}}" id="" size="2">
+        </div>
+      </div>
+    </form>
+</div>
+{% endfor %}
+</div>
+</div>
+
+
+
+
+
+
 
 </form>
-{% endfor %}
-</table>
-
-
 {% endblock %}

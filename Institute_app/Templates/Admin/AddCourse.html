@@ -4,7 +4,18 @@
 
 <form method="POST" action="{% url 'institute_app:add_course' %}" style="margin-left: 200px; margin-top: 100px;">
     {% csrf_token %}
-    <p  class="text-danger">{{msg}}</p>
+    
+    {% if success_msg %}
+    <div class="alert alert-success w-50" style="border-radius: 10px;margin-top: 10px;" role="alert">
+       {{success_msg}}
+      </div>
+      {% endif %}
+      {% if error_msg %}
+      <div class="alert alert-danger w-50" style="border-radius: 10px;margin-top: 10px;" role="alert">
+         {{error_msg}}
+        </div>
+        {% endif %}
+        
 <table style="border-spacing: 20px;border-collapse: separate;">
     <tr>
         <td>

@@ -1,10 +1,22 @@
 {% extends 'Admin/AdminMaster.html' %}
 
 {% block content%}
-
+{% if success_msg %}
+<div class="alert alert-success w-50" style="border-radius: 10px;margin-top: 10px;width:100px;margin-left: 200px;" role="alert">
+    {{success_msg}}
+   </div>
+   {% endif %}
+   {% if error_msg %}
+   <div class="alert alert-danger w-50" style="border-radius: 10px;margin-top: 10px;margin-left: 200px;" role="alert">
+      {{error_msg}}
+     </div>
+     {% endif %}
+     
+ <div class="alert alert-danger "  id="err_display" style="border-radius: 10px;margin-top: 10px; opacity: .9;display: none;margin-left:280px; width: 310px;" role="alert">
+  eded
+</div>
 <form method="POST" action="{% url 'institute_app:add_trainer' %}" class="reg-form" enctype="multipart/form-data">
-    {% csrf_token %}
-    <p  class="text-danger">{{msg}}</p>
+  {% csrf_token %}
 <table class="tb">
     <tr>
         <td>{{form.tr_name.label}}</td>
@@ -13,7 +25,7 @@
     <tr>
         <td>Assign Course</td>
          <td>
-             <select name="course">
+             <select name="course" class="form-control">
                  {% for course in courses %}
                 <option value="{{course.c_id}}">{{course.c_name|title}}</option>
                 {% endfor %}
@@ -44,10 +56,10 @@
         <td>{{form.tr_phno.label}}</td>
          <td>{{form.tr_phno}}</td>
     </tr>
-    <tr>
+    <!-- <tr>
         <td>{{form.log_permission.label}}</td>
          <td>{{form.log_permission}}</td>
-    </tr>
+    </tr> -->
     <tr>
         <td>{{form.tr_pic.label}}</td>
          <td>{{form.tr_pic}}</td>
@@ -57,6 +69,137 @@
     
 </table>
 
-<input type="submit" value="Login" class="btn btn-primary" style="margin-left: 60px;"/>
+<input type="submit" id="btn" value="Login" class="btn btn-primary" style="margin-left: 60px;"/>
 </form>
+
+
+
+
+
+
+
+
+
+<script>
+    $(document).ready(()=>{
+        $('#btn').click(()=>{
+           
+      
+        var sname=$('#id_tr_name') 
+        var dob=$('#id_tr_dob')
+       
+        var email=$('#id_tr_email') 
+        var address=$('#id_tr_address') 
+        var phno=$('#id_tr_phno') 
+        
+        var err=$('#err_display')
+    
+        var name_format=/^[a-z A-Z]+$/
+        var reg_email = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+          
+        dob_format = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/
+       
+        
+        
+        if(name_format.test(sname.val())==false){
+            
+            err.css({'display':'block','color':'red'})
+            err.html('Name Should Not Contain Numbers Or Characters')
+            sname.focus()
+            return false
+        }
+        else{
+            err.css({'display':'none'})
+        }
+     
+    
+        
+    if(dob.val()==''){
+
+    err.css({'display':'block','color':'red'})
+         err.html('Enter DOB')
+         dob.focus()
+         return false
+     }
+     else{
+         err.css({'display':'none'})
+     }
+    
+    
+    if(dob_format.test(dob.val())==false){
+         
+         err.css({'display':'block','color':'red'})
+         err.html('Invalid DOB')
+         dob.focus()
+         return false
+     }
+     else{
+         err.css({'display':'none'})
+     }
+    
+     if(address.val()==''){
+
+err.css({'display':'block','color':'red'})
+     err.html('Enter Address')
+     address.focus()
+     return false
+ }
+ else{
+     err.css({'display':'none'})
+ }
+    
+ if(email.val()==''){
+
+err.css({'display':'block','color':'red'})
+     err.html('Enter Email')
+     email.focus()
+     return false
+ }
+ else{
+     err.css({'display':'none'})
+ }
+        if(email.val().match(reg_email)==null){
+             
+            err.css({'display':'block','color':'red'})
+            err.html('Invalid Email Format')
+            email.focus()
+            
+            return false;
+        }
+    
+        else{
+            err.css({'display':'none'})
+        }
+    
+       
+       
+    
+    
+    
+       
+    
+    
+    var phno_format=/^[6-9]{1}[0-9]{9}$/;
+    if(phno.val().match(phno_format)==null){
+         
+         err.css({'display':'block','color':'red'})
+         err.html('Invalid Phone No')
+         phno.focus()
+         return false
+     }
+     else{
+         err.css({'display':'none'})
+     }
+       
+    
+        })
+    })
+    </script>
+    
+    
+
+
+
+
+
 {% endblock %}

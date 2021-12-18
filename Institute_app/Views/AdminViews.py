@@ -10,7 +10,26 @@ from ..services import GetUniqueID, checkSystemAvailability, email_service
 from Institute_app.Forms.AdminForms import CourseForm, HrForm, ModuleForm, SystemForm, TrainerForm,FollowupForm
 
 def AdminHome(request):
-    return render(request,'Admin/AdminHome.html')
+    
+    data=FeeDetails.objects.filter(status='not paid')
+    std_count=StudentDetails.objects.filter(status='active').count()
+    cert_count=CertificateDetails.objects.filter(status='pending').count()
+    trainer_count=TrainerDetails.objects.filter(tr_status='active').count()
+    system_count=SystemDetails.objects.all().count()
+    recent_exams=ExamDetails.objects.filter(status='pending').count()
+    
+    total=0
+    
+    for i in data:
+        dt=i.due_date
+        
+        d=datetime.strptime(dt,'%d/%m/%Y')
+        dd=datetime.now()+timedelta(days=7)
+        if d<=dd:
+            total+=i.due_amt
+            
+    return render(request,'Admin/AdminHome.html',{'total':total,'std_count':std_count,'cert_count':cert_count,'trainer_count':trainer_count,'system_count':system_count,
+    'recent_exams':recent_exams})
 
 
 def AddModule(request):
@@ -31,10 +50,10 @@ def AddModule(request):
                 module=ModuleDetails(m_name=m_name,c_id=c_id)
                 module.save()
                 success_msg="Module Added Succesfully"
-                return render(request,'Admin/AddModule.html',{'form':form,'msg':success_msg,'courses':courses})
+                return render(request,'Admin/AddModule.html',{'form':form,'success_msg':success_msg,'courses':courses})
             else:
                 error_msg="Module Already Added For The Course"
-                return render(request,'Admin/AddModule.html',{'form':form,'msg':error_msg,'courses':courses})
+                return render(request,'Admin/AddModule.html',{'form':form,'error_msg':error_msg,'courses':courses})
     return render(request,'Admin/AddModule.html',{'form':form,'courses':courses})
 
 
@@ -54,10 +73,11 @@ def AddCourse(request):
                 course=CourseDetails(c_name=c_name,c_duration=c_duration,c_fee=c_fee)
                 course.save()
                 success_msg="Course Added Succesfully"
-                return render(request,'Admin/AddCourse.html',{'form':form,'msg':success_msg})
+                form=CourseForm()
+                return render(request,'Admin/AddCourse.html',{'form':form,'success_msg':success_msg})
             else:
                 error_msg="Course Already Added"
-                return render(request,'Admin/AddCourse.html',{'form':form,'msg':error_msg})
+                return render(request,'Admin/AddCourse.html',{'form':form,'error_msg':error_msg})
     return render(request,'Admin/AddCourse.html',{'form':form,})
 
 
@@ -80,11 +100,11 @@ def AddSystem(request):
                 seating=SeatingDetails(sys_no=sys_no,lab_no=lab_no)
                 seating.save()
                 
-                success_msg="System Allocated Succesfully"
-                return render(request,'Admin/AddSystem.html',{'form':form,'msg':success_msg})
+                success_msg="System Added Succesfully"
+                return render(request,'Admin/AddSystem.html',{'form':form,'success_msg':success_msg})
             else:
                 error_msg="System Already Added For Selected Lab"
-                return render(request,'Admin/AddSystem.html',{'form':form,'msg':error_msg})
+                return render(request,'Admin/AddSystem.html',{'form':form,'error_msg':error_msg})
         else:
             print(form.errors)
     return render(request,'Admin/AddSystem.html',{'form':form,})
@@ -129,12 +149,12 @@ def AddHr(request):
                 except Exception as e:
                     print(e)
                 hr_detail.save()
-                
+                email_service(hr_email,hr_email,hr_phno)
                 success_msg="HR Added Succesfully"
-                return render(request,'Admin/AddHr.html',{'form':form,'msg':success_msg})
+                return render(request,'Admin/AddHr.html',{'form':form,'success_msg':success_msg})
             else:
                 error_msg="Email Exist"
-                return render(request,'Admin/AddHr.html',{'form':form,'msg':error_msg})
+                return render(request,'Admin/AddHr.html',{'form':form,'error_msg':error_msg})
         else:
             print(form.errors)
     return render(request,'Admin/AddHr.html',{'form':form,})
@@ -154,7 +174,7 @@ def AddTrainer(request):
             tr_phno=form.cleaned_data['tr_phno']
             tr_email=form.cleaned_data['tr_email']
             tr_pic=form.cleaned_data['tr_pic']  
-            log_permission=form.cleaned_data['log_permission']
+            # log_permission=form.cleaned_data['log_permission']
             join_date=date.today()
             tr_id=GetUniqueID('trainer')
             tr_course=CourseDetails.objects.get(c_id=request.POST['course'])
@@ -164,20 +184,20 @@ def AddTrainer(request):
             print(tr_id,passwd,'0000')
             data_exist=TrainerDetails.objects.filter(tr_email=tr_email,tr_status='active').exists()
             if not data_exist:
-                if log_permission ==0:
-                    passwd=""
-                else:
-                    pass
+                # if log_permission ==0:
+                #     passwd=""
+                # else:
+                #     pass
                     #email_service(tr_email,tr_id,tr_phno)
                 trainer=TrainerDetails(tr_id=tr_id,tr_name=tr_name,tr_dob=tr_dob,tr_course=tr_course,tr_qual=tr_qual,tr_gender=tr_gender,tr_email=tr_email,tr_address=tr_address,tr_phno=tr_phno,
-                tr_pic=tr_pic,tr_join=dt_covrt,tr_passwd=passwd_enc,log_permission=log_permission)
+                tr_pic=tr_pic,tr_join=dt_covrt,tr_passwd=passwd_enc)
                 trainer.save()
-                #email_service(tr_email,tr_id,tr_phno)
+                email_service(tr_email,tr_id,passwd)
                 success_msg="Trainer Added Succesfully"
-                return render(request,'Admin/AddTrainer.html',{'form':form,'msg':success_msg,'courses':courses})
+                return render(request,'Admin/AddTrainer.html',{'form':form,'success_msg':success_msg,'courses':courses})
             else:
                 error_msg="Email Exist"
-                return render(request,'Admin/AddTrainer.html',{'form':form,'msg':error_msg,'courses':courses})
+                return render(request,'Admin/AddTrainer.html',{'form':form,'error_msg':error_msg,'courses':courses})
         else:
             print(form.errors)
     return render(request,'Admin/AddTrainer.html',{'form':form,'courses':courses})
@@ -279,6 +299,15 @@ def ViewStudentStatus(request):
         return render(request,'Admin/StudentStatus.html',{'modules':data,'name':student.s_name})
     
     return render(request,'Admin/StudentStatus.html',)
+    
+def CompletedStudents(request):
+    students=StudentDetails.objects.filter(status="completed")
+    courses=CourseDetails.objects.all()
+    tab_selection="Completed Students"
+    if request.method=='POST':
+        course=request.POST['course']
+        students=StudentDetails.objects.filter(c_id=course, status="completed")
+    return render(request,'Admin/CompletedStudents.html',{'students':students,'courses':courses,'tab_selection':tab_selection})
 
 
 def DueList(request):
@@ -362,3 +391,21 @@ def StudentExam(request):
     exams=ExamDetails.objects.all()
     return render(request,'Admin/Exams.html',{'exams':exams,})
 
+def ViewProfile(request):
+    print('yes')
+    if request.method=='GET':
+        return redirect("institute_app:admin_active_students")
+    id=request.POST['id']
+    data=StudentDetails.objects.get(s_id=id)
+    tot_modules=StudentModule.objects.filter(s_id=id).count()
+    mod_completed=StudentModule.objects.filter(s_id=id,status='completed').count()
+    payment_data=FeeDetails.objects.filter(s_id=id)
+    std_exam=ExamDetails.objects.filter(s_id=id)
+    perc=""
+    try:
+        perc=(mod_completed/tot_modules) *100
+        print(perc)
+    except:
+        perc=0
+    
+    return render(request,'Admin/StudentProfile.html',{'data':data,'perc':perc,'payment_data':payment_data,'exams':std_exam})

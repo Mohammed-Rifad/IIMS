@@ -1,10 +1,25 @@
 {% extends 'Admin/AdminMaster.html' %}
 
 {% block content%}
+{% if success_msg %}
+ <div class="alert alert-success w-50" style="border-radius: 10px;margin-top: 10px;width:100px" role="alert">
+    {{success_msg}}
+   </div>
+   {% endif %}
+   {% if error_msg %}
+   <div class="alert alert-danger w-50" style="border-radius: 10px;margin-top: 10px;" role="alert">
+      {{error_msg}}
+     </div>
+     {% endif %}
+     
+ <div class="alert alert-danger "  id="err_display" style="border-radius: 10px;margin-top: 10px; opacity: .9;display: none;margin-left:280px; width: 310px;" role="alert">
+  
+</div>
+
 
 <form method="POST" action="{% url 'institute_app:add_hr' %}" class="reg-form" enctype="multipart/form-data">
     {% csrf_token %}
-    <p  class="text-danger">{{msg}}</p>
+  
 <table class="tb">
     <tr>
         <td>{{form.hr_name.label}}</td>
@@ -43,6 +58,98 @@
     
 </table>
 
-<input type="submit" value="Login" class="btn btn-primary" style="margin-left: 60px;"/>
+<input type="submit" value="Login" class="btn btn-primary" id='btn' style="margin-left: 60px;"/>
 </form>
+
+
+<script>
+$(document).ready(()=>{
+    $('#btn').click(()=>{
+       
+  
+    var sname=$('#id_hr_name') 
+    var dob=$('#id_hr_dob')
+   
+    var email=$('#id_hr_email') 
+    var phno=$('#id_hr_phno') 
+    
+    var err=$('#err_display')
+
+    var name_format=/^[a-z A-Z]+$/
+    var reg_email = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      
+    dob_format = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/
+   
+    
+    
+    if(name_format.test(sname.val())==false){
+        
+        err.css({'display':'block','color':'red'})
+        err.html('Name Should Not Contain Numbers Or Characters')
+        sname.focus()
+        return false
+    }
+    else{
+        err.css({'display':'none'})
+    }
+alert(email.val().match(reg_email))
+
+    
+
+
+if(dob_format.test(dob.val())==false){
+     
+     err.css({'display':'block','color':'red'})
+     err.html('Invalid DOB')
+     dob.focus()
+     return false
+ }
+ else{
+     err.css({'display':'none'})
+ }
+
+
+
+    if(email.val().match(reg_email)==null){
+         
+        err.css({'display':'block','color':'red'})
+        err.html('Invalid Email Format')
+        email.focus()
+        
+        return false;
+    }
+
+    else{
+        err.css({'display':'none'})
+    }
+
+   
+   
+
+
+
+   
+
+
+var phno_format=/^[6-9]{1}[0-9]{9}$/;
+if(phno.val().match(phno_format)==null){
+     
+     err.css({'display':'block','color':'red'})
+     err.html('Invalid Phone No')
+     phno.focus()
+     return false
+ }
+ else{
+     err.css({'display':'none'})
+ }
+   
+
+    })
+})
+</script>
+
+
+
+
+
 {% endblock %}

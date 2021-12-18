@@ -15,7 +15,7 @@ class CourseForm(forms.ModelForm):
     
 
 class ModuleForm(forms.ModelForm):
-    m_name=forms.CharField(label="Course Name",widget=forms.TextInput(attrs={'class':'form-control'}))
+    m_name=forms.CharField(label="Module Name",widget=forms.TextInput(attrs={'class':'form-control'}))
     
     class Meta:
         model=ModuleDetails
@@ -76,7 +76,7 @@ class TrainerForm(forms.ModelForm):
         (1,'Yes'),
         (0,'No')
     )
-    log_permission=forms.IntegerField(label="Login Permission",widget=forms.RadioSelect(choices=permission_set,)) 
+    # log_permission=forms.IntegerField(label="Login Permission",widget=forms.RadioSelect(choices=permission_set,)) 
     tr_name=forms.CharField(label="Trainer Name",widget=forms.TextInput(attrs={'class':'form-control','style':'width:300px',}))
     tr_dob=forms.CharField(label="D.O.B",widget=forms.TextInput(attrs={'class':'form-control','style':'width:300px',}))
     tr_qual=forms.CharField(label="Qualification",widget=forms.Select(choices=qual_choices, attrs={'class':'form-control','style':'width:300px',}))
@@ -88,7 +88,7 @@ class TrainerForm(forms.ModelForm):
     
     class Meta:
         model=TrainerDetails
-        exclude=('tr_id','tr_join','tr_passwd','tr_status','tr_course')
+        exclude=('tr_id','tr_join','tr_passwd','tr_status','tr_course','log_permission')
 
 class FollowupForm(forms.ModelForm):
     gender_choices=(

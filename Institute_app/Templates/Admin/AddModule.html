@@ -4,14 +4,23 @@
 
 <form method="POST" action="{% url 'institute_app:add_module' %}" class="reg-form">
     {% csrf_token %}
-    <p  class="text-danger">{{msg}}</p>
-<table class="tb">
+    {% if success_msg %}
+    <div class="alert alert-success " style="border-radius: 10px;width: 100px; margin-top: 10px;width:250px" role="alert">
+       {{success_msg}}
+      </div>
+      {% endif %}
+      {% if error_msg %}
+      <div class="alert alert-danger " style="border-radius: 10px;margin-top: 10px;width: 250px;" role="alert">
+         {{error_msg}}
+        </div>
+        {% endif %}
+<table style="border-spacing: 10px;border-collapse: separate;">
     <tr>
         <td>
             Select Course
         </td>
         <td>
-           <select name="course" id="">
+           <select name="course" id="" class="form-control">
                {% for course in courses %}
             <option value="{{course.c_id}}">{{course.c_name|title}}</option>
                {% endfor %}

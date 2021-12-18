@@ -17,6 +17,9 @@ urlpatterns = [
     path('AdminHome/AddHr',AdminViews.AddHr,name="add_hr"),
     path('AdminHome/AddTrainer',AdminViews.AddTrainer,name="add_trainer"),    
     path('AdminData',CommonViews.AdminData),
+    path('AdminHome/Profile',AdminViews.ViewProfile,name="admin_viewpro"),
+
+    path('AdminHome/CompletedStudents',AdminViews.CompletedStudents,name="admin_comp"),
     path('AdminHome/FollowUp',AdminViews.AddFollowUp,name="add_followup"),
     path('AdminHome/Students',AdminViews.ViewActiveStudents,name="admin_active_students"),
     path('AdminHome/Status',AdminViews.ViewStudentStatus,name="admin_st_status"),
@@ -27,7 +30,7 @@ urlpatterns = [
     path('AdminHome/SetPermission/',AdminViews.UpdatePermission,name="set_permission"),
     path('HrHome',HrViews.HrHome,name="hr_home"),
     path('AdminHome/TrainerAttendance',AdminViews.ViewTrainerAttendance,name="view_tr_attendance"),
-    path('AdminHome/StudentAttendance',AdminViews.ViewStudentAttendance,name="view_hr_attendance"),
+    path('AdminHome/StudentAttendance',AdminViews.ViewStudentAttendance,name="view_st_attendance"),
     path('AdminHome/CertPending',AdminViews.CertPending,name="ad_st_pending"),
     path('AdminHome/CertStatus',AdminViews.CertUpdate,name="ad_st_update"),
     path('AdminHome/Notes',AdminViews.ViewNotes,name="ad_view_notes"),
