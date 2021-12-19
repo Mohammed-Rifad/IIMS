@@ -1,0 +1,41 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+
+  <div class="container mt-5 me-5">
+<table class="table table-primary table-hover" style="opacity: 0.8;">
+ <tr>
+     <td>SID</td>
+    <th>Date Entered</th> 
+    <th>Student Name</th>
+    <th>Interview Date</th>
+    <th>Company Name</th>
+    <th>Address</th>
+    <th>Contact</th>
+    <!-- <th>Mode</th> -->
+    <th>Post</th>
+    <th>Status</th>
+    
+ </tr>
+{% for d in data %}
+<tr>
+   
+{% csrf_token %}
+<td>{{d.s_id.s_id}}</td>
+        <td>{{d.added_date}}</td>
+        <td>{{d.s_id.s_name|title}}</td>
+        <td>{{d.interview_date}}</td>
+        <td>{{d.cmp_name|title}}</td>
+        <td>{{d.cmp_addr|capfirst}}</td>
+        <td>{{d.cmp_contact}}</td>
+        <!-- <td>{{d.int_type|title}}</td> -->
+        <td>{{d.int_post|title}}</td>
+        <td>{{d.status|title}}</td>
+        
+</tr>
+ 
+{% endfor %}
+ 
+</div>
+{% endblock %}

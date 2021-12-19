@@ -18,7 +18,7 @@ urlpatterns = [
     path('AdminHome/AddTrainer',AdminViews.AddTrainer,name="add_trainer"),    
     path('AdminData',CommonViews.AdminData),
     path('AdminHome/Profile',AdminViews.ViewProfile,name="admin_viewpro"),
-
+    path('AdminHome/ComProfile',AdminViews.ViewCompProfile,name="admin_viewcompro"),
     path('AdminHome/CompletedStudents',AdminViews.CompletedStudents,name="admin_comp"),
     path('AdminHome/FollowUp',AdminViews.AddFollowUp,name="add_followup"),
     path('AdminHome/Students',AdminViews.ViewActiveStudents,name="admin_active_students"),
@@ -27,6 +27,8 @@ urlpatterns = [
     path('AdminHome/Seating',AdminViews.ViewSeating,name="view_seating_admin"),
     path('AdminHome/ActiveFollowup',AdminViews.ActiveFollowUp,name="admin_active_followup"),
     path('AdminHome/History/<int:f_id>',AdminViews.FollowUpHistory,name="admin_followup_hst"),
+    path('AdminHome/ViewInterview/',AdminViews.ViewInterview,name="ad_view_inter"),
+    
     path('AdminHome/SetPermission/',AdminViews.UpdatePermission,name="set_permission"),
     path('HrHome',HrViews.HrHome,name="hr_home"),
     path('AdminHome/TrainerAttendance',AdminViews.ViewTrainerAttendance,name="view_tr_attendance"),
@@ -38,6 +40,8 @@ urlpatterns = [
     
     path('HrHome/AddStudent',HrViews.AddStudent,name="add_student"),
     path('HrHome/TrainerAttendance',HrViews.TrainerAttendance,name="trainer_att"),
+    path('HrHome/MyAttendance',HrViews.MyAttendance,name="my_att"),
+    path('HrHome/ViewMyAtt',HrViews.ViewMyAttendance,name="my_att_view"),
     path('HrHome/ViewTrAttendance',HrViews.ViewTrainerAttendance,name="tr_attendance"),
     path('HrHome/AssignSeat',HrViews.AssignSeating,name="assign_seat"),
     path('HrHome/Seating',HrViews.ViewSeating,name="view_seating_hr"),

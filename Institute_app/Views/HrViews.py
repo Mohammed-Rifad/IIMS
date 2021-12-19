@@ -228,6 +228,66 @@ def ViewTrainerAttendance(request):
 
 
 
+def ViewMyAttendance(request):
+    attendance_data=""
+   
+    
+    if request.method=='POST':
+        
+        mnth=request.POST['mnth']
+        yr=date.today().year
+         
+        attendance_data=AttendanceDetails.objects.filter(hr_id=request.session['hr_id'],mnth=mnth,yr=yr)
+        
+    return render(request,'HR/ViewMyAttendance.html',{'attendance_data':attendance_data,})
+
+
+def MyAttendance(request):
+    data=HrDetails.objects.get(hr_status="active")
+    tab_selection="My Attendance"
+    msg=""
+    if request.method=='POST':
+        dt=request.POST['date']
+        status=request.POST['status']
+        mnth=datetime.strptime(dt,"%Y-%m-%d").date().month
+        
+        yr =date.today().year
+        dt_convrt=datetime.strptime(dt,"%Y-%m-%d").date()
+        dt_str=dt_convrt.strftime("%d/%m/%Y")
+        print('lplpp',dt_str)
+        is_mnth_added=AttendanceDetails.objects.filter(hr_id=data.hr_id,mnth=mnth).exists()
+       
+        if not is_mnth_added:
+
+            mnth_data=[31,28,31,30,31,30,31,31,30,31,30,31]
+            selected_mnth=mnth_data[mnth-1]
+           
+            for d in range(1,selected_mnth+1):
+                
+              
+                if d<10:
+                    date_to_enter=f'0{d}/{mnth}/{yr}'
+                else:
+                    date_to_enter=f'{d}/{mnth}/{yr}'
+
+               
+        
+                attendance=AttendanceDetails(type="hr",hr_id=data,mnth=mnth,date=date_to_enter,yr=yr,status="N/A")
+                attendance.save()
+            selected_attendance=AttendanceDetails.objects.get(hr_id=data.hr_id,mnth=mnth,yr=yr,date=dt_str)
+            selected_attendance.status=status
+            selected_attendance.save()
+            print('edjkdhf',selected_attendance.status)
+        else:
+             
+            selected_attendance=AttendanceDetails.objects.get(hr_id=data.hr_id,date=dt_str)
+            selected_attendance.status=status
+            selected_attendance.save()
+        msg="Attendance Added Succesfully"
+    
+    return render(request,'HR/MyAttendance.html',{'tab_selection':tab_selection,'msg':msg})
+
+
 def DueList(request):
     std_array=[]
     data=FeeDetails.objects.filter(status='not paid')

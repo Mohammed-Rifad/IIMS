@@ -1,0 +1,67 @@
+{% extends 'HR/HrMaster.html' %}
+
+{% block content%}
+<form method="POST" action="{% url 'institute_app:my_att_view'  %}" class="reg-form" enctype="multipart/form-data">
+
+    
+    {% csrf_token %}
+    <table style="border-spacing: 10px;border-collapse: separate; color: white;font-weight: bold; margin-left: 370px;" >
+        
+    <tr>
+        <td>
+            Select Month
+        </td>
+        <td>
+            <select name="mnth" class="form-control">
+                
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value=7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="submit" class="btn" style="background-color: blueviolet;"></td>
+    </tr>
+</table>
+
+</form>
+
+
+{% if attendance_data %}
+
+
+<div style="min-height: 300px;max-height: 400px; overflow: scroll;">
+    <table class="table table-primary table-hover" style="opacity: 0.8;">
+        <tr>
+           
+            <th>Date</th>
+            <th>Status</th>
+           
+        </tr>
+        <tr>
+            {% for data in attendance_data %}
+     
+             <td>{{data.date}}</td>
+             <td>{{data.status|title}}</td>
+          
+     
+            
+         </tr>
+         {% endfor %}
+     </table>
+</div>
+{% endif %}
+
+{% endblock %}

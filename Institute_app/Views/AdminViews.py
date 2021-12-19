@@ -1,6 +1,6 @@
 
 
-from Institute_app.models import ExamDetails, AttendanceDetails, CertificateDetails, CourseDetails, FeeDetails, FollowUpData, FollowupStatus, HrDetails, ModuleDetails, NotesDetails, SeatingDetails, StudentDetails, StudentModule, SystemDetails, TrainerDetails
+from Institute_app.models import ExamDetails, AttendanceDetails, CertificateDetails, CourseDetails, FeeDetails, FollowUpData, FollowupStatus, HrDetails, InterviewDetails, ModuleDetails, NotesDetails, SeatingDetails, StudentDetails, StudentModule, SystemDetails, TrainerDetails
 from django.db import models
 from django.shortcuts import render,redirect
 from datetime import date, datetime, time, timedelta
@@ -310,6 +310,12 @@ def CompletedStudents(request):
     return render(request,'Admin/CompletedStudents.html',{'students':students,'courses':courses,'tab_selection':tab_selection})
 
 
+def ViewInterview(request):
+    data=InterviewDetails.objects.all()
+     
+    return render(request,'Admin/ViewInter.html',{'data':data,})
+
+
 def DueList(request):
     std_array=[]
     data=FeeDetails.objects.filter(status='not paid')
@@ -388,7 +394,7 @@ def ViewNotes(request):
     return render(request,'Admin/ViewNotes.html',{'modules':modules,'notes':notes,})
 
 def StudentExam(request):
-    exams=ExamDetails.objects.all()
+    exams=ExamDetails.objects.filter(status='pending')
     return render(request,'Admin/Exams.html',{'exams':exams,})
 
 def ViewProfile(request):
@@ -409,3 +415,23 @@ def ViewProfile(request):
         perc=0
     
     return render(request,'Admin/StudentProfile.html',{'data':data,'perc':perc,'payment_data':payment_data,'exams':std_exam})
+
+
+def ViewCompProfile(request):
+     
+    if request.method=='GET':
+        return redirect("institute_app:admin_comp")
+    id=request.POST['id']
+    data=StudentDetails.objects.get(s_id=id)
+    tot_modules=StudentModule.objects.filter(s_id=id).count()
+    mod_completed=StudentModule.objects.filter(s_id=id,status='completed').count()
+    payment_data=FeeDetails.objects.filter(s_id=id)
+    std_exam=ExamDetails.objects.filter(s_id=id)
+    perc=""
+    try:
+        perc=(mod_completed/tot_modules) *100
+        print(perc)
+    except:
+        perc=0
+    
+    return render(request,'Admin/CompStudentProfile.html',{'data':data,'perc':perc,'payment_data':payment_data,'exams':std_exam})

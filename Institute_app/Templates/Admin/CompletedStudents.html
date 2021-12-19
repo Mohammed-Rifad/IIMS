@@ -74,7 +74,7 @@
 {% for student in students %}
 
 <div class="col-md-4 mt-3">
-    <form action="{% url 'institute_app:admin_viewpro' %}" method="POST">
+    <form action="{% url 'institute_app:admin_viewcompro' %}" method="POST">
     {% csrf_token %}
         <div class="card" style="width:400px">
         <img class="card-img-top rounded" src="{{student.s_pic.url}}" style="height: 100px; width:100px" alt="Card image">

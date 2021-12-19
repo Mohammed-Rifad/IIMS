@@ -1,0 +1,177 @@
+{% extends 'Admin/AdminMaster.html' %}
+
+{% block content%}
+
+<div class="container">
+    <div class="row mt-4 ">
+        <div class="col-md-2">
+<img src="{{data.s_pic.url}}" style="height: 130px; width: 100px;" class="rounded" alt="">
+        </div>
+        <div class="col-md-7 " style="background-color: slateblue;">
+            <br>
+            <p class="h4 text-white" style="font-weight: bolder;">{{data.s_name|title}}</p>
+            <p class="h6 text-white pl-2">{{data.s_email}}</p>
+            <p class="h6 text-white pl-2">{{data.s_phno}}</p>
+            <p class="h4 text-white " style="padding-left: 220px;">ID : {{data.s_id}}</p>
+        </div>
+        <div class="col-md-3 bg-light">
+           <span class="h4 text-decoration-underline" style="position: relative; top: 10px;left: 30px;"><u><b>Course Completion</b> </u></span>
+           <br>
+      <span class="h2" style="position: relative; top: 50px;left: 60px;">{{perc}} %</span>     
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <br><br><br>
+            <p class="h4 text-primary" border=1>Personal Details</p>
+            <table class="table table-striped mt-3" border="1">
+                <tr>
+                    <td>Name  </td>
+                    <td>{{data.s_name|title}}</td>
+                </tr>
+               
+                <tr>
+                    <td>Email</td>
+                    <td>{{data.s_email}}</td>
+                </tr>
+                <tr>
+                    <td>Phone No</td>
+                    <td>{{data.s_phno}}</td>
+                </tr>
+                
+                <tr>
+                    <td>Address</td>
+                    <td>{{data.s_address|capfirst}}</td>
+                </tr>
+                <tr>
+                    <td>Joined Date</td>
+                    <td>{{data.s_join|capfirst}}</td>
+                </tr>
+                <tr>
+                    <td>Placed</td>
+                    {% if data.placed == 0 %}
+                    <td>No</td>
+                    {% else %}
+                    <td>Yes</td>
+                    {% endif %}
+                </tr>
+            </table>
+        </div>
+
+
+        <div class="col-md-12 mb-4">
+            <br><br><br>
+            <p class="h4 text-primary">Qualification Details</p>
+            <table class="table table-striped mt-3" border="1">
+                
+                <tr>
+                    <td>College</td>
+                    <td>{{data.s_colg|title}}</td>
+                </tr>
+                <tr>
+                    <td>Qualification</td>
+                    <td>{{data.s_qual|upper}}</td>
+                </tr>
+               
+                <tr>
+                    <td>Passout Year</td>
+                    <td>{{data.s_passout}}</td>
+                </tr>
+                
+                
+                
+            </table>
+        </div>
+
+
+
+        <div class="col-md-12 mb-4">
+            <br><br><br>
+            <p class="h4 text-primary">Placement Details</p>
+            <table class="table table-striped mt-3" border="1">
+                
+                <tr>
+                    <td>Company Name</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Designation</td>
+                    <td> </td>
+                </tr>
+               
+                <tr>
+                    <td>Joining Date</td>
+                    <td></td>
+                </tr>
+                
+                
+                
+            </table>
+        </div>
+
+
+
+        <div class="col-md-12">
+            <br><br><br>
+            <p class="h4 text-primary" border=1>Payment Details</p>
+            <table class="table table-striped mt-3" border="1">
+                 <tr>
+                     <td>SL.No</td>
+                     <td>Installment No</td>
+                     <td>Due Date</td>
+                     <td>Paid Date</td>
+                     <td>Due Amount</td>
+                     <td>Amount Paid</td>
+                     <td>Payment Type</td>
+                 </tr>
+                 {% for p in payment_data %}
+
+                 <tr>
+                     <td>{{forloop.counter}}</td>
+                     <td>{{p.ins_no}}</td>
+                     <td>{{p.due_date}}</td>
+                     <td>{{p.paid_date}}</td>
+                     <td>Rs {{p.due_amt}}</td>
+                     <td>Rs {{p.paid_amt}}</td>
+                     <td>{{p.pay_type|title}}</td>
+                     
+                    
+                 </tr>
+                 {% endfor %}
+                </table>
+                <br>
+                <br>
+        </div>
+
+        <div class="col-md-12">
+            <br><br><br>
+            <p class="h4 text-primary" border=1>Exam Details</p>
+            <table class="table table-striped mt-3" border="1">
+                 <tr>
+                     <td>SL.No</td>
+                     <td>Exam Date</td>
+                     <td>Module</td>
+                     <td>Result</td>
+                     
+                 </tr>
+                 {% for exam in exams %}
+
+                 <tr>
+                     <td>{{forloop.counter}}</td>
+                     <td>{{exam.exam_date}}</td>
+                     <td>{{exam.m_id.m_name|title}}</td>
+                     <td>{{exam.status|capfirst}}</td>
+                    
+                    
+                 </tr>
+                 {% endfor %}
+                </table>
+                <br>
+                <br>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

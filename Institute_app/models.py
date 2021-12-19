@@ -94,7 +94,7 @@ class StudentDetails(models.Model):
     s_completed=models.CharField(max_length=10,default="",db_column="s_join")
     amt_payable=models.FloatField(db_column="amt_payable")
     s_passwd=models.CharField(max_length=20,db_column="s_passwd")
-    balance=models.FloatField(db_column="balance")
+    # balance=models.FloatField(db_column="balance")
     s_completed=models.CharField(max_length=10,db_column="s_compl")
     s_pic=models.ImageField(upload_to="Student/",db_column="s_pic")
     cert_req=models.IntegerField(default=0,db_column="c_req")

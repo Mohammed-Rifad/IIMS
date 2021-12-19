@@ -1,0 +1,41 @@
+{% extends 'HR/HrMaster.html' %}
+
+{% block content%}
+<form method="POST" action="{% url 'institute_app:my_att' %}" class="reg-form" enctype="multipart/form-data">
+    {% csrf_token %}
+  
+<table class="tb">
+ 
+    
+    <tr>
+        <td>
+            Date
+        </td>
+        <td>
+            <input type="date" name="date" id="" required class="form-control">
+        </td>
+    </tr>
+
+        <tr>
+            <td>Status</td>
+            <td>
+                <select name="status" id="" class="form-control">
+                    <option value="present">Present</option>
+                    <option value="leave">Leave</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Add" class="btn" style="background-color: blueviolet;"></td>
+        </tr>
+    </table>
+
+    {% if msg %}
+    <div class="alert alert-success w-25" style="border-radius: 10px;margin-top: 10px;margin-left: 350px; " role="alert">
+       {{msg}}
+      </div>
+      {% endif %}
+</form>
+{% endblock %}
