@@ -3,7 +3,7 @@
 {% block content%}
 <div class="bd">
     
-<form method="POST" action="{% url 'institute_app:add_student' %}" class="reg-form" enctype="multipart/form-data">
+<form method="POST" action="{% url 'institute_app:add_student' %}" class="reg-form"  enctype="multipart/form-data">
     {% csrf_token %}
    
     {% if error_msg  %}
@@ -15,8 +15,8 @@
  {% endif %}
 
 
- <div class="alert alert-danger tb"  id="err_display" style="border-radius: 10px;margin-top: 10px; opacity: .9;display: none;margin-left: 200px; width: 360px;" role="alert">
-  
+ <div class="alert alert-danger tb"  id="err_display" style="border-radius: 10px;margin-top: 10px;display: none; opacity: .9;margin-left: 400px; width: 300px;" role="alert">
+ rfherlgh
  </div>
 
  
@@ -25,17 +25,22 @@
 
 <table class="tb" >
     <tr>
-        <td>{{form.s_name.label}}</td>
-         <td>{{form.s_name}}</td>
+        <td>Student Name</td>
+        <td><input type="text" name="std_name"  id="std_name" required class="form-control"></td>
+        
     </tr>
     <tr>
-        <td >{{form.s_gender.label}}</td>
-         <td style="color: black;">{{form.s_gender}}</td>
-    </tr>
-    <tr>
+        <td >Gender</td>
+         <td style="color: black;">
+            <input type="radio" name="std_gender" id="std_gender1" value="male" checked >Male
+            <input type="radio" name="std_gender" id="std_gender2" value="female">Female
+
+        </td>
+    </tr> 
+     <tr>
         <td>Course Selected</td>
          <td>
-             <select name="course" class="form-control">
+             <select name="std_course" class="form-control">
                  {% for course in courses %}
                 <option value="{{course.c_id}}">{{course.c_name|title}}</option>
                 {% endfor %}
@@ -44,123 +49,112 @@
     </tr>
     <tr>
         <td>
-            {{form.s_type.label}}
+           Mode
         </td>
         <td>
-           {{form.s_type}}
+          <select name="std_mode" id="std_mode" class="form-control">
+              <option value="offline">Offline</option>
+              <option value="online">Online</option>
+          </select>
        </td>
     </tr>
-    <tr>
-        <td>{{form.s_dob.label}}</td>
-         <td>{{form.s_dob}}</td>
+     <tr>
+        <td>D.O.B</td>
+         <td><input type="date" name="std_dob" id="std_dob" class="form-control" required></td>
+    </tr>
+   <tr>
+        <td>College</td>
+         <td><input type="text" name="std_colg" required class="form-control" id=""></td>
     </tr>
     <tr>
-        <td>{{form.s_colg.label}}</td>
-         <td>{{form.s_colg}}</td>
+        <td>Qualification</td>
+         <td><select name="std_qual" id="std_qual" class="form-control">
+             <option value="bca">BCA</option>
+             <option value="mca">MCA</option>
+             <option value="bba">BBA</option>
+             <option value="bsc">BSC</option>
+             <option value="msc">MSC</option>
+             <option value="btech">BTech</option>
+             <option value="mtech">MTech</option>
+         </select></td>
+    </tr>
+     
+    <tr>
+        <td>Passout Year</td>
+         <td><input type="number" name="std_passout" min=1990 max=2022 id="std_passout" class="form-control" required></td>
+    </tr>
+    
+    <tr>
+        <td>Address</td>
+         <td><textarea name="std_address" id="std_address" cols="22" class="form-control" rows="5" required></textarea></td>
+    </tr>
+  
+    <tr>
+        <td>Email</td>
+         <td><input type="text" name="std_email" id="std_email" class="form-control" required></td>
+    </tr>
+     
+    <tr>
+        <td>Phone No</td>
+         <td><input type="text" name="std_phno" id="std_phno" class="form-control" required></td>
+    </tr>
+     
+    <tr>
+        <td>Amount Payable</td>
+         <td><input type="number" name="amt_payable" id="amt_payable" required min="100" class="form-control"></td>
     </tr>
     <tr>
-        <td>{{form.s_qual.label}}</td>
-         <td>{{form.s_qual}}</td>
-    </tr>
-    <tr>
-        <td>{{form.s_passout.label}}</td>
-         <td>{{form.s_passout}}</td>
-    </tr>
-    <tr>
-        <td>{{form.s_address.label}}</td>
-         <td>{{form.s_address}}</td>
-    </tr>
-    <tr>
-        <td>{{form.s_email.label}}</td>
-         <td>{{form.s_email}}</td>
-    </tr>
-    <tr>
-        <td>{{form.s_phno.label}}</td>
-         <td>{{form.s_phno}}</td>
-    </tr>
-    <tr>
-        <td>{{form.amt_payable.label}}</td>
-         <td>{{form.amt_payable}}</td>
-    </tr>
-    <tr>
-        <td>{{form.s_pic.label}}</td>
-         <td>{{form.s_pic}}</td>
+        <td>Select Pic</td>
+         <td><input type="file" name="std_pic" id="std_pic" required class="form-control"></td>
     </tr>
     <tr>
 
         <td>Enter Installment</td>
-        <td><input type="number" name="ins1" required style="width: 80px;" id="ins1" min="100">
-            <input type="number" name="ins2" required style="width: 80px;" id="ins2" min=100>
+        <td><input type="number" name="ins1" class="form-control d-inline" required style="width: 80px;" id="ins1" min="100">
+            <input type="number" name="ins2" class="form-control d-inline" required style="width: 80px;" id="ins2" min=100>
             
-            <input type="number" name="ins3" required style="width: 80px;" id="ins3" min=100></td>
+            <input type="number" name="ins3" class="form-control d-inline" required style="width: 80px;" id="ins3" min=100></td>
     </tr>
    
     
 </table>
 
-<input type="submit" id='btn' value="Add" class="btn btn-primary"  style="margin-left: 480px;"/>
+<input type="submit" id='btn' onclick="return validation()" value="Add" class="btn btn-primary"  style="margin-left: 480px;"/>
 </form>
 </div>
 
 <script>
-$(document).ready(()=>{
-    $('#btn').click(()=>{
-       
-    
-    var sname=$('#id_s_name') 
-    var dob=$('#id_s_dob')
-    var colg=$('#id_s_colg')
-    var passout=$('#id_s_passout')
-    var address=$('#id_s_address')
-    var email=$('#id_s_email') 
-    var phno=$('#id_s_phno') 
-    var amt=$('#id_amt_payable')     
-    var ins1=$('#ins1').val()
-    var ins2=$('#ins2').val()
-    var ins3=$('#ins3').val()
-    var err=$('#err_display')
+
+function validation(){
+
+
+    var name=$("#std_name")
+   
+    var email=$("#std_email")
+    var phno=$("#std_phno")
+     var err=$("#err_display")
+
     var name_format=/^[a-z A-Z]+$/
     var reg_email = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
       
-    dob_format = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/
-   
-    if(sname.val()==''){
-        err.css({'display':'block','color':'red'})
-        err.html('Please Enter Name')
-        sname.focus()
-        return false
-    }
-    else{
-        err.css({'display':'none'})
-    }
-
-
-
-    if(address.val()==''){
-        err.css({'display':'block','color':'red'})
-        err.html('Please Enter Address')
-        address.focus()
-        return false
-    }
-    else{
-        err.css({'display':'none'})
-    }
-    if(email.val()==''){
-        err.css({'display':'block','color':'red'})
-        err.html('Please Enter Email')
-        email.focus()
-        return false
-    }
-    else{
-        err.css({'display':'none'})
-    }
     
-    if(!reg_email.test(email)){
+    if(name.val().match(name_format)==null && name.val()!=''){
+        
+        err.css({'display':'block','color':'red'})
+        err.html('Name Should Not Contain Numbers Or Characters')
+        name.focus()
+        return false
+    }
+    else{
+        err.css({'display':'none'})
+    }
+
+    if(email.val().match(reg_email)==null && email.val()!=""){
          
         err.css({'display':'block','color':'red'})
         err.html('Invalid Email Format')
-        phno.focus()
-        
+       
+        email.focus()
         return false;
     }
 
@@ -168,78 +162,29 @@ $(document).ready(()=>{
         err.css({'display':'none'})
     }
 
-    if(phno.val()==''){
-        err.css({'display':'block','color':'red'})
-        err.html('Please Enter Phone')
-        phno.focus()
-        return false
-    }
-    else{
-        err.css({'display':'none'})
-    }
  
 
-    if(name_format.test(sname.val())==false){
-        
-        err.css({'display':'block','color':'red'})
-        err.html('Name Should Not Contain Numbers')
-        sname.focus()
-        return false
-    }
-    else{
-        err.css({'display':'none'})
-    }
+    
+    var phno_format=/^[6-9]{1}[0-9]{9}$/;
+if(phno.val().match(phno_format)==null && phno.val()!=''){
+     
+     err.css({'display':'block','color':'red'})
+     err.html('Invalid Phone No')
+     phno.focus()
+     return false
+ }
+ else{
+     err.css({'display':'none'})
+ }
 
+    
 
-
-    if(dob_format.test(dob.val())==false){
-        alert('yes')
-        err.css({'display':'block','color':'red'})
-        err.html('Invalid DOB')
-        dob.focus()
-        return false
-    }
-    else{
-        err.css({'display':'none'})
-    }
-
-
-    if(dob.val()==''){
-        
-        err.css({'display':'block','color':'red'})
-        err.html('Enter D.O.B')
-        dob.focus()
-        return false
-    }
-    else{
-        err.css({'display':'none'})
-    }
-
-    if(colg.val()==''){
-        err.css({'display':'block','color':'red'})
-        err.html('Please Enter College Name')
-        colg.focus()
-        return false
-    }
-    else{
-        err.css({'display':'none'})
-    }
+   
+ 
     
    
 
-    if(passout.val().length!=4){
-       
-        err.css({'display':'block','color':'red'})
-        err.html('Enter Valid Passout Year')
-        passout.focus()
-        return false
-    }
-
-    else{
-        err.css({'display':'none'})
-    }
-
-    })
-})
+   
+}
 </script>
 {% endblock %}

@@ -19,53 +19,52 @@ def HrHome(request):
 
 
 def AddStudent(request):
-    form=StudentForm()
+     
     msg=""
     tab_selection="Register Student"
     courses=CourseDetails.objects.all()
     if request.method=='POST':
-        form=StudentForm(request.POST,request.FILES)
-        if form.is_valid():
-            s_name=form.cleaned_data['s_name'].lower()
-            s_colg=form.cleaned_data['s_colg'].lower()
-            c_id=CourseDetails.objects.get(c_id=request.POST['course'])
-            s_dob=form.cleaned_data['s_dob']
-            s_qual=form.cleaned_data['s_qual']
-            # s_type=request.POST['type']
-            s_address=form.cleaned_data['s_address'].lower()
-            s_gender=form.cleaned_data['s_gender']
-            s_phno=form.cleaned_data['s_phno']
-            s_email=form.cleaned_data['s_email']
-            s_pic=form.cleaned_data['s_pic']
-            s_passout=form.cleaned_data['s_passout']
-            amt_payable=form.cleaned_data['amt_payable']
-            s_type=form.cleaned_data['s_type']
-            s_join=date.today()
-            dt_covrt=s_join.strftime("%d/%m/%Y")
-            passwd=get_random_string(length=8)
-            passwd_enc=pbkdf2_sha256.hash(passwd,rounds=1000,salt_size=32)
-            ins1=request.POST['ins1']
-            ins2=request.POST['ins2']
-            ins3=request.POST['ins3']
+         
+       
+        s_name=request.POST['std_name'].lower()
+        s_colg=request.POST['std_colg'].lower()
+        c_id=CourseDetails.objects.get(c_id=request.POST['std_course'])
+        s_dob=request.POST['std_dob']
+        s_qual=request.POST['std_qual']
+        s_type=request.POST['std_mode']
+        s_address=request.POST['std_address'].lower()
+        s_gender=request.POST['std_gender'] 
+        s_phno=request.POST['std_phno']
+        s_email=request.POST['std_email']
+        s_pic=request.FILES['std_pic']
+        s_passout=request.POST['std_passout']
+        amt_payable=request.POST['amt_payable']
+        # s_type=form.cleaned_data['s_type']
+        s_join=date.today()
+        dt_covrt=s_join.strftime("%d/%m/%Y")
+        passwd=get_random_string(length=8)
+        passwd_enc=pbkdf2_sha256.hash(passwd,rounds=1000,salt_size=32)
+        ins1=request.POST['ins1']
+        ins2=request.POST['ins2']
+        ins3=request.POST['ins3']
 
-            student_exist=StudentDetails.objects.filter(s_email=s_email,status="active").exists()
-            if not student_exist:
-                s_id=GetUniqueID('student')   
-                student=StudentDetails(s_id=s_id,s_phno=s_phno,s_join=dt_covrt,s_type=s_type,s_name=s_name,c_id=c_id,s_dob=s_dob,s_colg=s_colg,s_qual=s_qual,s_address=s_address,
-                s_gender=s_gender,s_email=s_email,s_pic=s_pic,s_passout=s_passout,amt_payable=amt_payable,balance=amt_payable,
-                s_passwd=passwd_enc)
-                student.save()
-                print('uname',s_id,passwd)
-                InsertFeeDetails(s_id,s_join,[ins1,ins2,ins3])
-                AddStudentModule(s_id,c_id)
-                #email_service(s_email,s_id,passwd)
-                msg="Student Added Successfully"
-            else:
-                msg="Email Already Added"
+        student_exist=StudentDetails.objects.filter(s_email=s_email,status="active").exists()
+        if not student_exist:
+            s_id=GetUniqueID('student')   
+            student=StudentDetails(s_id=s_id,s_phno=s_phno,s_join=dt_covrt,s_type=s_type,s_name=s_name,c_id=c_id,s_dob=s_dob,s_colg=s_colg,s_qual=s_qual,s_address=s_address,
+            s_gender=s_gender,s_email=s_email,s_pic=s_pic,s_passout=s_passout,amt_payable=amt_payable,
+            s_passwd=passwd_enc)
+            student.save()
+            print('uname',s_id,passwd)
+            InsertFeeDetails(s_id,s_join,[ins1,ins2,ins3])
+            AddStudentModule(s_id,c_id)
+            email_service(s_email,s_id,passwd)
+            msg="Student Added Successfully"
         else:
-            print(form.errors)
-        return render(request,'HR/AddStudent.html',{'form':form,'courses':courses,'msg':msg,'tab_selection':tab_selection}) 
-    return render(request,'HR/AddStudent.html',{'form':form,'courses':courses,'tab_selection':tab_selection})
+            msg="Email Already Added"
+    
+        return render(request,'HR/AddStudent.html',{ 'courses':courses,'msg':msg,'tab_selection':tab_selection}) 
+    return render(request,'HR/AddStudent.html',{ 'courses':courses,'tab_selection':tab_selection})
 
 # ajax
 def getSystem(request):
