@@ -1,1 +1,1 @@
-web : gunicorn ITInstituteManagementSystem.wsgi --log-file -
+web: gunicorn ITInstituteManagementSystem.wsgi --log-file -
