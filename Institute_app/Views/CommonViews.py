@@ -12,6 +12,7 @@ def AdminData(request):
 
 def ProjectHome(request):
     return render(request,'Common/ProjectHome.html')
+    
 def Login(request):
     form=LoginForm()
     msg=""
