@@ -91,14 +91,19 @@ def checkSystemAvailability(seating_data,slot_selected,student_id):
 def UpdateSeat(seating_data,student,selected_slot):
     current_seating=SeatingDetails.objects.get(Q(slot_s1=student.s_id)|Q(slot_s2=student.s_id)|Q(slot_s3=student.s_id))
     
+    print('current seating',current_seating)
     if current_seating.slot_s1==student:
+        print('slot1')
         cur_slot="slot1"
     if current_seating.slot_s2==student:
+        print('slot2')
         cur_slot="slot2"
     if current_seating.slot_s3==student:
+        print('slot3')
         cur_slot="slot3"
     if selected_slot=="slot1":
         if seating_data.slot1=="free":
+            print('first one')
             seating_data.slot1=student.s_name+" ("+student.c_id.c_name+")"
             seating_data.slot_s1=student
             seating_data.save()
@@ -117,10 +122,17 @@ def UpdateSeat(seating_data,student,selected_slot):
         else:
             return "Seleted System Not Free"
     if selected_slot=="slot2":
+        
         if seating_data.slot2=="free":
-                seating_data.slot2=student.s_name+" ("+student.c_id.c_name+")"
-                seating_data.slot_s2=student
-                seating_data.save()
+                print('second one')
+                try:
+                    seating_data.slot2=student.s_name+" ("+student.c_id.c_name+")"
+                    print('name added')
+                    seating_data.slot_s2=student
+                    print('id added')
+                    seating_data.save()
+                except print(0):
+                    print('error')
                 current_seating.slot2="free"
                 if cur_slot=="slot1":
                     current_seating.slot1="free"
@@ -137,6 +149,7 @@ def UpdateSeat(seating_data,student,selected_slot):
         else:
             return "Seleted System Not Free"
     if selected_slot=="slot3":
+        print('third one')
         if seating_data.slot3=="free":
                 seating_data.slot3=student.s_name+" ("+student.c_id.c_name+")"
                 seating_data.slot_s3=student

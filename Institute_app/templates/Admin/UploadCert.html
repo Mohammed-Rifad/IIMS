@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% extends 'Admin/AdminMaster.html' %}
+
+    {% block content%}
+    <div class="container mt-5">
+        {% if success_msg %}
+        <div class="alert alert-success w-50" style="border-radius: 10px;margin-top: 10px; margin-left: 220px;" role="alert">
+           {{success_msg}}
+          </div>
+          {% endif %}
+          {% if error_msg %}
+          <div class="alert alert-danger w-50" style="border-radius: 10px;margin-top: 10px;margin-left: 220px;" role="alert">
+             {{error_msg}}
+            </div>
+            {% endif %}
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+    
+        <table style="border-spacing: 20px; border-collapse: separate; margin-left: 100px;margin-top: 60px;">
+            <tr>
+                <td>Certificate Title File</td>
+                <td>
+                    <select name="cert_title" id="" class="form-control">
+                        <option value="course completed">Course Completed</option>
+                        <option value="experience">Experience Certificate</option>
+
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Upload File</td>
+                <td><input type="file" name="cert_file" id="" class="form-control" required></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" name="" value="Update" id="" class="btn btn-primary">
+                </td>
+                <td><input type="hidden" name="s_id" value="{{s_id}}" id=""></td>
+            </tr>
+        </table>
+        {% if msg %}
+        <div class="alert alert-success w-25" style="border-radius: 10px;margin-top: 10px;width:100px;margin-left: 230px;" role="alert">
+           {{msg}}
+          </div>
+          {% endif %}
+          
+    </form>
+    </div>
+    
+    
+    {% endblock %} 
+</body>
+</html>

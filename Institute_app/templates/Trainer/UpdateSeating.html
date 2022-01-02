@@ -1,8 +1,6 @@
 {% extends 'Trainer/TrainerMaster.html' %}
 
 {% block content%}
-
-eeeeeeeeeeeeee
 <form method="POST" action="{% url 'institute_app:tr_assign_seat' %}" class="reg-form" enctype="multipart/form-data" style="position: relative;left:420px;color: white;font-weight: bold; top: 5px;">
     {% csrf_token %}
     <p  class="text-danger">{{msg}}</p>

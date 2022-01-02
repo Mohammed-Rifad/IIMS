@@ -1,0 +1,45 @@
+{% extends 'Hr/HrMaster.html' %}
+
+{% block content%}
+
+
+
+<div class="container">
+
+  
+<table class="table table-primary">
+   <tr>
+
+        <th>Student ID</th>
+        <th>Student Name</th>
+        <th>Course Completed</th>
+        <th>Company Name</th>
+        <th>Designation</th>
+        <th>Joining Date</th>
+        <th></th>
+        <th></th>
+       
+   </tr>
+   
+   <tr>
+       {% for p in placements %}
+       <form action="" method="POST">
+
+        {% csrf_token %}
+        <td>{{p.s_id.s_id}}</td>
+        <td>{{p.s_id.s_name|title}}</td>
+        <td>{{p.s_id.c_id.c_name|title}}</td>
+        <td>{{p.cmp_name|title}}</td>
+        <td>{{p.designation|title}}</td>
+        <td>{{p.join_date}}</td>
+    <td><input type="hidden" name='id' value="{{p.id}}"></td>
+       <td><input type="submit" name="del" id="" value="Delete" class="btn btn-danger"></td>
+    </tr>
+</form>
+    {% endfor %}
+</table>
+
+</div>
+
+
+{% endblock %}

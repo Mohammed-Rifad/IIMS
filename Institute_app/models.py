@@ -225,4 +225,27 @@ class InterviewDetails(models.Model):
 
     class Meta:
         db_table="tb_inter"
+    
+class PlacementDetails(models.Model):
+    s_id=models.ForeignKey(StudentDetails,on_delete=models.CASCADE,db_column="s_id")
+    cmp_name=models.CharField(max_length=50,db_column="cmp_name")
+    designation=models.CharField(max_length=50,db_column="cmp_design")
+    join_date=models.CharField(max_length=50,db_column="cmp_join")
+
+    class Meta:
+        db_table="tb_placement"
+
+    
+class CertFiles(models.Model):
+    s_id=models.ForeignKey(StudentDetails,on_delete=models.CASCADE,db_column="s_id")
+    cert_title=models.CharField(max_length=30,db_column="cert_title",null=True)
+    cert=models.FileField(upload_to="Certificate/",db_column="cert")
+    
+
+    class Meta:
+        db_table="tb_certf  "
+
+
+
+
 

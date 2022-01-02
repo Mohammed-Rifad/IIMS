@@ -3,7 +3,8 @@
 from django.db.models.query_utils import Q
 from django.http.response import JsonResponse
 from Institute_app.Forms.HrForms import StudentForm
-from Institute_app.models import AttendanceDetails, CourseDetails, ExamDetails, FeeDetails, FollowUpData, FollowupStatus, HrDetails, InterviewDetails, ModuleDetails, NotesDetails, SeatingDetails, StudentDetails, StudentModule, SystemDetails, TrainerDetails
+from Institute_app.Views.auth_gaurd import auth_st
+from Institute_app.models import AttendanceDetails, CertFiles, CourseDetails, ExamDetails, FeeDetails, FollowUpData, FollowupStatus, HrDetails, InterviewDetails, ModuleDetails, NotesDetails, SeatingDetails, StudentDetails, StudentModule, SystemDetails, TrainerDetails
 from django.db import models
 from django.shortcuts import render,redirect
 from datetime import date, datetime, time, timedelta
@@ -12,9 +13,11 @@ from django.utils.crypto import get_random_string
 from ..services import GetUniqueID, checkSystemAvailability, email_service
 from Institute_app.Forms.AdminForms import CourseForm, HrForm, ModuleForm, SystemForm, TrainerForm,FollowupForm
 
+@auth_st
 def StudentHome(request):
     return render(request,'Student/StudentHome.html')
 
+@auth_st
 def ViewNotes(request):
     modules=ModuleDetails.objects.all()
     notes =NotesDetails.objects.all()
@@ -26,11 +29,12 @@ def ViewNotes(request):
             notes=NotesDetails.objects.filter(mod_id=module)
     return render(request,'Student/ViewNotes.html',{'modules':modules,'notes':notes,'tab_selection':tab_selection})
 
+@auth_st
 def ExamShedhule(request):
     exams=ExamDetails.objects.filter(s_id=request.session['s_id'])
     return render(request,'Student/Exam.html',{'exams':exams,})
 
-
+@auth_st
 def MyAttendance(request):
     tab_selection="My Attendance"
     attendance_data=""
@@ -44,12 +48,13 @@ def MyAttendance(request):
         
     return render(request,'Student/ViewAttendance.html',{'attendance_data':attendance_data,'tab_selection':tab_selection})
 
+@auth_st
 def ViewAllExam(request):
     tab_selection="View Exam"
     exams=ExamDetails.objects.filter(s_id=request.session['s_id'])
     return render(request,'Student/ViewExams.html',{'exams':exams,'tab_selection':tab_selection})
 
-
+@auth_st
 def PaymentStatus(request):
    
      
@@ -58,13 +63,13 @@ def PaymentStatus(request):
     
     return render(request,'Student/PaymentStatus.html',{'payment_data':payment_data,'tab_selection':tab_selection})
 
-
+@auth_st
 def ViewInterview(request):
     data=InterviewDetails.objects.filter(s_id=request.session['s_id'])
     tab_selection="View Interview"
     return render(request,'Student/ViewInter.html',{'data':data,'tab_selection':tab_selection})
 
-
+@auth_st
 def ChangePassword(request):
     tab_selection="Change Password"
     if request.method=='POST':
@@ -101,8 +106,9 @@ def Logout(request):
     if 's_id' in request.session:
         del request.session['s_id']
     request.session.flush()
-    return redirect("institute_app:login")
+    return redirect("institute_app:proj_home")
 
+@auth_st
 def LoadPay(request):
     tab_selection="Select Installment"
     data=FeeDetails.objects.filter(~Q(status='paid'),s_id=request.session['s_id'])
@@ -121,6 +127,7 @@ def LoadPay(request):
         return render(request,'Student/ConfirmPayment.html',{'amt':amt,'no':no,'d':d,'tab_selection':tab_selection})
     return render(request,'Student/LoadPay.html',{'tab_selection':tab_selection,'data':data,'student':student,'fee':fee})
 
+@auth_st
 def PaySuccess(request):
     print(request.GET['no'],'kkaka')
     cur_date=date.today()
@@ -133,8 +140,16 @@ def PaySuccess(request):
     data.save()
     return redirect("institute_app:st_home")
 
+@auth_st
 def MyProfile(request):
     std_data=StudentDetails.objects.get(s_id=request.session['s_id'])
     
     tab_selection="My Profile"
     return render(request,'Student/UpdateProfile.html',{'data':std_data,'tab_selection':tab_selection,})
+
+@auth_st
+def DownloadCert(request):
+    tab_selection="Download Certificate"
+    cert_data=CertFiles.objects.filter(s_id=request.session['s_id'])
+    return render(request,'Student/DownloadCert.html',{'data':cert_data,'tab_selection':tab_selection,})
+

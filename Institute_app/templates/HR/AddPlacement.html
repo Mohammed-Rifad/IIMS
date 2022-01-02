@@ -1,0 +1,65 @@
+{% extends 'HR/HrMaster.html' %}
+
+{% block content%}
+  
+
+
+{% if success_msg  %}
+<div class="alert alert-success w-25"  style="border-radius: 10px;margin-left: 390px; margin-top: 10px; opacity: .9;" role="alert">
+ {{success_msg}}
+</div>
+{% endif %}
+
+<form action="" method="POST">
+ {% csrf_token %}
+
+<table class="text-white" style="opacity: 0.8;margin-left: 290px;font-weight: bolder;border-spacing: 10px;border-collapse: separate;">
+
+    <tr>
+        <td>Select Student</td>
+        <td><select name="student" class="form-control" >
+            {% for s in students %}
+            <option value="{{s.s_id}}">{{s.s_name|title}}</option>
+            {% endfor %}
+        </select>
+   
+    </td>
+    </tr>
+    <tr>
+        <td>
+            Company Name
+        </td>
+        <td>
+            <input type="text" class="form-control" name="cmp_name" id="cmp_name" required>
+
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            Designation
+        </td>
+        <td>
+            <input type="text" class="form-control" name="cmp_desg" required>
+
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            Joining Date
+        </td>
+        <td>
+            <input type="date" class="form-control" name="cmp_join" required >
+
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="submit" name="" id="" value="Add" class="btn" style="background-color: blueviolet;"></td>
+    </tr>
+</table>
+
+
+</form>
+{% endblock %}

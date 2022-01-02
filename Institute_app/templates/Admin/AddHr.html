@@ -1,13 +1,14 @@
 {% extends 'Admin/AdminMaster.html' %}
 
 {% block content%}
+
 {% if success_msg %}
- <div class="alert alert-success w-50" style="border-radius: 10px;margin-top: 10px;width:100px" role="alert">
+ <div class="alert alert-success w-50" style="border-radius: 10px;margin-top: 10px;width:100px;margin-left: 210px; " role="alert">
     {{success_msg}}
    </div>
    {% endif %}
    {% if error_msg %}
-   <div class="alert alert-danger w-50" style="border-radius: 10px;margin-top: 10px;" role="alert">
+   <div class="alert alert-danger w-50" style="border-radius: 10px;margin-top: 10px;margin-left: 210px;" role="alert">
       {{error_msg}}
      </div>
      {% endif %}
@@ -20,45 +21,54 @@
 <form method="POST" action="{% url 'institute_app:add_hr' %}" class="reg-form" enctype="multipart/form-data">
     {% csrf_token %}
   
-<table class="tb">
+<table style="margin-left: 200px;border-spacing: 10px;border-collapse: separate;">
     <tr>
-        <td>{{form.hr_name.label}}</td>
-         <td>{{form.hr_name}}</td>
+        <td>Name</td>
+         <td><input type="text" name="hr_name" id="hr_name" name="hr_name" class="form-control" required></td>
+    </tr>
+   <tr>
+        <td>Gender</td>
+         <td><input type="radio" value="male" name="hr_gender" id="g_male" checked><label for="g_male">Male</label>
+                <input type="radio" name="hr_gender" id="g_female" value="female"><label for="g_female">Female</label>
+        </td>
     </tr>
     <tr>
-        <td>{{form.hr_gender.label}}</td>
-         <td>{{form.hr_gender}}</td>
+        <td>D.O.B</td>
+         <td><input type="date" name=hr_dob class="form-control" required></td>
     </tr>
     <tr>
-        <td>{{form.hr_dob.label}}</td>
-         <td>{{form.hr_dob}}</td>
+        <td>Qualification</td>
+         <td><select name="hr_qual" id="hr_qual" class="form-control">
+             <option value="bca">BCA</option>
+             <option value="mca">MCA</option>
+             <option value="bba">BBA</option>
+             <option value="mba">MBA</option>
+             <option value="btech">B Tech</option>
+         </select></td>
     </tr>
     <tr>
-        <td>{{form.hr_qual.label}}</td>
-         <td>{{form.hr_qual}}</td>
+        <td>Address</td>
+         <td><textarea name="hr_add" id="hr_add" cols="30" rows="10" class="form-control" required></textarea></td>
+    </tr>
+
+    <tr>
+        <td>Email</td>
+         <td><input type="text" name="hr_email" id="hr_email" class="form-control" required></td>
     </tr>
     <tr>
-        <td>{{form.hr_address.label}}</td>
-         <td>{{form.hr_address}}</td>
-    </tr>
+        <td>Phone No</td>
+         <td><input type="text" name="hr_phno" id="hr_phno" required class="form-control"></td>
+    </tr> 
     <tr>
-        <td>{{form.hr_email.label}}</td>
-         <td>{{form.hr_email}}</td>
-    </tr>
-    <tr>
-        <td>{{form.hr_phno.label}}</td>
-         <td>{{form.hr_phno}}</td>
-    </tr>
-    <tr>
-        <td>{{form.hr_pic.label}}</td>
-         <td>{{form.hr_pic}}</td>
+        <td>Pic</td>
+         <td><input type="file" name="hr_pic" id="hr_pic" required class="form-control"></td>
     </tr>
     
    
     
 </table>
 
-<input type="submit" value="Login" class="btn btn-primary" id='btn' style="margin-left: 60px;"/>
+<input type="submit" value="Register" class="btn btn-primary" id='btn' style="margin-left: 290px;"/>
 </form>
 
 
@@ -67,72 +77,46 @@ $(document).ready(()=>{
     $('#btn').click(()=>{
        
   
-    var sname=$('#id_hr_name') 
-    var dob=$('#id_hr_dob')
+    var hname=$('#hr_name') 
+    
    
-    var email=$('#id_hr_email') 
-    var phno=$('#id_hr_phno') 
+     var email=$('#hr_email') 
+    var phno=$('#hr_phno') 
     
     var err=$('#err_display')
 
+    // var name_format=/^[a-z A-Z]+$/
+    // var reg_email = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     var name_format=/^[a-z A-Z]+$/
-    var reg_email = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-      
-    dob_format = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/
+    var reg_email = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
+    // dob_format = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/
    
     
-    
-    if(name_format.test(sname.val())==false){
+    if(hname.val().match(name_format)==null && hname.val()!=''){
         
         err.css({'display':'block','color':'red'})
         err.html('Name Should Not Contain Numbers Or Characters')
-        sname.focus()
+        hname.focus()
         return false
     }
     else{
         err.css({'display':'none'})
     }
-alert(email.val().match(reg_email))
-
-    
-
-
-if(dob_format.test(dob.val())==false){
-     
-     err.css({'display':'block','color':'red'})
-     err.html('Invalid DOB')
-     dob.focus()
-     return false
- }
- else{
-     err.css({'display':'none'})
- }
-
-
-
-    if(email.val().match(reg_email)==null){
+   
+    if(email.val().match(reg_email)==null && email.val()!=""){
          
-        err.css({'display':'block','color':'red'})
-        err.html('Invalid Email Format')
-        email.focus()
+         err.css({'display':'block','color':'red'})
+         err.html('Invalid Email Format')
         
-        return false;
-    }
-
-    else{
-        err.css({'display':'none'})
-    }
-
-   
-   
-
-
-
-   
-
-
-var phno_format=/^[6-9]{1}[0-9]{9}$/;
-if(phno.val().match(phno_format)==null){
+         email.focus()
+         return false;
+     }
+ 
+     else{
+         err.css({'display':'none'})
+     }
+     var phno_format=/^[6-9]{1}[0-9]{9}$/;
+if(phno.val().match(phno_format)==null && phno.val()!=''){
      
      err.css({'display':'block','color':'red'})
      err.html('Invalid Phone No')
@@ -142,7 +126,6 @@ if(phno.val().match(phno_format)==null){
  else{
      err.css({'display':'none'})
  }
-   
 
     })
 })

@@ -6,7 +6,7 @@
 <form  action="{% url  'institute_app:upd_status' %}"  method="POST">
     {% csrf_token %}
 
- <table style="border-spacing: 20px;border-collapse: separate;position: relative; left:400px">
+ <table style="border-spacing: 20px;border-collapse: separate;position: relative; left:280px">
      <tr>
          <th class="h5" style="color: white;font-weight: bold;">Select Module</th>
          <th><select name="module" id="" class="form-control">
@@ -16,6 +16,8 @@
              <option value="{{mod.m_id.m_id}}">{{mod.m_id.m_name|title}}</option>
 
              {% endfor %}
+           
+
          </select></th>
      </tr>
      <tr>

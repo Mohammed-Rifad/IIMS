@@ -1,14 +1,16 @@
 import datetime
 
 from django.db.models.query_utils import Q
+from Institute_app.Views.auth_gaurd import auth_tr
 
 from Institute_app.services import UpdateSeat, getFileName
 from django.shortcuts import render,redirect
 from django.core.paginator import Paginator
 from passlib.hash import pbkdf2_sha256
 
-from ..models import AttendanceDetails, CourseDetails, ExamDetails, ModuleDetails, NotesDetails, SeatingDetails,StudentDetails, StudentModule, SystemDetails, TrainerDetails
+from ..models import AttendanceDetails, CourseDetails, ExamDetails, FeeDetails, ModuleDetails, NotesDetails, PlacementDetails, SeatingDetails,StudentDetails, StudentModule, SystemDetails, TrainerDetails
 
+@auth_tr
 def TrainerHome(request):
     return render(request,'Trainer/TrainerHome.html')
 
@@ -19,15 +21,20 @@ def getSystem(request):
     systems=SystemDetails.objects.filter(lab_no=lab_no)
     return render(request,'Trainer/system_dropdown.html',{'systems':systems})
 
+
+@auth_tr
 def ViewActiveStudents(request):
 
     courses=CourseDetails.objects.all()
     tab_selection="View Students"
     students=StudentDetails.objects.filter(status="active")
-
+    data=''
+    
+    s_id=''
     if request.method=='POST':
         if 'filter' in request.POST:
             course=request.POST['course']
+            # s_id=request.POST['s_id']
             students=StudentDetails.objects.filter(c_id=course, status="active")
         if 'status' in request.POST:
             s_id=request.POST['s_id']
@@ -39,9 +46,39 @@ def ViewActiveStudents(request):
             s_id=request.POST['s_id']
             data=StudentModule.objects.filter(s_id=s_id)
             tab_selection="Update Status"
-            return render(request,'Trainer/UpdateStudentModule.html',{'s_id':s_id,'modules':data,'tab_selection':tab_selection})
+        if 'completed' in request.POST:
+            s_id=request.POST['s_id']
+            flag=0
+            fee_detail=FeeDetails.objects.filter(s_id=s_id)
+            for f in fee_detail:
+                if f.status=='not paid':
+                    flag=1
+            print('fffffffffffffff',flag)
+            if flag==0:
+                std=StudentDetails.objects.get(s_id=s_id)
+                std.status='course completed'
+                std.save()
+                return redirect('institute_app:tr_active_students')
+            else:
+                fee_msg="Payment Not Completed"
+                return render(request,'Trainer/ActiveStudents.html',{'students':students,'courses':courses,'tab_selection':tab_selection,'fee_msg':fee_msg})
+
+
+        return render(request,'Trainer/UpdateStudentModule.html',{'s_id':s_id,'modules':data,'tab_selection':tab_selection})
     return render(request,'Trainer/ActiveStudents.html',{'students':students,'courses':courses,'tab_selection':tab_selection})
 
+@auth_tr
+def ViewPlacement(request):
+    tab_selection="View Placement"
+    placements=PlacementDetails.objects.all()
+    if request.method=='POST':
+        id=request.POST['id']
+        placement=PlacementDetails.objects.get(id=id)
+        placement.delete()
+        student=StudentDetails.objects.get(s_id=id)
+        student.placed=0
+        student.save()
+    return render(request,'Trainer/ViewPlacement.html',{'placements':placements,'tab_selection':tab_selection,})
 
 def UpdateStatus(request):
     s_id=request.POST['s_id']
@@ -53,6 +90,7 @@ def UpdateStatus(request):
 
 
 
+@auth_tr
 def UpdateSeating(request):
     status=""
     students=StudentDetails.objects.filter(status="active")
@@ -69,6 +107,7 @@ def UpdateSeating(request):
         print(status)
     return render(request,'Trainer/UpdateSeating.html',{'students':students,'status':status,'tab_selection':tab_selection})
 
+@auth_tr
 def AddNotes(request):
     course_data=CourseDetails.objects.all()
     tab_selection="Upload Notes"
@@ -96,6 +135,7 @@ def getModules(request):
     modules=ModuleDetails.objects.filter(c_id=c_id)
     return render(request,'Trainer/modulesDropdown.html',{'modules':modules})
 
+@auth_tr
 def ViewNotes(request):
     modules=ModuleDetails.objects.all()
     notes =NotesDetails.objects.all()
@@ -110,10 +150,12 @@ def ViewNotes(request):
             notes=NotesDetails.objects.filter(mod_id=module)
     return render(request,'Trainer/ViewNotes.html',{'modules':modules,'notes':notes,'tab_selection':tab_selection})
 
+@auth_tr
 def ViewStudentStatus(request):
     student=''
     return render(request,'Trainer/StudentModule.html',)
 
+@auth_tr
 def AddExam(request):
     tab_selection="Add Exam"
     students=StudentDetails.objects.filter(status="active")
@@ -138,12 +180,14 @@ def AddExam(request):
             return render(request,'Trainer/AddExam.html',{'students':students,'error_msg':error_msg,'tab_selection':tab_selection})
     return render(request,'Trainer/AddExam.html',{'students':students,'tab_selection':tab_selection})
 
+@auth_tr
 def getStudentModule(request):
     data=StudentDetails.objects.get(s_id=request.GET['s_id'])
     modules=ModuleDetails.objects.filter(c_id=data.c_id)
     return render(request,'Trainer/modulesDropdown.html',{'modules':modules})
 
 
+@auth_tr
 def StudentAttendance(request):
     students=StudentDetails.objects.filter(status="active")
     tab_selection="Add Attendance"
@@ -200,6 +244,7 @@ def StudentAttendance(request):
     return render(request,'Trainer/StudentAttendance.html',{'students':students,'tab_selection':tab_selection,'msg':msg})
 
 
+@auth_tr
 def ViewStudentAttendance(request):
     tab_selection="View Attendance"
     attendance_data=""
@@ -218,23 +263,27 @@ def ViewStudentAttendance(request):
     return render(request,'Trainer/ViewStudentAttendance.html',{'students':students,'attendance_data':attendance_data,'student_name':student_name,'tab_selection':tab_selection})
 
 
+@auth_tr
 def StudentExam(request):
     tab_selection="Update Exam"
     exams=ExamDetails.objects.filter(status='pending')
     return render(request,'Trainer/Exams.html',{'exams':exams,'tab_selection':tab_selection})
 
+@auth_tr
 def ViewAllExam(request):
     tab_selection="View Exam"
     exams=ExamDetails.objects.filter(~Q(status='pending'))
     return render(request,'Trainer/AllExams.html',{'exams':exams,'tab_selection':tab_selection})
 
 
+@auth_tr
 def DeleteExam(request):
     id=request.GET['id']
     exam=ExamDetails.objects.get(id=id)
     exam.delete()
     return redirect("institute_app:tr_view_exam")
 
+@auth_tr
 def UpdateExam(request):
     tab_selection="Update Exam"
     if request.method=='POST':
@@ -248,6 +297,7 @@ def UpdateExam(request):
     return render(request,'Trainer/UpdateExam.html',{'id':id,'tab_selection':tab_selection})
 
 
+@auth_tr
 def ViewSeating(request):
     seating_details=""
     tab_selection="View Seating"
@@ -257,6 +307,7 @@ def ViewSeating(request):
     return render(request,'Trainer/ViewSeating.html',{'seating_details':seating_details,'tab_selection':tab_selection})
 
 
+@auth_tr
 def ChangePassword(request):
     tab_selection="Change Password"
     if request.method=='POST':
@@ -292,8 +343,9 @@ def Logout(request):
     if 'tr_id' in request.session:
         del request.session['tr_id']
     request.session.flush()
-    return redirect("institute_app:login")
+    return redirect("institute_app:proj_home")
 
+@auth_tr
 def MyAttendance(request):
     tab_selection="My Attendance"
     attendance_data=""

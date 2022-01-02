@@ -1,10 +1,11 @@
 {% extends 'Trainer/TrainerMaster.html' %}
 
 {% block content%}
+<div class="container">
 
 <form action="{% url 'institute_app:tr_active_students' %}" method="POST">
  {% csrf_token %}
-<table style="border-spacing: 10px; border-collapse: separate; height: 30px; margin-left: 430px; margin-bottom: 10px;">
+<table style="border-spacing: 10px; border-collapse: separate; height: 30px; margin-left: 200px; margin-bottom: 10px;">
     <tr>
         <td style="color: white;font-weight: bold;" class="h5">Select Course</td>
         <td><select name="course" class="form-control"  >
@@ -43,8 +44,9 @@
           
            <th>Qualification</th>
            
-           <th>Email</th>
+        
            <th>Phone No</th>
+       <th></th>
        <th></th>
        <th></th>
        <th></th>
@@ -63,11 +65,13 @@
          
            <td>{{student.s_qual|title}}</td>
           
-           <td>{{student.s_email}}</td>
+          
            <td>{{student.s_phno}}</td>
            
            <td><input type="submit" name="status" value="View Status" class="btn" style="background-color: blueviolet;"   id=""></td>
            <td><input type="submit" name="update" value="Update" class="btn" id="" style="background-color: red;"></td>
+           <td><input type="submit" name="completed" value="Completed" class="btn" id="" style="background-color: coral;"></td>
+           
            <td><input type="hidden" name="s_id" id="" value="{{student.s_id}}"></td>
        </tr>
        </form>
@@ -75,6 +79,19 @@
        </table>
       
 </div>
-
+<input type="text" id="fee_err" value="{{fee_msg}}">
 </form>
+</div>
+<script>
+    
+    if(document.getElementById('fee_err').value!="")
+    {
+alert('Payment Not Completed')
+    }
+     
+
+    
+    
+</script>
+
 {% endblock %}

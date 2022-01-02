@@ -37,7 +37,7 @@ def Login(request):
             elif '@' in login_id:
                 auth_check=HrDetails.objects.filter(hr_email=login_id,hr_status='active').exists()
                 if auth_check:
-                    auth_data=HrDetails.objects.get(hr_email=login_id)
+                    auth_data=HrDetails.objects.get(hr_email=login_id,hr_status="active")
                     auth_passwd=auth_data.verifyPasswd(login_passwd)
                     if auth_passwd:
                         request.session['hr_id']=auth_data.hr_id
@@ -48,9 +48,10 @@ def Login(request):
                 else:
                     msg="Incorrect UserName or Password"
             elif login_id.isdigit()==True and len(login_id)==5:
-                auth_check=TrainerDetails.objects.filter(tr_id=login_id,tr_status='active',log_permission=1).exists()
+                auth_check=TrainerDetails.objects.filter(tr_id=login_id,tr_status='active').exists()
                 if auth_check:
                     auth_data=TrainerDetails.objects.get(tr_id=login_id)
+                    print('yesss')
                     auth_passwd=auth_data.verifyPasswd(login_passwd)
                     if auth_passwd:
                         request.session['tr_id']=auth_data.tr_id

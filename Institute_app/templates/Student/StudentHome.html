@@ -64,8 +64,11 @@
                             <li class="nav-item text-primary">
                                 <a class="nav-link nav-link-2" href="{% url 'institute_app:st_prof' %}"><span class=text-white>My Profile</span></a>
                             </li>
+                            <li class="nav-item text-primary">
+                                <a class="nav-link nav-link-2" href="{% url 'institute_app:st_chpass' %}"><span class=text-white>Change Password </span></a>
+                            </li>
                           
-                            <li class="nav-item">
+                            <li class="nav-item text-primary">
                                 <a class="nav-link nav-link-4" href="{% url 'institute_app:st_logout' %}"><span class=text-white>Logout</span></a>
                             </li>
                         </ul>
@@ -221,6 +224,21 @@
     <i class="fas fa-chevron-right" style="position: relative; left: 40px;"></i>
                  </div>
             </div>
+
+            <div class="col-md-3 col-sm-4" >
+               
+           
+                <div class=" text-center text-info opt " id=vatt>
+                    <a href="{% url 'institute_app:st_down' %}">
+                    <h5 class="mt-2">Certificate</h5>
+                    <i class="fas fa-book-open fa-2x"></i>
+    
+                     <br>
+                     </a>
+    <i class="fas fa-chevron-right" style="position: relative; left: 40px;"></i>
+                 </div>
+            </div>
+
 
 </div>
 

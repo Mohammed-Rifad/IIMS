@@ -4,7 +4,7 @@ from django.core.mail import send_mail
 from django.db.models.query_utils import check_rel_lookup_compatibility
 from datetime import date, datetime, time
 from django.http.request import split_domain_port
-from Institute_app.models import AttendanceDetails, CertificateDetails, CourseDetails, FeeDetails, FollowUpData, FollowupStatus, HrDetails, InterviewDetails, SeatingDetails, StudentDetails, StudentModule,SystemDetails, TrainerDetails
+from Institute_app.models import AttendanceDetails, CertificateDetails, CourseDetails, FeeDetails, FollowUpData, FollowupStatus, HrDetails, InterviewDetails, PlacementDetails, SeatingDetails, StudentDetails, StudentModule,SystemDetails, TrainerDetails
 from Institute_app.Forms.HrForms import InterviewForm, StudentForm
 from django.shortcuts import render,redirect
 from passlib.hash import pbkdf2_sha256
@@ -17,7 +17,7 @@ from ..services import AddStudentModule, GetUniqueID, InsertFeeDetails, email_se
 def HrHome(request):
     return render(request,'HR/HrHome.html')
 
-
+@auth_hr
 def AddStudent(request):
      
     msg=""
@@ -72,7 +72,7 @@ def getSystem(request):
     systems=SystemDetails.objects.filter(lab_no=lab_no)
     return render(request,'Hr/system_dropdown.html',{'systems':systems})
 
-
+@auth_hr
 def AssignSeating(request):
     status=""
     s_name=""
@@ -96,7 +96,7 @@ def AssignSeating(request):
             st=False
     return render(request,'HR/AssignSeating.html',{'students':students,'status':status,'tab_selection':tab_selection,'s_name':s_name,'st':st})
 
-
+@auth_hr
 def ViewSeating(request):
     seating_details=""
     tab_selection="View Seating"
@@ -105,7 +105,7 @@ def ViewSeating(request):
         seating_details=SeatingDetails.objects.filter(lab_no=lab_no)
     return render(request,'HR/ViewSeating.html',{'seating_details':seating_details,'tab_selection':tab_selection})
 
-
+@auth_hr
 def ActiveFollowUp(request):
     tab_selection="Follow Up"
     followup_data=FollowUpData.objects.filter(status="active")
@@ -115,6 +115,7 @@ def ActiveFollowUp(request):
         data.save()
     return render(request,'HR/ActiveFollowUp.html',{'followup_data':followup_data,'tab_selection':tab_selection})
 
+@auth_hr
 def AddFollowUp(request,id):
     tab_selection="Update Follow Up"
     if request.method=='POST':
@@ -131,6 +132,7 @@ def AddFollowUp(request,id):
        
     return render(request,'HR/FollowUp.html',{'id':id,'tab_selection':tab_selection})
 
+@auth_hr
 def FollowUpHistory(request,f_id):
     data=FollowupStatus.objects.filter(f_id=f_id)
     tab_selection="Follow Up History"
@@ -140,6 +142,7 @@ def FollowUpHistory(request,f_id):
         hst_data.delete()
     return render(request,'HR/FollowUpHistory.html',{'data':data,'tab_selection':tab_selection})
 
+@auth_hr
 def ViewActiveStudents(request):
     tab_selection="Active Students"
     courses=CourseDetails.objects.all()
@@ -149,6 +152,7 @@ def ViewActiveStudents(request):
         students=StudentDetails.objects.filter(c_id=course, status="active")
     return render(request,'HR/ActiveStudents.html',{'students':students,'courses':courses,'tab_selection':tab_selection})
 
+@auth_hr
 def TrainerAttendance(request):
     trainers=TrainerDetails.objects.filter(tr_status="active")
     tab_selection="Trainers Attendance"
@@ -211,7 +215,7 @@ def TrainerAttendance(request):
     #         return render(request,'HR/TrainerAttendance.html',{'trainers':trainers,'msg':msg})
     return render(request,'HR/TrainerAttendance.html',{'trainers':trainers,'tab_selection':tab_selection,'msg':msg})
 
-
+@auth_hr
 def ViewTrainerAttendance(request):
     attendance_data=""
     trainer_name=""
@@ -226,7 +230,7 @@ def ViewTrainerAttendance(request):
     return render(request,'HR/ViewTrainerAttendance.html',{'trainers':trainers,'attendance_data':attendance_data,'trainer_name':trainer_name})
 
 
-
+@auth_hr
 def ViewMyAttendance(request):
     attendance_data=""
    
@@ -240,7 +244,7 @@ def ViewMyAttendance(request):
         
     return render(request,'HR/ViewMyAttendance.html',{'attendance_data':attendance_data,})
 
-
+@auth_hr
 def MyAttendance(request):
     data=HrDetails.objects.get(hr_status="active")
     tab_selection="My Attendance"
@@ -286,7 +290,7 @@ def MyAttendance(request):
     
     return render(request,'HR/MyAttendance.html',{'tab_selection':tab_selection,'msg':msg})
 
-
+@auth_hr
 def DueList(request):
     std_array=[]
     data=FeeDetails.objects.filter(status='not paid')
@@ -305,7 +309,7 @@ def DueList(request):
         print(d)
         print('array',std_array)
     return render(request,'HR/DueList.html',{'data':std_array,'tab_selection':tab_selection,'total':total})
-
+@auth_hr
 def AddPayment(request):
     tab_selection="Add Payment"
     if request.method=='GET':
@@ -328,14 +332,14 @@ def AddPayment(request):
     return render(request,'HR/OfflinePayment.html',{'st':st,'tab_selection':tab_selection})
 
 
-
+@auth_hr
 def StudentStatus(request):
     id=request.GET['id']
     name=request.GET['st_name']
     tab_selection="Student Status"
     student_data=StudentModule.objects.filter(s_id=id)
     return render(request,'HR/StudentStatus.html',{'student_data':student_data,'tab_selection':tab_selection,'name':name})
-
+@auth_hr
 def PaymentStatus(request):
     id=request.GET['id']
     name=request.GET['st_name']
@@ -343,7 +347,7 @@ def PaymentStatus(request):
     payment_data=FeeDetails.objects.filter(s_id=id)
     
     return render(request,'HR/PaymentStatus.html',{'payment_data':payment_data,'name':name,'tab_selection':tab_selection})
-
+@auth_hr
 def ViewStudentAttendance(request):
     attendance_data=""
     student_name=""
@@ -356,7 +360,7 @@ def ViewStudentAttendance(request):
         attendance_data=AttendanceDetails.objects.filter(s_id=s_id,mnth=mnth,yr=yr)
         student_name=student_data.s_name
     return render(request,'Hr/ViewStudentAttendance.html',{'students':students,'attendance_data':attendance_data,'student_name':student_name})
-
+@auth_hr
 def RequestCertificate(request):
     students=StudentDetails.objects.filter(status="active")
     tab_selection="Request Certificate"
@@ -377,7 +381,7 @@ def RequestCertificate(request):
 
     return render(request,'Hr/RequestCertificate.html',{'students':students,'tab_selection':tab_selection})
 
-
+@auth_hr
 def CertStatus(request):
     data=CertificateDetails.objects.all()
     tab_selection="Certificate Status"
@@ -398,8 +402,8 @@ def Logout(request):
     if 'hr_id' in request.session:
         del request.session['hr_id']
     request.session.flush()
-    return redirect("institute_app:login")
-
+    return redirect("institute_app:proj_home")
+@auth_hr
 def CompletedStudents(request):
     students=StudentDetails.objects.filter(status="completed")
     courses=CourseDetails.objects.all()
@@ -408,7 +412,7 @@ def CompletedStudents(request):
         course=request.POST['course']
         students=StudentDetails.objects.filter(c_id=course, status="completed")
     return render(request,'Hr/CompletedStudents.html',{'students':students,'courses':courses,'tab_selection':tab_selection})
-
+@auth_hr
 def AddInterView(request):
     form=InterviewForm()
     courses=CourseDetails.objects.all()
@@ -419,7 +423,7 @@ def AddInterView(request):
         students=StudentDetails.objects.filter(c_id=course, status="active")
     return render(request,'HR/AddInterview.html',{'students':students,'courses':courses,'form':form,'tab_selection':tab_selection})
 
-    
+@auth_hr
 def SchedhuleInterview(request) :
     id=request.GET['id']
     msg=""
@@ -446,18 +450,20 @@ def SchedhuleInterview(request) :
             msg="Data Submitted Succesfully"
     return render(request,'HR/SchedhuleInterview.html',{'form':form,'id':id,'msg':msg,'tab_selection':tab_selection})
 
-
+@auth_hr
 def ViewInterview(request):
     data=InterviewDetails.objects.all()
     tab_selection="View Interview"
     return render(request,'Hr/ViewInter.html',{'data':data,'tab_selection':tab_selection})
 
+@auth_hr
 def DelInterview(request):
     id=request.GET['id']
     data=InterviewDetails.objects.get(id=id)
     data.delete()
     return redirect("institute_app:hr_view_inter")
 
+@auth_hr
 def UpdateInterview(request):
     tab_selection="Update Interview Status"
     
@@ -473,7 +479,7 @@ def UpdateInterview(request):
     return render(request,'Hr/UpdateInterview.html',{'tab_selection':tab_selection,'id':id})
 
 
-
+@auth_hr
 def ChangePassword(request):
     tab_selection="Change Password"
     if request.method=='POST':
@@ -503,3 +509,38 @@ def ChangePassword(request):
             return render(request,'Hr/ChangePassword.html',{'error_msg':error_msg,'tab_selection':tab_selection,})
 
     return render(request,'Hr/ChangePassword.html',{'tab_selection':tab_selection,})
+
+@auth_hr
+def AddPlacement(request):
+    tab_selection="Add Placement"
+    success_msg=""
+    students=StudentDetails.objects.filter(placed=0)
+    if request.method=='POST':
+        student=StudentDetails.objects.get(s_id=request.POST['student'])
+        cmp_name=request.POST['cmp_name']
+        cmp_desg=request.POST['cmp_desg']
+        
+        dt_convrt=datetime.strptime(request.POST['cmp_join'],"%Y-%m-%d").date()
+        dt_str=dt_convrt.strftime("%d/%m/%Y")
+        placement=PlacementDetails(s_id=student,cmp_name=cmp_name,designation=cmp_desg,join_date=dt_str)
+
+        placement.save()
+        student=StudentDetails.objects.get(s_id=request.POST['s_id'])
+        student.placed=1
+        student.save()
+        success_msg="Data Saved Succesfully"
+
+    return render(request,'Hr/AddPlacement.html',{'students':students,'tab_selection':tab_selection,'success_msg':success_msg})
+
+@auth_hr
+def ViewPlacement(request):
+    tab_selection="View Placement"
+    placements=PlacementDetails.objects.all()
+    if request.method=='POST':
+        id=request.POST['id']
+        placement=PlacementDetails.objects.get(id=id)
+        placement.delete()
+        student=StudentDetails.objects.get(s_id=id)
+        student.placed=0
+        student.save()
+    return render(request,'Hr/ViewPlacement.html',{'placements':placements,'tab_selection':tab_selection,})

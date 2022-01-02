@@ -10,6 +10,7 @@ urlpatterns = [
 
     path('',CommonViews.ProjectHome,name="proj_home"),
     path('login',CommonViews.Login,name="login"),
+    path('logout',AdminViews.Logout,name="admin_logout"),
     path('AdminHome',AdminViews.AdminHome,name="admin_home"),
     path('AdminHome/AddCourse',AdminViews.AddCourse,name="add_course"),
     path('AdminHome/AddModule',AdminViews.AddModule,name="add_module"),
@@ -28,8 +29,9 @@ urlpatterns = [
     path('AdminHome/ActiveFollowup',AdminViews.ActiveFollowUp,name="admin_active_followup"),
     path('AdminHome/History/<int:f_id>',AdminViews.FollowUpHistory,name="admin_followup_hst"),
     path('AdminHome/ViewInterview/',AdminViews.ViewInterview,name="ad_view_inter"),
+    path('AdminHome/UploadCert',AdminViews.UploadCert,name="ad_upl_cert"),
     
-    path('AdminHome/SetPermission/',AdminViews.UpdatePermission,name="set_permission"),
+    # path('AdminHome/SetPermission/',AdminViews.UpdatePermission,name="set_permission"),
     path('HrHome',HrViews.HrHome,name="hr_home"),
     path('AdminHome/TrainerAttendance',AdminViews.ViewTrainerAttendance,name="view_tr_attendance"),
     path('AdminHome/StudentAttendance',AdminViews.ViewStudentAttendance,name="view_st_attendance"),
@@ -64,6 +66,8 @@ urlpatterns = [
     path('HrHome/Status',HrViews.StudentStatus,name="hr_std_status"),
     path('HrHome/PayStatus',HrViews.PaymentStatus,name="hr_pay_status"),
     path('HrHome/AttendanceView',HrViews.ViewStudentAttendance,name="hr_st_att"),
+    path('HrHome/Placement',HrViews.AddPlacement,name="hr_add_plc"),
+    path('HrHome/ViewPlacement',HrViews.ViewPlacement,name="hr_view_plc"),
     path('HrHome/ReqCert',HrViews.RequestCertificate,name="hr_req_cert"),
     path('HrHome/CertStatus',HrViews.CertStatus,name="hr_cert_status"),
     path('TrainerHome',TrainerViews.TrainerHome,name="tr_home"),
@@ -87,7 +91,8 @@ urlpatterns = [
     path('TrainerHome/Logout',TrainerViews.Logout,name="tr_logout"),
     path('TrainerHome/AllExams',TrainerViews.ViewAllExam,name="tr_all_exam"),
     path('TrainerHome/MyAtt',TrainerViews.MyAttendance,name="tr_my_att"),
-   
+    path('TrainerHome/View/Placement',TrainerViews.ViewPlacement,name="tr_plc"),
+    
     path('Student/StudentHome',StudentViews.StudentHome,name="st_home"),
     path('Student/Notes',StudentViews.ViewNotes,name="st_notes"),
     path('Student/Exam',StudentViews.ExamShedhule,name="st_exam"),
@@ -100,6 +105,6 @@ urlpatterns = [
     path('Student/Pay/Success',StudentViews.PaySuccess,name="st_pay_success"),
     path('Student/Logout',StudentViews.Logout,name="st_logout"),
     path('Student/MyProfile',StudentViews.MyProfile,name="st_prof"),
-
+    path('Student/Download/Cert',StudentViews.DownloadCert,name="st_down"),
 
 ]
